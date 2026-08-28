@@ -1,50 +1,6 @@
 import type { Metadata } from "next";
-import { Button, Calendar, C, Hero, InfoGrid, ny21, ny30, Section, Shell } from "../../_components/IconicPage";
+import { Button, Hero, InfoGrid, Section, Shell } from "../../_components/IconicPage";
 
-export const metadata: Metadata = {
-  title: "ICONIC New York — Resorts World New York City",
-  description: "ICONIC New York: a recurring 21+ and 30+ concert program anchored at Resorts World New York City.",
-};
+export const metadata: Metadata={title:"ICONIC New York — Resorts World",description:"ICONIC New York at Resorts World: ENCORE and Funny Business."};
 
-export default function ResortsWorldPage() {
-  return <Shell>
-    <Hero eyebrow="ICONIC · MARKET 02 · NEW YORK CITY" title="RESORTS WORLD." sub="New York becomes ICONIC's second flagship market with the same repeatable concert architecture as Atlanta: a recurring 21+ series, a recurring 30+ series, and major tentpole opportunities." accent="#d2ad55">
-      <Button href="#calendar">View 2027 Calendar</Button><Button href="/series/21-plus" ghost>21+ Series</Button><Button href="/series/30-plus" ghost>30+ Series</Button>
-    </Hero>
-
-    <Section eyebrow="New York Program" title="A monthly residency model. Not random dates.">
-      <InfoGrid items={[
-        { label: "Market", value: "New York City", body: "ICONIC flagship market 02." },
-        { label: "Venue Partner", value: "Resorts World NYC", body: "Queens-based entertainment and resort destination." },
-        { label: "21+ Series", value: "12 Shows / Year", body: "One recurring younger-adult concert property. Final brand name to be assigned." },
-        { label: "30+ Series", value: "12 Shows / Year", body: "One recurring grown-audience concert property. Final brand name to be assigned." },
-      ]} />
-    </Section>
-
-    <Section eyebrow="Market Architecture" title="Same system as Atlanta. New York-specific execution." dark>
-      <InfoGrid items={[
-        { label: "Programming", value: "Separate Talent", body: "New York booking packages stand on their own rather than simply copying Atlanta lineups." },
-        { label: "Marketing", value: "NYC Audience", body: "Separate creative, media buying, local partnerships and audience data for New York." },
-        { label: "Revenue", value: "Local + National", body: "Local sponsor packages can sit underneath national ICONIC partnerships spanning multiple markets." },
-        { label: "Operations", value: "Dedicated Market", body: "Ticketing, production, staffing, VIP and show operations are run as a standalone New York program." },
-      ]} />
-    </Section>
-
-    <Section eyebrow="2027 New York" title="Twenty-four recurring concert dates." >
-      <div id="calendar" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(330px,1fr))", gap: 16 }}>
-        <div><div style={{ marginBottom: 18 }}><div style={{ fontFamily: "Georgia,serif", fontSize: 34 }}>21+ Concert Series</div><div style={{ marginTop: 8, color: C.muted, fontFamily: "Arial,sans-serif", fontSize: 11, lineHeight: 1.6 }}>Working monthly residency structure. Final name and exact venue-approved dates remain to be locked.</div></div><Calendar rows={ny21} /></div>
-        <div><div style={{ marginBottom: 18 }}><div style={{ fontFamily: "Georgia,serif", fontSize: 34 }}>30+ Concert Series</div><div style={{ marginTop: 8, color: C.muted, fontFamily: "Arial,sans-serif", fontSize: 11, lineHeight: 1.6 }}>Working monthly residency structure. Final name and exact venue-approved dates remain to be locked.</div></div><Calendar rows={ny30} /></div>
-      </div>
-    </Section>
-
-    <Section eyebrow="Commercial" title="One market. Multiple revenue lanes." dark>
-      <InfoGrid items={[
-        { label: "Tickets", value: "General + Premium", body: "Standard admission plus premium-view and hospitality inventory." },
-        { label: "VIP", value: "High-Value Inventory", body: "Group packages, hospitality and premium access." },
-        { label: "Sponsors", value: "Market Packages", body: "New York-specific sponsorship plus national multi-market packages." },
-        { label: "Data", value: "Always-On Audience", body: "Each monthly show feeds the next show instead of restarting customer acquisition every event." },
-      ]} />
-      <div style={{ marginTop: 34 }}><Button href="mailto:info@thekollectivehospitality.com?subject=ICONIC%20New%20York%20Partnership">Partner With ICONIC New York</Button></div>
-    </Section>
-  </Shell>;
-}
+export default function Page(){return <Shell><Hero eyebrow="ICONIC · MARKET 02 · NEW YORK" title="RESORTS WORLD." sub="ICONIC's New York home base. Two distinct live entertainment properties—ENCORE and Funny Business—built as recurring reasons to return, not one-off dates."><Button href="/new-york/encore">Enter ENCORE</Button><Button href="/new-york/funny-business" ghost>Funny Business</Button></Hero><Section eyebrow="New York Properties" title="Two brands. Two audiences. One ICONIC standard."><InfoGrid items={[{label:"Property 01",value:"ENCORE",body:"A premium live music and nightlife property at Resorts World."},{label:"Property 02",value:"Funny Business",body:"Comedy, personality and culture-driven live entertainment at Resorts World."},{label:"Market",value:"New York",body:"A dedicated ICONIC operating market with its own talent, marketing, sponsors and data."},{label:"Venue",value:"Resorts World",body:"The venue anchor for ICONIC's New York programming."}]}/><div style={{marginTop:30}}><Button href="/new-york/encore">Explore ENCORE</Button><Button href="/new-york/funny-business" ghost>Explore Funny Business</Button></div></Section><Section eyebrow="Operating Model" title="New York gets its own world." dark><InfoGrid items={[{label:"Programming",value:"NYC-Specific",body:"Talent and show formats are developed for the New York audience."},{label:"Marketing",value:"Independent",body:"Dedicated creative, media, partnerships and remarketing for each property."},{label:"VIP",value:"Premium",body:"Hospitality and high-value inventory built directly into each event."},{label:"Commercial",value:"Local + National",body:"Resorts World inventory can sit inside larger ICONIC sponsorship packages."}]}/></Section><Section eyebrow="Partnerships" title="Put your brand inside the room."><Button href="mailto:info@thekollectivehospitality.com?subject=ICONIC%20New%20York%20Partnership">Partner With ICONIC New York</Button></Section></Shell>}
