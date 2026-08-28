@@ -1,56 +1,8 @@
 import type { Metadata } from "next";
-import { Button, Calendar, Hero, InfoGrid, ny30, Section, Shell } from "../../_components/IconicPage";
+import { Button, Calendar, Hero, InfoGrid, Section, Shell } from "../../_components/IconicPage";
 
-export const metadata: Metadata = {
-  title: "ICONIC 30+ Concert Series — Atlanta + New York",
-  description: "ICONIC's recurring 30+ concert series across Atlanta and New York. Final series name coming soon.",
-};
+export const metadata: Metadata = { title: "Soul Session — ICONIC Atlanta", description: "Soul Session is ICONIC's elevated 30+ Atlanta concert series." };
 
-const atlanta = [
-  { month: "JAN", date: "JAN 23", anchor: "JANUARY" },
-  { month: "FEB", date: "FEB 12", anchor: "VALENTINE'S WEEKEND R&B" },
-  { month: "MAR", date: "MAR 20", anchor: "SPRING" },
-  { month: "APR", date: "APR 17", anchor: "SPRING" },
-  { month: "MAY", date: "MAY 08", anchor: "MOTHER'S DAY WEEKEND" },
-  { month: "JUN", date: "JUN 12", anchor: "PRE-JUNETEENTH" },
-  { month: "JUL", date: "JUL 17", anchor: "SUMMER" },
-  { month: "AUG", date: "AUG 21", anchor: "LATE SUMMER" },
-  { month: "SEP", date: "SEP 25", anchor: "FALL" },
-  { month: "OCT", date: "OCT 23", anchor: "HOMECOMING SEASON" },
-  { month: "NOV", date: "NOV 20", anchor: "PRE-THANKSGIVING" },
-  { month: "DEC", date: "DEC 18", anchor: "CHRISTMAS / HOLIDAY R&B" },
-];
+const atlanta=[{month:"JAN",date:"JAN 23",anchor:"JANUARY"},{month:"FEB",date:"FEB 12",anchor:"VALENTINE'S WEEKEND R&B"},{month:"MAR",date:"MAR 20",anchor:"SPRING"},{month:"APR",date:"APR 17",anchor:"SPRING"},{month:"MAY",date:"MAY 08",anchor:"MOTHER'S DAY WEEKEND"},{month:"JUN",date:"JUN 12",anchor:"PRE-JUNETEENTH"},{month:"JUL",date:"JUL 17",anchor:"SUMMER"},{month:"AUG",date:"AUG 21",anchor:"LATE SUMMER"},{month:"SEP",date:"SEP 25",anchor:"FALL"},{month:"OCT",date:"OCT 23",anchor:"HOMECOMING SEASON"},{month:"NOV",date:"NOV 20",anchor:"PRE-THANKSGIVING"},{month:"DEC",date:"DEC 18",anchor:"HOLIDAY R&B"}];
 
-export default function ThirtyPlusPage() {
-  return <Shell>
-    <Hero eyebrow="ICONIC SERIES · NAME COMING SOON" title="30+ CONCERT SERIES." sub="A recurring grown-audience concert property centered on R&B, soul, neo-soul, legacy hip-hop and artists with deep catalog recognition.">
-      <Button href="#markets">See 2027 Calendar</Button><Button href="mailto:info@thekollectivehospitality.com?subject=ICONIC%2030%2B%20Talent%20Submission" ghost>Talent / Booking</Button>
-    </Hero>
-
-    <Section eyebrow="Series Position" title="Grown music. Premium room. Strong catalog.">
-      <InfoGrid items={[
-        { label: "Audience", value: "30+", body: "A mature concert audience that values catalog, comfort, premium seating and hospitality." },
-        { label: "Primary Sound", value: "R&B + Soul", body: "Neo-soul, legacy hip-hop and high-recognition crossover acts fit naturally into the format." },
-        { label: "Atlanta", value: "12 Shows", body: "Monthly 2027 series, including a major Valentine's R&B opportunity." },
-        { label: "New York", value: "12 Shows", body: "Monthly Resorts World program with exact venue-approved dates still to be locked." },
-      ]} />
-    </Section>
-
-    <Section eyebrow="2027 Markets" title="Twenty-four grown-audience shows across two cities." dark>
-      <div id="markets" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(330px,1fr))", gap: 16 }}>
-        <div><h3 style={{ fontFamily: "Georgia,serif", fontSize: 36, margin: "0 0 18px" }}>Atlanta</h3><Calendar rows={atlanta} status="ATLANTA · 12 CONFIRMED PLANNING DATES" /></div>
-        <div><h3 style={{ fontFamily: "Georgia,serif", fontSize: 36, margin: "0 0 18px" }}>New York · Resorts World</h3><Calendar rows={ny30} status="NEW YORK · 12 MONTHLY HOLDS" /></div>
-      </div>
-    </Section>
-
-    <Section eyebrow="Programming System" title="Premium enough to feel special every month.">
-      <InfoGrid items={[
-        { label: "Talent", value: "Catalog Matters", body: "Packages prioritize artists with songs audiences already know and want to hear live." },
-        { label: "Experience", value: "Premium Seating", body: "Comfort, service and upgraded inventory become part of the series proposition." },
-        { label: "Tentpoles", value: "Holiday Windows", body: "Valentine's, Mother's Day, Juneteenth, homecoming and holiday dates receive larger packages." },
-        { label: "Retention", value: "Membership Mindset", body: "Build repeat attendance so the audience follows the series, not only the individual artist." },
-      ]} />
-      <div style={{ marginTop: 34 }}><Button href="mailto:info@thekollectivehospitality.com?subject=ICONIC%2030%2B%20Partnership">Sponsor the Series</Button><Button href="/new-york/resorts-world" ghost>Resorts World Program</Button></div>
-    </Section>
-  </Shell>;
-}
+export default function Page(){return <Shell><Hero eyebrow="ICONIC ATLANTA · 30+ SERIES" title="SOUL SESSION." sub="Atlanta's elevated 30+ concert experience. R&B, soul, neo-soul, legacy hip-hop and premium hospitality in a room designed to feel grown from the first note to the last drink."><Button href="#calendar">2027 Calendar</Button><Button href="mailto:info@thekollectivehospitality.com?subject=Soul%20Session%20Talent%20or%20Partnership" ghost>Talent / Partners</Button></Hero><Section eyebrow="The Property" title="Grown music. Premium room. Strong catalog."><InfoGrid items={[{label:"Audience",value:"30+",body:"A mature concert audience that values comfort, service and catalog."},{label:"Market",value:"Atlanta",body:"A dedicated Atlanta property under ICONIC."},{label:"Sound",value:"R&B + Soul",body:"Neo-soul, legacy hip-hop and recognizable crossover acts."},{label:"Cadence",value:"12 Shows",body:"A full 2027 monthly calendar."}]}/></Section><Section eyebrow="2027" title="Twelve premium nights built around the calendar." dark><div id="calendar" style={{maxWidth:920}}><Calendar rows={atlanta} status="SOUL SESSION · ATLANTA 2027"/></div></Section><Section eyebrow="Experience" title="A concert series that feels worth dressing for."><InfoGrid items={[{label:"Talent",value:"Catalog Matters",body:"Artists with songs the audience already knows and wants live."},{label:"Hospitality",value:"Premium",body:"Reserved seating, elevated service and high-value VIP inventory."},{label:"Tentpoles",value:"Bigger Dates",body:"Valentine's, Mother's Day, Juneteenth, homecoming and holiday editions scale up."},{label:"Retention",value:"Series Loyalty",body:"Every show sells the next Soul Session."}]}/></Section></Shell>}
