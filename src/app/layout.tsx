@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
+
 export const metadata: Metadata = {
-  title: "ICONIC™ — The Entertainment Group",
-  description: "Multi-vertical entertainment, culture, and media enterprise.",
+  title: "ICONIC — Concerts, Festivals & Arena Events",
+  description: "ICONIC produces major concerts, festivals, arena events and recurring city concert series in Atlanta, New York and beyond.",
 };
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      </head>
-      <body style={{margin:0,padding:0,background:'#07070a'}}>{children}</body>
+      <body style={{ margin: 0, padding: 0, background: "#050505" }}>{children}</body>
     </html>
   );
 }
