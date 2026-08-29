@@ -1,62 +1,74 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import type { Metadata } from "next";
+import { Button, C, Hero, InfoGrid, Section, Shell } from "./_components/IconicPage";
 
-const events = [
-  { city:"ATLANTA", title:"NIGHTMARE ON CHANNELSIDE", meta:"HALLOWEEN CONCERT · OCT 31, 2026", href:"/atlanta/halloween", glow:"rgba(255,87,34,.55)", tag:"NEXT" },
-  { city:"ATLANTA", title:"BRAVO", meta:"NEW YEAR'S EVE · SOUTHLAKE", href:"/atlanta/bravo", glow:"rgba(241,200,106,.46)", tag:"NYE" },
-  { city:"ATLANTA", title:"GROWN-ISH", meta:"21+ CONCERT SERIES · 2027", href:"/series/21-plus", glow:"rgba(255,63,164,.48)", tag:"SERIES" },
-  { city:"ATLANTA", title:"SOUL SESSION", meta:"30+ CONCERT SERIES · 2027", href:"/series/30-plus", glow:"rgba(124,92,255,.52)", tag:"SERIES" },
-  { city:"NEW YORK", title:"ENCORE", meta:"RESORTS WORLD · NEW YORK", href:"/new-york/resorts-world", glow:"rgba(59,130,246,.48)", tag:"RWNYC" },
-  { city:"NEW YORK", title:"FUNNY BUSINESS", meta:"RESORTS WORLD · NEW YORK", href:"/new-york/resorts-world", glow:"rgba(168,85,247,.48)", tag:"RWNYC" },
+export const metadata: Metadata = {
+  title: "ICONIC — Live Entertainment Platform",
+  description: "ICONIC produces arena events, recurring concert series and culture-driven live entertainment across Southlake Arena, New York, Las Vegas, Washington DC and Tampa.",
+};
+
+const southlakeProperties = [
+  { title: "THE BALL SERIES", meta: "6-event formal + themed season", href: "/ball-series", glow: "rgba(184,151,255,.52)" },
+  { title: "BRAVO", meta: "New Year's Eve · Southlake Arena", href: "/atlanta/bravo", glow: "rgba(241,200,106,.46)" },
+  { title: "GROWN-ISH", meta: "21+ Concert Series · Southlake Arena", href: "/series/21-plus", glow: "rgba(255,63,164,.50)" },
+  { title: "SOUL SESSION", meta: "30+ Concert Series · Southlake Arena", href: "/series/30-plus", glow: "rgba(124,92,255,.54)" },
 ];
 
-function CTA({ href, children, ghost=false }:{href:string;children:React.ReactNode;ghost?:boolean}){
-  return <Link href={href} style={{display:"inline-flex",alignItems:"center",justifyContent:"center",minHeight:52,padding:"0 28px",borderRadius:999,textDecoration:"none",fontSize:10,fontWeight:900,letterSpacing:".18em",textTransform:"uppercase",border:ghost?"1px solid rgba(255,255,255,.14)":"1px solid rgba(255,255,255,.16)",background:ghost?"rgba(255,255,255,.03)":"linear-gradient(110deg,#f5f2ff,#bba7ff 42%,#ff76bf)",color:ghost?"#fff":"#050507",boxShadow:ghost?"none":"0 12px 40px rgba(157,92,255,.24)"}}>{children}</Link>
-}
+const circuit = [
+  { market: "LAS VEGAS", count: "04", href: "/las-vegas", body: "Four ICONIC dates. Individual properties, venues, talent and launch dates announced separately." },
+  { market: "WASHINGTON DC", count: "04", href: "/washington-dc", body: "Four ICONIC dates built for the DMV market with dedicated local audience and partner strategy." },
+  { market: "TAMPA", count: "04", href: "/tampa", body: "Four ICONIC dates built to compound Tampa Bay ticket, sponsor and audience data." },
+];
 
-export default function Home(){
-  const [menu,setMenu]=useState(false); const [ready,setReady]=useState(false);
-  useEffect(()=>setReady(true),[]);
-  return <main className="iconic-shell" style={{minHeight:"100vh",color:"var(--white)"}}>
-    <nav style={{position:"fixed",zIndex:60,top:0,left:0,right:0,minHeight:76,padding:"0 clamp(18px,4vw,58px)",display:"flex",alignItems:"center",justifyContent:"space-between",background:"rgba(3,3,6,.72)",borderBottom:"1px solid rgba(255,255,255,.08)",backdropFilter:"blur(28px) saturate(145%)"}}>
-      <Link href="/" style={{display:"flex",alignItems:"center",gap:12,textDecoration:"none",color:"white"}}><span style={{width:12,height:12,transform:"rotate(45deg)",background:"linear-gradient(135deg,#8d5cff,#ff4fa7)",boxShadow:"0 0 24px rgba(165,90,255,.7)"}}/><span style={{fontFamily:"Georgia,serif",fontWeight:700,fontSize:27,letterSpacing:".08em"}}>ICONIC</span><span className="navBrandSub" style={{fontSize:8,fontWeight:900,letterSpacing:".28em",color:"rgba(255,255,255,.42)",textTransform:"uppercase"}}>Live Entertainment</span></Link>
-      <div className="desktopNav" style={{display:"flex",alignItems:"center",gap:27}}>{[["Events","#events"],["Atlanta","#atlanta"],["New York","#newyork"],["Vegas","/las-vegas"],["Partners","#partners"]].map(([a,b])=><Link key={a} href={b} style={{color:"rgba(255,255,255,.62)",textDecoration:"none",fontSize:9,fontWeight:900,letterSpacing:".15em",textTransform:"uppercase"}}>{a}</Link>)}<CTA href="#events">Get Tickets</CTA></div>
-      <button className="mobileToggle" onClick={()=>setMenu(!menu)} style={{display:"none",width:44,height:42,borderRadius:999,border:"1px solid rgba(255,255,255,.14)",background:"rgba(255,255,255,.04)",color:"#fff"}}>☰</button>
-    </nav>
-    {menu&&<div style={{position:"fixed",zIndex:55,top:76,left:0,right:0,padding:24,display:"grid",gap:18,background:"rgba(3,3,6,.97)",backdropFilter:"blur(30px)",borderBottom:"1px solid rgba(255,255,255,.1)"}}>{[["Events","#events"],["Atlanta","#atlanta"],["New York","#newyork"],["Vegas","/las-vegas"],["Partners","#partners"]].map(([a,b])=><Link onClick={()=>setMenu(false)} key={a} href={b} style={{color:"#fff",textDecoration:"none",fontSize:12,fontWeight:900,letterSpacing:".18em",textTransform:"uppercase"}}>{a}</Link>)}</div>}
+export default function Home(){return <Shell>
+  <Hero eyebrow="ICONIC · LIVE ENTERTAINMENT PLATFORM" title="ICONIC." sub="A multi-market live entertainment platform built around repeatable event properties, arena-scale production and distinct audience brands. Southlake Arena is the flagship home. New York remains active at Resorts World. Las Vegas, Washington DC and Tampa each receive four-event market programs." accent="#9b5cff">
+    <Button href="#southlake">Explore Southlake</Button><Button href="#national-circuit" ghost>National Circuit</Button>
+  </Hero>
 
-    <section style={{position:"relative",minHeight:"100svh",display:"flex",alignItems:"end",padding:"145px clamp(22px,6vw,92px) 66px",overflow:"hidden"}}>
-      <div className="light-beam" style={{right:"6%",top:"-20%"}}/><div className="light-beam" style={{left:"-14%",top:"15%",transform:"rotate(-18deg)",background:"linear-gradient(to bottom,transparent,rgba(255,56,164,.75),rgba(74,92,255,.3),transparent)"}}/>
-      <div style={{position:"absolute",inset:0,background:"radial-gradient(circle at 72% 22%,rgba(143,84,255,.16),transparent 24%),radial-gradient(circle at 16% 82%,rgba(255,63,164,.11),transparent 22%),linear-gradient(180deg,rgba(255,255,255,.01),transparent 45%,rgba(0,0,0,.45))"}}/>
-      <div style={{position:"absolute",inset:0,opacity:.16,backgroundImage:"linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px)",backgroundSize:"80px 80px",maskImage:"linear-gradient(to bottom,black,transparent 78%)"}}/>
-      <div style={{position:"relative",zIndex:2,width:"100%",maxWidth:1500,margin:"0 auto",opacity:ready?1:0,transform:ready?"none":"translateY(34px)",transition:"all 1s cubic-bezier(.16,1,.3,1)"}}>
-        <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:22,color:"#d6c9ff",fontSize:9,fontWeight:900,letterSpacing:".32em",textTransform:"uppercase"}}><span className="pulse-dot"/>Concerts · Festivals · Arena Events</div>
-        <h1 className="heroTitle neon-text" style={{margin:0,fontFamily:"Georgia,serif",fontSize:"clamp(100px,18vw,250px)",fontWeight:700,letterSpacing:"-.075em",lineHeight:.72}}>ICONIC.</h1>
-        <div className="heroGrid" style={{display:"grid",gridTemplateColumns:"1.35fr .65fr",gap:48,alignItems:"end",marginTop:48}}>
-          <h2 style={{margin:0,maxWidth:850,fontFamily:"Georgia,serif",fontSize:"clamp(38px,5vw,78px)",fontWeight:400,lineHeight:.96}}>We don't book nights.<br/><span className="chrome-text">We build moments.</span></h2>
-          <div><p style={{margin:"0 0 26px",color:"var(--muted)",fontSize:14,lineHeight:1.8}}>ICONIC is the live entertainment platform behind headline concerts, recurring series and arena-scale cultural events in Atlanta, New York and soon Las Vegas.</p><div style={{display:"flex",gap:10,flexWrap:"wrap"}}><CTA href="#events">Enter ICONIC</CTA><CTA href="#markets" ghost>Explore Markets</CTA></div></div>
-        </div>
-        <div className="statsGrid" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16,marginTop:72}}>{[["06","Event Properties"],["03","Markets"],["2027","Full Series Rollout"],["NIGHT","Operating Mode"]].map(([a,b])=><div className="glass" key={b} style={{padding:"18px 20px",borderRadius:18}}><div style={{fontFamily:"Georgia,serif",fontSize:26}}>{a}</div><div style={{marginTop:5,color:"rgba(255,255,255,.43)",fontSize:8,fontWeight:900,letterSpacing:".17em",textTransform:"uppercase"}}>{b}</div></div>)}</div>
-      </div>
-    </section>
+  <section style={{position:"relative",zIndex:2,padding:"30px clamp(22px,6vw,90px) 90px"}}><div style={{maxWidth:1450,margin:"0 auto"}}><InfoGrid items={[
+    {label:"Flagship Venue",value:"Southlake Arena",body:"Home venue for four major ICONIC properties."},
+    {label:"Southlake Portfolio",value:"4 Properties",body:"Ball Series, BRAVO, GROWN-ISH and Soul Session."},
+    {label:"Expansion Circuit",value:"12 Events",body:"Four in Las Vegas, four in Washington DC and four in Tampa."},
+    {label:"Active Markets",value:"5 Markets",body:"Atlanta/Southlake, New York, Las Vegas, Washington DC and Tampa."},
+  ]}/></div></section>
 
-    <div className="marquee"><div className="marquee-track">{Array.from({length:2}).flatMap(()=>["NIGHTMARE ON CHANNELSIDE","BRAVO","GROWN-ISH","SOUL SESSION","ENCORE","FUNNY BUSINESS","LAS VEGAS · COMING SOON"]).map((x,i)=><span key={i}>✦ {x}</span>)}</div></div>
+  <Section eyebrow="Flagship Home" title="Southlake Arena becomes the center of the ICONIC calendar.">
+    <div id="southlake" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(290px,1fr))",gap:14}}>
+      {southlakeProperties.map((p)=><Link key={p.title} href={p.href} className="event-card glass" style={{"--cardGlow":p.glow,minHeight:390,padding:30,borderRadius:26,color:C.white,textDecoration:"none",display:"flex",flexDirection:"column",justifyContent:"space-between"} as React.CSSProperties}>
+        <div style={{display:"flex",justifyContent:"space-between",gap:16,alignItems:"center"}}><span style={{color:C.muted,fontSize:9,fontWeight:900,letterSpacing:".20em",textTransform:"uppercase"}}>SOUTHLAKE ARENA</span><span style={{fontSize:20}}>↗</span></div>
+        <div><h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(42px,5.4vw,76px)",lineHeight:.84,letterSpacing:"-.04em",margin:0}}>{p.title}</h2><div style={{marginTop:24,paddingTop:18,borderTop:`1px solid ${C.faint}`,color:C.muted,fontSize:10,fontWeight:800,letterSpacing:".1em",textTransform:"uppercase"}}>{p.meta}</div></div>
+      </Link>)}
+    </div>
+    <div style={{marginTop:30}}><Button href="/southlake-arena">Open Southlake Venue Hub</Button></div>
+  </Section>
 
-    <section id="events" style={{position:"relative",zIndex:2,padding:"110px clamp(22px,6vw,92px)",maxWidth:1560,margin:"0 auto"}}>
-      <div style={{display:"flex",justifyContent:"space-between",gap:30,alignItems:"end",flexWrap:"wrap",marginBottom:50}}><div><div style={{color:"#cbbcff",fontSize:9,fontWeight:900,letterSpacing:".3em",textTransform:"uppercase"}}>The ICONIC Universe</div><h2 style={{margin:"14px 0 0",fontFamily:"Georgia,serif",fontSize:"clamp(48px,7vw,98px)",lineHeight:.88}}>Six properties.<br/><span style={{color:"rgba(255,255,255,.35)"}}>One name above them all.</span></h2></div><p style={{maxWidth:420,color:"var(--muted)",fontSize:13,lineHeight:1.8}}>Each property carries its own identity, audience, creative direction and sales funnel. ICONIC is the master platform connecting them.</p></div>
-      <div className="twoCol" style={{display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:16}}>{events.map((e,i)=><Link href={e.href} key={e.title} className="event-card glass" style={{"--cardGlow":e.glow,minHeight:i<2?500:420,padding:"clamp(26px,4vw,42px)",borderRadius:26,textDecoration:"none",color:"white",display:"flex",flexDirection:"column",justifyContent:"space-between"} as React.CSSProperties}><div style={{display:"flex",justifyContent:"space-between",gap:20}}><span style={{fontSize:9,fontWeight:900,letterSpacing:".24em",textTransform:"uppercase",color:"rgba(255,255,255,.52)"}}>{e.city}</span><span style={{fontSize:8,fontWeight:900,letterSpacing:".18em",padding:"8px 10px",borderRadius:999,background:"rgba(255,255,255,.07)",border:"1px solid rgba(255,255,255,.09)"}}>{e.tag}</span></div><div><h3 style={{margin:0,maxWidth:700,fontFamily:"Georgia,serif",fontSize:i<2?"clamp(48px,7vw,96px)":"clamp(42px,5.4vw,75px)",lineHeight:.84,letterSpacing:"-.045em"}}>{e.title}</h3><div style={{display:"flex",justifyContent:"space-between",alignItems:"end",gap:20,marginTop:28,paddingTop:22,borderTop:"1px solid rgba(255,255,255,.11)"}}><span style={{color:"rgba(255,255,255,.58)",fontSize:10,fontWeight:800,letterSpacing:".12em",textTransform:"uppercase"}}>{e.meta}</span><span style={{fontSize:26}}>↗</span></div></div></Link>)}</div>
-    </section>
+  <Section eyebrow="National Circuit" title="Three expansion markets. Four events in each." dark>
+    <div id="national-circuit" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
+      {circuit.map((m)=><Link key={m.market} href={m.href} className="glass market-card" style={{minHeight:360,padding:30,borderRadius:24,color:C.white,textDecoration:"none",display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"start",gap:20}}><span style={{color:"#cdbfff",fontSize:9,fontWeight:900,letterSpacing:".22em",textTransform:"uppercase"}}>ICONIC MARKET</span><strong style={{fontFamily:"Georgia,serif",fontSize:52,lineHeight:.8}}>{m.count}</strong></div>
+        <div><h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(42px,5vw,70px)",lineHeight:.86,margin:"0 0 18px"}}>{m.market}</h2><p style={{color:C.muted,fontSize:13,lineHeight:1.7,margin:0}}>{m.body}</p></div>
+      </Link>)}
+    </div>
+  </Section>
 
-    <section id="markets" style={{position:"relative",zIndex:2,padding:"110px clamp(22px,6vw,92px)",borderTop:"1px solid rgba(255,255,255,.08)",background:"rgba(255,255,255,.018)"}}><div style={{maxWidth:1500,margin:"0 auto"}}><div style={{color:"#cbbcff",fontSize:9,fontWeight:900,letterSpacing:".3em",textTransform:"uppercase"}}>Markets</div><h2 style={{margin:"14px 0 48px",fontFamily:"Georgia,serif",fontSize:"clamp(50px,7vw,102px)",lineHeight:.9}}>Atlanta. New York.<br/><span className="neon-text">Vegas next.</span></h2><div className="marketGrid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14}}>
-      <Link id="atlanta" href="/series/21-plus" className="market-card glass" style={{padding:30,minHeight:290,borderRadius:24,textDecoration:"none",color:"white"}}><div style={{fontSize:9,fontWeight:900,letterSpacing:".25em",color:"#ff77bc"}}>MARKET 01</div><h3 style={{fontFamily:"Georgia,serif",fontSize:52,margin:"55px 0 12px"}}>ATLANTA</h3><p style={{color:"var(--muted)",fontSize:13,lineHeight:1.7}}>Nightmare on Channelside · BRAVO · GROWN-ISH · Soul Session</p></Link>
-      <Link id="newyork" href="/new-york/resorts-world" className="market-card glass" style={{padding:30,minHeight:290,borderRadius:24,textDecoration:"none",color:"white"}}><div style={{fontSize:9,fontWeight:900,letterSpacing:".25em",color:"#7cb4ff"}}>MARKET 02</div><h3 style={{fontFamily:"Georgia,serif",fontSize:52,margin:"55px 0 12px"}}>NEW YORK</h3><p style={{color:"var(--muted)",fontSize:13,lineHeight:1.7}}>Resorts World · ENCORE · Funny Business</p></Link>
-      <Link href="/las-vegas" className="market-card glass" style={{padding:30,minHeight:290,borderRadius:24,textDecoration:"none",color:"white",position:"relative",overflow:"hidden"}}><div style={{position:"absolute",inset:0,background:"radial-gradient(circle at 70% 15%,rgba(168,85,247,.23),transparent 34%)"}}/><div style={{position:"relative"}}><div style={{fontSize:9,fontWeight:900,letterSpacing:".25em",color:"#c68cff"}}>MARKET 03</div><h3 style={{fontFamily:"Georgia,serif",fontSize:52,margin:"55px 0 12px"}}>LAS VEGAS</h3><p style={{color:"var(--muted)",fontSize:13,lineHeight:1.7}}>COMING SOON · New properties, new venue relationships, same ICONIC standard.</p></div></Link>
-    </div></div></section>
+  <Section eyebrow="New York" title="Resorts World remains its own ICONIC platform.">
+    <InfoGrid items={[
+      {label:"Venue Platform",value:"Resorts World",body:"ICONIC's New York venue relationship and operating platform."},
+      {label:"Concert Property",value:"ENCORE",body:"A distinct recurring concert property for the New York market."},
+      {label:"Comedy Property",value:"Funny Business",body:"A distinct comedy series with its own programming and sales path."},
+      {label:"Operating Rule",value:"Keep Brands Separate",body:"Every property keeps its own identity, audience, creative direction and funnel under ICONIC."},
+    ]}/>
+    <div style={{marginTop:30}}><Button href="/new-york/resorts-world">Explore New York</Button></div>
+  </Section>
 
-    <section id="partners" style={{position:"relative",zIndex:2,padding:"120px clamp(22px,6vw,92px)",textAlign:"center"}}><div style={{maxWidth:1000,margin:"0 auto"}}><div style={{color:"#d1c5ff",fontSize:9,fontWeight:900,letterSpacing:".34em",textTransform:"uppercase"}}>Brands · Sponsors · Talent · Venues</div><h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(52px,8vw,112px)",lineHeight:.86,margin:"20px 0 28px"}}>Be part of the<br/><span className="neon-text">next ICONIC night.</span></h2><p style={{maxWidth:620,margin:"0 auto 32px",color:"var(--muted)",fontSize:14,lineHeight:1.8}}>Partnership inventory spans concert sponsorships, hospitality, integrations, VIP, content, talent alignment and market-wide programs.</p><CTA href="mailto:info@thekollectivehospitality.com">Partner With ICONIC</CTA></div></section>
+  <Section eyebrow="The Model" title="ICONIC is the platform. The properties are the products." dark>
+    <InfoGrid items={[
+      {label:"Brand",value:"Independent Identity",body:"Every event property has its own visual language, positioning and audience."},
+      {label:"Market",value:"Local Operating Layer",body:"Each city develops dedicated demand, partner and buyer data instead of one blended national list."},
+      {label:"Venue",value:"Right Room",body:"Southlake is the flagship home while expansion-market venues remain event-specific until confirmed."},
+      {label:"Scale",value:"Repeatable System",body:"Programming, ticketing, sponsorship, VIP, CRM and post-event retention are designed to repeat."},
+    ]}/>
+  </Section>
 
-    <footer style={{position:"relative",zIndex:2,padding:"38px clamp(22px,6vw,92px)",borderTop:"1px solid rgba(255,255,255,.08)",display:"flex",justifyContent:"space-between",gap:24,flexWrap:"wrap",background:"rgba(0,0,0,.35)"}}><strong style={{fontFamily:"Georgia,serif",fontSize:25}}>ICONIC.</strong><span style={{color:"rgba(255,255,255,.42)",fontSize:9,fontWeight:800,letterSpacing:".16em",textTransform:"uppercase"}}>Atlanta · New York · Las Vegas Coming Soon</span></footer>
-  </main>
-}
+  <section style={{padding:"120px clamp(22px,6vw,90px)",textAlign:"center",borderTop:`1px solid ${C.faint}`}}><div style={{maxWidth:950,margin:"0 auto"}}><div style={{color:"#d1c5ff",fontSize:9,fontWeight:900,letterSpacing:".34em",textTransform:"uppercase"}}>Talent · Sponsors · Venues · Partners</div><h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(54px,8vw,112px)",lineHeight:.86,margin:"20px 0 28px"}}>Build the next<br/>ICONIC moment.</h2><Button href="mailto:info@thekollectivehospitality.com?subject=ICONIC%20Partnership">Partner With ICONIC</Button></div></section>
+</Shell>}
