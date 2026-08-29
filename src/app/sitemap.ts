@@ -6,15 +6,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     "",
     "/atlanta",
-    "/atlanta/halloween",
+    "/southlake-arena",
+    "/ball-series",
     "/atlanta/bravo",
-    "/atlanta/grown-ish",
-    "/atlanta/soul-session",
+    "/series/21-plus",
+    "/series/30-plus",
+    "/atlanta/halloween",
     "/new-york",
     "/new-york/resorts-world",
     "/new-york/encore",
     "/new-york/funny-business",
     "/las-vegas",
+    "/washington-dc",
+    "/tampa",
   ];
 
   return routes.map((route, index) => ({
