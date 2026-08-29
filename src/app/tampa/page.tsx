@@ -1,29 +1,39 @@
 import type { Metadata } from "next";
-import { Button, Hero, InfoGrid, Section, Shell } from "../_components/IconicPage";
+import { Button, Calendar, Hero, InfoGrid, Section, Shell } from "../_components/IconicPage";
 
 export const metadata: Metadata = {
-  title: "ICONIC Tampa — 4 Event Market Program",
-  description: "ICONIC is launching a four-event live entertainment program in Tampa.",
+  title: "ICONIC Tampa — 2027 Four-Event Program",
+  description: "ICONIC Tampa 2027 planning holds: four live entertainment dates across the full calendar year.",
 };
 
+const tampa=[
+  {month:"JAN",date:"JAN 30 · HOLD",anchor:"WINTER MARKET OPEN"},
+  {month:"APR",date:"APR 17 · HOLD",anchor:"SPRING"},
+  {month:"JUL",date:"JUL 03 · HOLD",anchor:"INDEPENDENCE DAY WEEKEND"},
+  {month:"OCT",date:"OCT 16 · HOLD",anchor:"FALL / HALLOWEEN RUNWAY"},
+];
+
 export default function TampaPage(){return <Shell>
-  <Hero eyebrow="ICONIC · NATIONAL CIRCUIT · MARKET 05" title="TAMPA." sub="Four ICONIC events built for Tampa. The market program is designed around distinct event brands, strong local demand, sponsor inventory and repeatable audience growth — with venues, talent and dates announced per property." accent="#ff6d67">
-    <Button href="#program">4-Event Program</Button><Button href="/" ghost>ICONIC Home</Button>
+  <Hero eyebrow="ICONIC · NATIONAL CIRCUIT · MARKET 05" title="TAMPA." sub="Four 2027 planning holds distributed across the full year so ICONIC can build a real Tampa Bay audience instead of appearing once and disappearing. Each date remains its own event property with dedicated talent, venue and funnel." accent="#ff6d67">
+    <Button href="#calendar">2027 Holds</Button><Button href="/" ghost>ICONIC Home</Button>
   </Hero>
-  <Section eyebrow="Tampa Program" title="Four events. Built for a real market footprint.">
-    <div id="program"><InfoGrid items={[
-      {label:"Market",value:"Tampa",body:"A dedicated ICONIC expansion market."},
-      {label:"Annual Program",value:"4 Events",body:"Four distinct ICONIC dates planned for Tampa."},
-      {label:"Venue Strategy",value:"To Be Announced",body:"Each event gets the venue that best fits its audience and scale."},
-      {label:"Brand Architecture",value:"Separate Properties",body:"Every event maintains its own identity, funnel and operating plan."},
-    ]}/></div>
-  </Section>
-  <Section eyebrow="Market Standard" title="Built to compound local audience, sponsor and ticket data." dark>
+  <Section eyebrow="Tampa Program" title="Four events. Four chances to compound the market.">
     <InfoGrid items={[
-      {label:"Audience",value:"Tampa Bay",body:"Programming is built to draw across Tampa, St. Petersburg and the wider Bay market."},
-      {label:"Partners",value:"Local + National",body:"Sponsor packages can be sold per event or across the four-event Tampa program."},
-      {label:"Sales",value:"Tampa Funnel",body:"Local buyers stay in a dedicated market CRM and presale path."},
-      {label:"Expansion",value:"4 / 4 / 4",body:"Tampa joins Las Vegas and Washington DC as a four-event ICONIC expansion market."},
+      {label:"Market",value:"Tampa Bay",body:"Tampa, St. Petersburg and the wider Bay market are treated as one regional demand opportunity with segmented targeting."},
+      {label:"Annual Program",value:"4 Events",body:"Four strategically spaced Saturday planning holds."},
+      {label:"Venue Strategy",value:"Event-Specific",body:"Each property gets the room that best matches its audience and scale."},
+      {label:"Brand Architecture",value:"Separate Properties",body:"Every event maintains its own identity, creative direction and conversion path."},
+    ]}/>
+  </Section>
+  <Section eyebrow="2027 Planning Holds" title="A full-year cadence instead of a one-off Tampa play." dark>
+    <div id="calendar" style={{maxWidth:960}}><Calendar rows={tampa} status="ICONIC TAMPA · 2027 PLANNING HOLDS · VENUE + TALENT TBD"/></div>
+  </Section>
+  <Section eyebrow="Market Standard" title="Built to turn four nights into a permanent Tampa audience asset.">
+    <InfoGrid items={[
+      {label:"Audience",value:"Tampa Bay CRM",body:"Every buyer, lead and partner enters a dedicated Tampa market data layer."},
+      {label:"Partners",value:"Local + National",body:"Sponsor packages can be sold event-by-event or across all four Tampa dates."},
+      {label:"Sales",value:"Presale Flywheel",body:"Every event sells the next event before the audience leaves the current one."},
+      {label:"Status",value:"Planning Holds",body:"Dates stay internal targets until venue and talent contracts convert them to confirmed."},
     ]}/>
   </Section>
 </Shell>}
