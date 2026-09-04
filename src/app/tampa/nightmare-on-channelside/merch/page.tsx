@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import styles from "./merch.module.css";
 import { collections } from "./merch-data";
@@ -58,7 +59,7 @@ export default function NightmareMerchPage() {
               href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}
               key={collection.slug}
               className={styles.card}
-              style={{ "--accent": collection.accent } as React.CSSProperties}
+              style={{ "--accent": collection.accent } as CSSProperties}
             >
               <span className={styles.cardNumber}>COLLECTION / {collection.code}</span>
               <span className={styles.cardMood}>{collection.mood}</span>
