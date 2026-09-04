@@ -15,7 +15,7 @@ const tampa=[
 
 export default function TampaPage(){return <Shell>
   <Hero eyebrow="ICONIC · NATIONAL CIRCUIT · MARKET 05" title="TAMPA." sub="Four 2027 planning holds distributed across the full year so ICONIC can build a real Tampa Bay audience instead of appearing once and disappearing. Each date remains its own event property with dedicated talent, venue and funnel." accent="#ff6d67">
-    <Button href="#calendar">2027 Holds</Button><Button href="/" ghost>ICONIC Home</Button>
+    <Button href="/tampa/nightmare-on-channelside/merch">Nightmare Merch</Button><Button href="#calendar" ghost>2027 Holds</Button><Button href="/" ghost>ICONIC Home</Button>
   </Hero>
   <Section eyebrow="Tampa Program" title="Four events. Four chances to compound the market.">
     <InfoGrid items={[
@@ -24,6 +24,15 @@ export default function TampaPage(){return <Shell>
       {label:"Venue Strategy",value:"Event-Specific",body:"Each property gets the room that best matches its audience and scale."},
       {label:"Brand Architecture",value:"Separate Properties",body:"Every event maintains its own identity, creative direction and conversion path."},
     ]}/>
+  </Section>
+  <Section eyebrow="Nightmare on Channelside" title="Official Halloween merch is now its own ICONIC experience." dark>
+    <InfoGrid items={[
+      {label:"Storefront",value:"14 Collections",body:"Artist, event, Tampa and culture collections remain completely separated."},
+      {label:"Merch System",value:"140 Slots",body:"Ten dedicated graphic-shirt product routes are prebuilt for every collection."},
+      {label:"Creative",value:"Halloween Archive",body:"Cinematic editorial design built to feel collectible rather than like a generic concert merch grid."},
+      {label:"Status",value:"Live Build",body:"Artwork slots are ready to receive finished merch graphics as production is completed."},
+    ]}/>
+    <div style={{marginTop:28}}><Button href="/tampa/nightmare-on-channelside/merch">Enter Nightmare Merch</Button></div>
   </Section>
   <Section eyebrow="2027 Planning Holds" title="A full-year cadence instead of a one-off Tampa play." dark>
     <div id="calendar" style={{maxWidth:960}}><Calendar rows={tampa} status="ICONIC TAMPA · 2027 PLANNING HOLDS · VENUE + TALENT TBD"/></div>
