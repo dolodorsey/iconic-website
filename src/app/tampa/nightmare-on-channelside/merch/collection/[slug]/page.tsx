@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import styles from "../../merch.module.css";
 import upgrade from "../../merch-upgrade.module.css";
+import final from "../../merch-final.module.css";
 import { collections as fallbackCollections, getCollection as getFallbackCollection } from "../../merch-data";
 import { formatPrice, getMerchCatalog } from "../../catalog";
 import { getFinishedSpriteArtwork } from "../../artwork-sprite";
@@ -73,11 +74,11 @@ export default async function CollectionPage({ params }: Props) {
             const hasArtwork = Boolean(product.primary_image_url || localArtwork);
             return (
               <Link href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}/${product.sku}`} className={`${styles.productCardNew} ${upgrade.dropCard}`} key={product.sku}>
-                <div className={`${styles.productVisual} ${upgrade.productVisual} ${hasArtwork ? upgrade.productVisualLive : ""}`}>
+                <div className={`${styles.productVisual} ${upgrade.productVisual} ${hasArtwork ? final.productVisualLive : ""}`}>
                   {product.primary_image_url ? (
-                    <img src={product.primary_image_url} alt={product.title} className={upgrade.catalogArtwork} />
+                    <img src={product.primary_image_url} alt={product.title} className={final.catalogArtwork} />
                   ) : localArtwork ? (
-                    <div className={upgrade.finishedArtwork} style={artVars} aria-label={localArtwork.label} />
+                    <div className={final.finishedArtwork} style={artVars} aria-label={localArtwork.label} />
                   ) : (
                     <div className={styles.teeShape}><span>{collection.name}</span><b>{String(product.design_number).padStart(2,"0")}</b></div>
                   )}
