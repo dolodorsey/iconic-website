@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Button, C, Hero, InfoGrid, Section, Shell } from "./_components/IconicPage";
+import { Button, C, Hero, InfoGrid, Section, Shell, drive } from "./_components/IconicPage";
 
 export const metadata: Metadata = {
   title: "ICONIC — Live Entertainment Platform",
@@ -35,9 +35,29 @@ const nationalSchedule=[
   {market:"LAS VEGAS",date:"NOV 27",anchor:"THANKSGIVING WEEKEND",href:"/las-vegas",glow:"rgba(168,85,247,.44)"},
 ];
 
+const experienceMedia=[
+  {kicker:"ARTIST REVEAL",title:"The name enters after the world is built.",src:drive("1LhNOBWdWbzVI4HRD6D4wO_pbWPcGylZ9"),href:"/series/21-plus"},
+  {kicker:"LINEUP SYSTEM",title:"Reveal talent without turning the site into a flyer.",src:drive("1mHcSw-4zNUkENmMKDMJL-vMaM-OhfKMn"),href:"/series/21-plus"},
+  {kicker:"VENUE REVEAL",title:"The room becomes part of the story.",src:drive("1GAz8_1S31jfsv6HZ4En76yZg_Itsjuo5"),href:"/southlake-arena"},
+];
+
+const conversionMedia=[
+  {kicker:"PRESALE + TICKETING",title:"Access before the public rush.",src:drive("1aq2ltX2swXKFSnE_wzr51gEPgRf3qCR8")},
+  {kicker:"VIP + HOSPITALITY",title:"Premium rooms inside the show.",src:drive("1gdC0YcTyQbX4wC4a7WUGWw-GRNAX1nLr")},
+  {kicker:"CITY WEEKEND",title:"Flight. Hotel. Arrival. Show. After.",src:drive("1-L8O7HBPmDjKf5CW51zd1Js6LxzZ7GHK")},
+  {kicker:"MERCH VAULT",title:"The show becomes an object.",src:drive("1o86B30vOmZfHAEVAevSmSBkIvx3ukoDv")},
+  {kicker:"PARTNERS",title:"Built into the experience—not pasted on.",src:drive("1iE79XNRpZDKZ-ulbpE6Z-m0X6LGIrXdq")},
+  {kicker:"AFTERMOVIE + ARCHIVE",title:"The stage goes dark. The asset keeps moving.",src:drive("1Q-_y4Z7ySuxKk0mvs29BqAHU9C-m2l1W")},
+];
+
+const mediaCard=(item:{kicker:string;title:string;src:string;href?:string},index:number)=>{
+  const body=<><div style={{position:"absolute",inset:0}}><img src={item.src} alt={item.kicker} style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform .7s cubic-bezier(.16,1,.3,1)"}}/></div><div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(0,0,0,.03) 30%,rgba(0,0,0,.88))"}}/><div style={{position:"absolute",left:26,right:26,bottom:26}}><div style={{fontSize:8,fontWeight:900,letterSpacing:".25em",color:"#d8caff",marginBottom:10}}>{String(index+1).padStart(2,"0")} / {item.kicker}</div><h3 style={{fontFamily:"Georgia,serif",fontSize:"clamp(28px,3vw,48px)",lineHeight:.95,margin:0,maxWidth:520}}>{item.title}</h3></div></>;
+  return item.href?<Link key={item.kicker} href={item.href} className="iconic-media-card" style={{position:"relative",minHeight:500,overflow:"hidden",border:`1px solid ${C.faint}`,borderRadius:22,color:C.white,textDecoration:"none"}}>{body}</Link>:<article key={item.kicker} className="iconic-media-card" style={{position:"relative",minHeight:430,overflow:"hidden",border:`1px solid ${C.faint}`,borderRadius:22}}>{body}</article>;
+};
+
 export default function Home(){return <Shell>
-  <Hero eyebrow="ICONIC · LIVE ENTERTAINMENT PLATFORM" title="ICONIC." sub="A multi-market live entertainment platform built around repeatable event properties, arena-scale production and distinct audience brands. Southlake Arena is the flagship home. New York remains active at Resorts World. Las Vegas, Washington DC and Tampa now have a locked 12-date 2027 planning framework." accent="#9b5cff">
-    <Button href="#southlake">Explore Southlake</Button><Button href="#national-circuit" ghost>2027 National Circuit</Button>
+  <Hero eyebrow="ICONIC · LIVE ENTERTAINMENT PLATFORM" title="A HIGHER CLASS OF LIVE." sub="A multi-market live entertainment platform built around repeatable event properties, arena-scale production and distinct audience brands. The site now mirrors the full experience: reveal, venue, access, VIP, travel, merch, partners and archive." accent="#9b5cff">
+    <Button href="#experience">Enter the experience</Button><Button href="#national-circuit" ghost>2027 National Circuit</Button>
   </Hero>
 
   <section style={{position:"relative",zIndex:2,padding:"30px clamp(22px,6vw,90px) 90px"}}><div style={{maxWidth:1450,margin:"0 auto"}}><InfoGrid items={[
@@ -47,6 +67,10 @@ export default function Home(){return <Shell>
     {label:"Active Markets",value:"5 Markets",body:"Southlake/Atlanta, New York, Las Vegas, Washington DC and Tampa."},
   ]}/></div></section>
 
+  <Section eyebrow="The Live System" title="The show starts before the artist walks out." dark>
+    <div id="experience" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:12}}>{experienceMedia.map(mediaCard)}</div>
+  </Section>
+
   <Section eyebrow="Flagship Home" title="Southlake Arena is the center of the ICONIC calendar.">
     <div id="southlake" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(290px,1fr))",gap:14}}>
       {southlakeProperties.map((p)=><Link key={p.title} href={p.href} className="event-card glass" style={{"--cardGlow":p.glow,minHeight:420,padding:30,borderRadius:26,color:C.white,textDecoration:"none",display:"flex",flexDirection:"column",justifyContent:"space-between"} as React.CSSProperties}>
@@ -55,6 +79,10 @@ export default function Home(){return <Shell>
       </Link>)}
     </div>
     <div style={{marginTop:30}}><Button href="/southlake-arena">Open Southlake Venue Hub</Button></div>
+  </Section>
+
+  <Section eyebrow="Conversion Architecture" title="Tickets are only one part of the business." dark>
+    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(290px,1fr))",gap:12}}>{conversionMedia.map(mediaCard)}</div>
   </Section>
 
   <Section eyebrow="National Circuit" title="Three expansion markets. Four events in each." dark>
