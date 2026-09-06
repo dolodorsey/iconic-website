@@ -19,12 +19,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/las-vegas",
     "/washington-dc",
     "/tampa",
+    "/tampa/nightmare-on-channelside",
+    "/tampa/nightmare-on-channelside/merch",
   ];
 
   return routes.map((route, index) => ({
     url: `${base}${route}`,
     lastModified: new Date(),
     changeFrequency: index === 0 ? "daily" : "weekly",
-    priority: index === 0 ? 1 : 0.8,
+    priority: index === 0 ? 1 : route.includes("nightmare-on-channelside") || route === "/atlanta/bravo" ? 0.95 : 0.8,
   }));
 }
