@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./mobile-polish.css";
 
 export const viewport: Viewport = {
   themeColor: "#050507",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "ICONIC",
     title: "ICONIC — Concerts, Festivals & Arena Events",
-    description: "Headline concerts. Recurring series. Arena-scale cultural moments. Atlanta · New York · Las Vegas coming soon.",
+    description: "Headline concerts. Recurring series. Arena-scale cultural moments. Atlanta · New York · Las Vegas · Washington DC · Tampa.",
     url: "/",
   },
   twitter: {
@@ -39,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     name: "ICONIC",
     url: "https://iconic-atl.com",
     description: "Live entertainment company producing concerts, festivals, comedy, recurring concert series and arena-scale events.",
-    areaServed: ["Atlanta", "New York City", "Las Vegas"],
+    areaServed: ["Atlanta", "New York City", "Las Vegas", "Washington DC", "Tampa"],
   };
 
   return (
