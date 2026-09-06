@@ -1,4 +1,4 @@
-export const FINISHED_21_SAVAGE_SPRITE = "/nightmare-merch/21-savage/21-savage-sprite.webp";
+export const FINISHED_21_SAVAGE_SPRITE = "/api/merch-art/21-savage-sprite";
 
 const positions = [
   "0% 0%", "100% 0%", "0% 25%", "100% 25%", "0% 50%",
