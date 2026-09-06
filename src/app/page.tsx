@@ -38,12 +38,12 @@ const experienceMedia=[
 ];
 
 const conversionMedia=[
-  {kicker:"PRESALE + TICKETING",title:"Access before the public rush.",src:drive("1aq2ltX2swXKFSnE_wzr51gEPgRf3qCR8")},
-  {kicker:"VIP + HOSPITALITY",title:"Premium rooms inside the show.",src:drive("1jsL325rOkWzSb2jTCy_1B-oZtmYrQxUp")},
-  {kicker:"CITY WEEKEND",title:"Flight. Hotel. Arrival. Show. After.",src:drive("1-L8O7HBPmDjKf5CW51zd1Js6LxzZ7GHK")},
-  {kicker:"MERCH VAULT",title:"The show becomes an object.",src:drive("1o86B30vOmZfHAEVAevSmSBkIvx3ukoDv")},
-  {kicker:"PARTNERS",title:"Built into the experience—not pasted on.",src:drive("1iE79XNRpZDKZ-ulbpE6Z-m0X6LGIrXdq")},
-  {kicker:"AFTERMOVIE + ARCHIVE",title:"The stage goes dark. The asset keeps moving.",src:drive("1Q-_y4Z7ySuxKk0mvs29BqAHU9C-m2l1W")},
+  {kicker:"PRESALE + TICKETING",title:"Access before the public rush.",src:drive("1aq2ltX2swXKFSnE_wzr51gEPgRf3qCR8"),href:"/access?intent=presale"},
+  {kicker:"VIP + HOSPITALITY",title:"Premium rooms inside the show.",src:drive("1jsL325rOkWzSb2jTCy_1B-oZtmYrQxUp"),href:"/access?intent=vip"},
+  {kicker:"CITY WEEKEND",title:"Flight. Hotel. Arrival. Show. After.",src:drive("1-L8O7HBPmDjKf5CW51zd1Js6LxzZ7GHK"),href:"/access?intent=travel"},
+  {kicker:"MERCH VAULT",title:"The show becomes an object.",src:drive("1o86B30vOmZfHAEVAevSmSBkIvx3ukoDv"),href:"/access?intent=merch"},
+  {kicker:"PARTNERS",title:"Built into the experience—not pasted on.",src:drive("1iE79XNRpZDKZ-ulbpE6Z-m0X6LGIrXdq"),href:"/access?intent=partners"},
+  {kicker:"AFTERMOVIE + ARCHIVE",title:"The stage goes dark. The asset keeps moving.",src:drive("1Q-_y4Z7ySuxKk0mvs29BqAHU9C-m2l1W"),href:"/access?intent=media"},
 ];
 
 const brandWorld=[
@@ -98,6 +98,7 @@ export default function Home(){return <Shell>
 
   <Section eyebrow="Conversion Architecture" title="Tickets are only one part of the business.">
     <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(290px,1fr))",gap:12}}>{conversionMedia.map(mediaCard)}</div>
+    <div style={{marginTop:28}}><Button href="/access?intent=sponsorship">Sponsorship Access</Button><Button href="/access?intent=partners" ghost>Partner With ICONIC</Button></div>
   </Section>
 
   <Section eyebrow="Market Identity" title="Every city gets its own world without breaking the master brand." dark>
@@ -119,5 +120,5 @@ export default function Home(){return <Shell>
     <div style={{marginTop:30}}><Button href="/new-york/resorts-world">Explore New York</Button></div>
   </Section>
 
-  <section className="iconic-closing"><div><div>Talent · Sponsors · Venues · Partners</div><h2>Build the next<br/>ICONIC moment.</h2><Button href="mailto:info@thekollectivehospitality.com?subject=ICONIC%20Partnership">Partner With ICONIC</Button></div></section>
+  <section className="iconic-closing"><div><div>Talent · Sponsors · Venues · Partners</div><h2>Build the next<br/>ICONIC moment.</h2><Button href="/access?intent=partners">Partner With ICONIC</Button></div></section>
 </Shell>}
