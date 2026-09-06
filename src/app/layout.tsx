@@ -2,13 +2,15 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./mobile-polish.css";
 
+const SITE_URL = "https://iconic-website-ten.vercel.app";
+
 export const viewport: Viewport = {
   themeColor: "#050507",
   colorScheme: "dark",
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://iconic-atl.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "ICONIC — Concerts, Festivals & Arena Events",
     template: "%s | ICONIC",
@@ -38,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "ICONIC",
-    url: "https://iconic-atl.com",
+    url: SITE_URL,
     description: "Live entertainment company producing concerts, festivals, comedy, recurring concert series and arena-scale events.",
     areaServed: ["Atlanta", "New York City", "Las Vegas", "Washington DC", "Tampa"],
   };
