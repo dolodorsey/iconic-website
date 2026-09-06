@@ -1,7 +1,9 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 import styles from "./merch.module.css";
+import upgrade from "./merch-upgrade.module.css";
 
 const BAG_KEY = "iconic-nightmare-bag";
 const BAG_EVENT = "iconic-nightmare-bag-change";
@@ -13,6 +15,12 @@ type BagItem = {
   qty: number;
   priceCents: number;
 };
+
+type GalleryArtwork = {
+  url: string;
+  position: string;
+  label: string;
+} | null;
 
 function readBag(): BagItem[] {
   if (typeof window === "undefined") return [];
@@ -38,6 +46,53 @@ export function BagIndicator() {
   }, []);
 
   return <span className={styles.bag}>CART ({String(count).padStart(2, "0")})</span>;
+}
+
+export function ProductGallery({
+  artwork,
+  collectionName,
+  designNumber,
+}: {
+  artwork: GalleryArtwork;
+  collectionName: string;
+  designNumber: number;
+}) {
+  const [view, setView] = useState<"front" | "detail" | "back">("front");
+  const number = String(designNumber).padStart(2, "0");
+  const artVars = artwork ? {
+    "--merch-art": `url("${artwork.url}")`,
+    "--merch-pos": artwork.position,
+  } as CSSProperties : undefined;
+
+  if (!artwork) {
+    return (
+      <div className={`${styles.detailFrame} ${upgrade.detailFrame} ${upgrade.galleryFallback}`}>
+        <span className={styles.detailNumber}>{number}</span>
+        <div className={styles.detailTee}><span>{collectionName}</span><b>NIGHTMARE<br/>ON CHANNELSIDE</b><em>{number}</em></div>
+        <div className={styles.artworkNotice}>COMING SOON · FINAL ART IN PRODUCTION</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={upgrade.galleryShell}>
+      <div className={upgrade.galleryViewport} style={artVars} aria-label={artwork.label}>
+        {view === "front" && <div className={`${upgrade.finishedArtwork} ${upgrade.galleryFront}`} />}
+        {view === "detail" && <div className={`${upgrade.finishedArtwork} ${upgrade.galleryDetail}`} />}
+        {view === "back" && (
+          <div className={upgrade.backMockup}>
+            <span>NIGHTMARE</span><b>ON CHANNELSIDE</b><em>{collectionName}</em><small>BACK GARMENT PREVIEW</small>
+          </div>
+        )}
+        <span className={upgrade.galleryNumber}>{number}</span>
+      </div>
+      <div className={upgrade.galleryTabs} role="tablist" aria-label="Product views">
+        <button type="button" onClick={() => setView("front")} className={view === "front" ? upgrade.galleryTabActive : ""}>FRONT</button>
+        <button type="button" onClick={() => setView("detail")} className={view === "detail" ? upgrade.galleryTabActive : ""}>DETAIL</button>
+        <button type="button" onClick={() => setView("back")} className={view === "back" ? upgrade.galleryTabActive : ""}>BACK</button>
+      </div>
+    </div>
+  );
 }
 
 export function AddToBag({
