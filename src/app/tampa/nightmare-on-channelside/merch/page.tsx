@@ -4,11 +4,18 @@ import Link from "next/link";
 import styles from "./merch.module.css";
 import upgrade from "./merch-upgrade.module.css";
 import { formatPrice, getMerchCatalog, type CatalogCollection, type CatalogProduct } from "./catalog";
+import { getFinishedSpriteArtwork } from "./artwork-sprite";
 import { BagIndicator } from "./shop-client";
 
 export const metadata: Metadata = {
   title: "Nightmare on Channelside — Official Merch",
   description: "Official ICONIC Nightmare on Channelside Halloween merch: artist, Tampa, event and culture collections.",
+  alternates: { canonical: "/tampa/nightmare-on-channelside/merch" },
+  openGraph: {
+    title: "Nightmare on Channelside — Official Merch",
+    description: "Limited Halloween concert merch from ICONIC in Tampa.",
+    url: "/tampa/nightmare-on-channelside/merch",
+  },
 };
 
 const spritePositions = [
@@ -46,19 +53,32 @@ function CollectionTile({ collection, compact = false }: { collection: CatalogCo
 }
 
 function ProductCard({ product, collection }: { product: CatalogProduct; collection?: CatalogCollection }) {
+  const localArtwork = getFinishedSpriteArtwork(product.collection_slug, product.design_number);
+  const artVars = localArtwork ? {
+    "--merch-art": `url("${localArtwork.url}")`,
+    "--merch-pos": localArtwork.position,
+  } as CSSProperties : undefined;
+  const hasArtwork = Boolean(product.primary_image_url || localArtwork);
   const vars = { "--accent": collection?.accent || "#ff3528" } as CSSProperties;
+
   return (
     <Link
       href={`/tampa/nightmare-on-channelside/merch/collection/${product.collection_slug}/${product.sku}`}
       className={`${styles.dropCard} ${upgrade.dropCard}`}
       style={vars}
     >
-      <div className={`${styles.productVisual} ${upgrade.productVisual}`}>
-        <div className={styles.teeShape}>
-          <span>{collection?.name || "NIGHTMARE"}</span>
-          <b>{String(product.design_number).padStart(2, "0")}</b>
-        </div>
-        <span className={styles.dropBadge}>{product.primary_image_url ? "NEW DROP" : "ARTWORK SLOT"}</span>
+      <div className={`${styles.productVisual} ${upgrade.productVisual} ${hasArtwork ? upgrade.productVisualLive : ""}`}>
+        {product.primary_image_url ? (
+          <img src={product.primary_image_url} alt={product.title} className={upgrade.catalogArtwork} />
+        ) : localArtwork ? (
+          <div className={upgrade.finishedArtwork} style={artVars} aria-label={localArtwork.label} />
+        ) : (
+          <div className={styles.teeShape}>
+            <span>{collection?.name || "NIGHTMARE"}</span>
+            <b>{String(product.design_number).padStart(2, "0")}</b>
+          </div>
+        )}
+        <span className={styles.dropBadge}>{hasArtwork ? "FINISHED DROP" : "COMING SOON"}</span>
       </div>
       <div className={styles.dropMeta}>
         <div><strong>{product.title}</strong><span>{product.product_type}</span></div>
@@ -131,7 +151,7 @@ export default async function NightmareMerchPage() {
       <section className={`${styles.featuredSection} ${upgrade.featuredSection}`} id="featured">
         <div className={styles.featuredIntro}>
           <span>THE LATEST DESIGNS</span><h2>FEATURED <em>DROPS</em></h2>
-          <p>The real nightmare is missing the piece you wanted. Live art replaces production slots without changing the collection architecture.</p>
+          <p>Finished artwork is shown live as each collection is completed. Unfinished pieces stay clearly marked instead of using fake product art.</p>
           <a href="#allCollections" className={`${styles.primaryCta} ${upgrade.primaryCta}`}>SHOP NEW ARRIVALS <span>→</span></a>
         </div>
         <div className={styles.featuredGrid}>
@@ -170,7 +190,7 @@ export default async function NightmareMerchPage() {
         <div><strong>ICONIC</strong><p>Live entertainment turned into collectible culture.</p></div>
         <div><b>SHOP</b><a href="#featured">NEW ARRIVALS</a><a href="#collections">ALL COLLECTIONS</a><Link href="/tampa">EVENT</Link></div>
         <div><b>STORE</b><span>14 COLLECTIONS</span><span>140 PRODUCT SKUS</span><span>TAMPA, FLORIDA</span></div>
-        <div><b>STATUS</b><span>{catalog.source === "supabase" ? "LIVE CATALOG" : "CATALOG FALLBACK"}</span><span>ARTWORK LOADING AS CREATED</span></div>
+        <div><b>ART STATUS</b><span>21 SAVAGE · 10 FINISHED DESIGNS</span><span>OTHER COLLECTIONS LOAD AS COMPLETED</span></div>
       </footer>
     </main>
   );
