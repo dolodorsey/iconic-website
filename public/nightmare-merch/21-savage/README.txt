@@ -1,0 +1,1 @@
+Finished 21 Savage Nightmare on Channelside merch artwork is served from a sprite asset in this folder. Product routes map designs 01–10 to the corresponding sprite cell.
