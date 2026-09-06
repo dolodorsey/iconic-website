@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 import styles from "./merch.module.css";
 import upgrade from "./merch-upgrade.module.css";
+import final from "./merch-final.module.css";
 
 const BAG_KEY = "iconic-nightmare-bag";
 const BAG_EVENT = "iconic-nightmare-bag-change";
@@ -66,7 +67,7 @@ export function ProductGallery({
 
   if (!artwork) {
     return (
-      <div className={`${styles.detailFrame} ${upgrade.detailFrame} ${upgrade.galleryFallback}`}>
+      <div className={`${styles.detailFrame} ${upgrade.detailFrame} ${final.galleryFallback}`}>
         <span className={styles.detailNumber}>{number}</span>
         <div className={styles.detailTee}><span>{collectionName}</span><b>NIGHTMARE<br/>ON CHANNELSIDE</b><em>{number}</em></div>
         <div className={styles.artworkNotice}>COMING SOON · FINAL ART IN PRODUCTION</div>
@@ -75,21 +76,21 @@ export function ProductGallery({
   }
 
   return (
-    <div className={upgrade.galleryShell}>
-      <div className={upgrade.galleryViewport} style={artVars} aria-label={artwork.label}>
-        {view === "front" && <div className={`${upgrade.finishedArtwork} ${upgrade.galleryFront}`} />}
-        {view === "detail" && <div className={`${upgrade.finishedArtwork} ${upgrade.galleryDetail}`} />}
+    <div className={final.galleryShell}>
+      <div className={final.galleryViewport} style={artVars} aria-label={artwork.label}>
+        {view === "front" && <div className={`${final.finishedArtwork} ${final.galleryFront}`} />}
+        {view === "detail" && <div className={`${final.finishedArtwork} ${final.galleryDetail}`} />}
         {view === "back" && (
-          <div className={upgrade.backMockup}>
+          <div className={final.backMockup}>
             <span>NIGHTMARE</span><b>ON CHANNELSIDE</b><em>{collectionName}</em><small>BACK GARMENT PREVIEW</small>
           </div>
         )}
-        <span className={upgrade.galleryNumber}>{number}</span>
+        <span className={final.galleryNumber}>{number}</span>
       </div>
-      <div className={upgrade.galleryTabs} role="tablist" aria-label="Product views">
-        <button type="button" onClick={() => setView("front")} className={view === "front" ? upgrade.galleryTabActive : ""}>FRONT</button>
-        <button type="button" onClick={() => setView("detail")} className={view === "detail" ? upgrade.galleryTabActive : ""}>DETAIL</button>
-        <button type="button" onClick={() => setView("back")} className={view === "back" ? upgrade.galleryTabActive : ""}>BACK</button>
+      <div className={final.galleryTabs} role="tablist" aria-label="Product views">
+        <button type="button" onClick={() => setView("front")} className={view === "front" ? final.galleryTabActive : ""}>FRONT</button>
+        <button type="button" onClick={() => setView("detail")} className={view === "detail" ? final.galleryTabActive : ""}>DETAIL</button>
+        <button type="button" onClick={() => setView("back")} className={view === "back" ? final.galleryTabActive : ""}>BACK</button>
       </div>
     </div>
   );
