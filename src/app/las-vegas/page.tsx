@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button, Calendar, Hero, InfoGrid, Section, Shell } from "../_components/IconicPage";
+import { Button, Calendar, Hero, InfoGrid, Section, Shell, drive } from "../_components/IconicPage";
 
 export const metadata: Metadata = {
   title: "ICONIC Las Vegas — 2027 Four-Event Program",
@@ -14,7 +14,7 @@ const vegas=[
 ];
 
 export default function LasVegasPage(){return <Shell>
-  <Hero eyebrow="ICONIC · NATIONAL CIRCUIT · MARKET 03" title="LAS VEGAS." sub="Four 2027 planning holds positioned on high-intent leisure weekends. Each date remains a distinct ICONIC property with its own venue, talent, creative direction and conversion funnel." accent="#a855f7">
+  <Hero visual={drive("1RnHCTmytNkYt2V2Fu938_a4bRwXt1E0q")} visualNote="MARKET CONCEPT VISUAL · VENUE + TALENT TBD" eyebrow="ICONIC · NATIONAL CIRCUIT · LAS VEGAS" title="LAS VEGAS. BUILT TO FEEL INEVITABLE." sub="Four 2027 planning holds positioned on high-intent leisure weekends. Each date remains a distinct ICONIC property with its own venue, talent, creative direction and conversion funnel.">
     <Button href="#calendar">2027 Holds</Button><Button href="/" ghost>ICONIC Home</Button>
   </Hero>
   <Section eyebrow="Las Vegas Program" title="Four events. Built around the weekends Vegas already wins.">

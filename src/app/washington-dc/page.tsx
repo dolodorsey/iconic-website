@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button, Calendar, Hero, InfoGrid, Section, Shell } from "../_components/IconicPage";
+import { Button, Calendar, Hero, InfoGrid, Section, Shell, drive } from "../_components/IconicPage";
 
 export const metadata: Metadata = {
   title: "ICONIC Washington DC — 2027 Four-Event Program",
@@ -14,7 +14,7 @@ const dc=[
 ];
 
 export default function WashingtonDCPage(){return <Shell>
-  <Hero eyebrow="ICONIC · NATIONAL CIRCUIT · MARKET 04" title="WASHINGTON DC." sub="Four 2027 planning holds for the DMV. The cadence creates a spring opening, a Juneteenth tentpole, a late-summer return and a strong fall close — each with its own event identity and local demand strategy." accent="#5b8cff">
+  <Hero visual={drive("1_Ks8CqO1RVSmLf7m644guTcVSkXcqnyt")} visualNote="MARKET CONCEPT VISUAL · VENUE + TALENT TBD" eyebrow="ICONIC · NATIONAL CIRCUIT · WASHINGTON DC" title="THE DMV GETS ITS OWN ICONIC LANGUAGE." sub="Four 2027 planning holds for the DMV. The cadence creates a spring opening, a Juneteenth tentpole, a late-summer return and a strong fall close—each with its own event identity and local demand strategy.">
     <Button href="#calendar">2027 Holds</Button><Button href="/" ghost>ICONIC Home</Button>
   </Hero>
   <Section eyebrow="Washington DC Program" title="Four dates. One deliberate DMV footprint.">

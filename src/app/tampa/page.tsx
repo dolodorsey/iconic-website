@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button, Calendar, Hero, InfoGrid, Section, Shell } from "../_components/IconicPage";
+import { Button, Calendar, Hero, InfoGrid, Section, Shell, drive } from "../_components/IconicPage";
 
 export const metadata: Metadata = {
   title: "ICONIC Tampa — 2027 Four-Event Program",
@@ -14,7 +14,7 @@ const tampa=[
 ];
 
 export default function TampaPage(){return <Shell>
-  <Hero eyebrow="ICONIC · NATIONAL CIRCUIT · MARKET 05" title="TAMPA." sub="Four 2027 planning holds distributed across the full year so ICONIC can build a real Tampa Bay audience instead of appearing once and disappearing. Each date remains its own event property with dedicated talent, venue and funnel." accent="#ff6d67">
+  <Hero visual={drive("1KqgHvJA4IdolRHTM5AOJ3ARpd2ViIVvN")} visualNote="MARKET CONCEPT VISUAL · VENUE + TALENT TBD" eyebrow="ICONIC · NATIONAL CIRCUIT · TAMPA" title="TAMPA BECOMES A REPEAT MARKET." sub="Four 2027 planning holds distributed across the full year so ICONIC can build a real Tampa Bay audience instead of appearing once and disappearing. Each date remains its own event property with dedicated talent, venue and funnel.">
     <Button href="/tampa/nightmare-on-channelside/merch">Nightmare Merch</Button><Button href="#calendar" ghost>2027 Holds</Button><Button href="/" ghost>ICONIC Home</Button>
   </Hero>
   <Section eyebrow="Tampa Program" title="Four events. Four chances to compound the market.">
@@ -25,7 +25,7 @@ export default function TampaPage(){return <Shell>
       {label:"Brand Architecture",value:"Separate Properties",body:"Every event maintains its own identity, creative direction and conversion path."},
     ]}/>
   </Section>
-  <Section eyebrow="Nightmare on Channelside" title="Official Halloween merch is now its own ICONIC experience." dark>
+  <Section eyebrow="Nightmare on Channelside" title="Official Halloween merch is its own ICONIC experience." dark>
     <InfoGrid items={[
       {label:"Storefront",value:"14 Collections",body:"Artist, event, Tampa and culture collections remain completely separated."},
       {label:"Merch System",value:"140 Slots",body:"Ten dedicated graphic-shirt product routes are prebuilt for every collection."},

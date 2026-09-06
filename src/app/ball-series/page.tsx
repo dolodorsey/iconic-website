@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button, Calendar, Hero, InfoGrid, Section, Shell } from "../_components/IconicPage";
+import { Button, Calendar, Hero, InfoGrid, Section, Shell, VisualBanner, drive } from "../_components/IconicPage";
 
 export const metadata: Metadata = {
   title: "The Ball Series — ICONIC | Southlake Arena",
@@ -16,7 +16,7 @@ const balls=[
 ];
 
 export default function BallSeriesPage(){return <Shell>
-  <Hero eyebrow="ICONIC · SOUTHLAKE ARENA" title="THE BALL SERIES." sub="Six distinct event properties. One arena home. The Ball Series turns formalwear, culture, nightlife and seasonal tentpoles into a recurring Southlake Arena franchise." accent="#b897ff">
+  <Hero visual={drive("12l451pQV2i-ou9RgE1nS21JlFAylyGeY")} visualPosition="center center" eyebrow="ICONIC · THE BALL SERIES" title="SIX NIGHTS. SIX WORLDS." sub="The Ball Series turns formalwear, culture, nightlife and seasonal tentpoles into a recurring Southlake Arena franchise. Every Ball has its own identity while the season compounds audience and demand.">
     <Button href="#calendar">View Season</Button><Button href="/southlake-arena" ghost>Southlake Hub</Button>
   </Hero>
   <Section eyebrow="The Franchise" title="Every Ball keeps its own identity.">
@@ -30,7 +30,10 @@ export default function BallSeriesPage(){return <Shell>
   <Section eyebrow="2026–2027 · Southlake Arena" title="Six reasons to dress for the room." dark>
     <div id="calendar" style={{maxWidth:1050}}><Calendar rows={balls} status="THE BALL SERIES · SOUTHLAKE ARENA"/></div>
   </Section>
-  <Section eyebrow="Commercial Architecture" title="Designed to compound attendance across the season.">
+  <Section eyebrow="Champagne Ball" title="The season should look as premium as it feels.">
+    <VisualBanner src={drive("1C9nszVwleMjAAe8mfavdvT2fb4HyoLd2")} eyebrow="JAN 02 · SOUTHLAKE ARENA" title="CHAMPAGNE BALL" height={620}/>
+  </Section>
+  <Section eyebrow="Commercial Architecture" title="Designed to compound attendance across the season." dark>
     <InfoGrid items={[
       {label:"Tickets",value:"Event-Specific",body:"Every Ball sells independently with its own ticket ladder and urgency cycle."},
       {label:"VIP",value:"Premium Inventory",body:"Tables, reserved inventory and hospitality packages increase yield per attendee."},
