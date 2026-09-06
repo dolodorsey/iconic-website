@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import styles from "./merch.module.css";
 import upgrade from "./merch-upgrade.module.css";
+import final from "./merch-final.module.css";
 import { formatPrice, getMerchCatalog, type CatalogCollection, type CatalogProduct } from "./catalog";
 import { getFinishedSpriteArtwork } from "./artwork-sprite";
 import { BagIndicator } from "./shop-client";
@@ -67,11 +68,11 @@ function ProductCard({ product, collection }: { product: CatalogProduct; collect
       className={`${styles.dropCard} ${upgrade.dropCard}`}
       style={vars}
     >
-      <div className={`${styles.productVisual} ${upgrade.productVisual} ${hasArtwork ? upgrade.productVisualLive : ""}`}>
+      <div className={`${styles.productVisual} ${upgrade.productVisual} ${hasArtwork ? final.productVisualLive : ""}`}>
         {product.primary_image_url ? (
-          <img src={product.primary_image_url} alt={product.title} className={upgrade.catalogArtwork} />
+          <img src={product.primary_image_url} alt={product.title} className={final.catalogArtwork} />
         ) : localArtwork ? (
-          <div className={upgrade.finishedArtwork} style={artVars} aria-label={localArtwork.label} />
+          <div className={final.finishedArtwork} style={artVars} aria-label={localArtwork.label} />
         ) : (
           <div className={styles.teeShape}>
             <span>{collection?.name || "NIGHTMARE"}</span>
@@ -112,11 +113,11 @@ export default async function NightmareMerchPage() {
         </div>
       </div>
 
-      <section className={upgrade.heroStage}>
-        <div className={upgrade.heroVisual} aria-label="Nightmare on Channelside Halloween visual world">
+      <section className={`${upgrade.heroStage} ${final.heroStageFinal}`}>
+        <div className={`${upgrade.heroVisual} ${final.heroVisualFinal}`} aria-label="Nightmare on Channelside Halloween visual world">
           <span className={upgrade.heroGlow} aria-hidden="true" />
         </div>
-        <div className={upgrade.heroCommand}>
+        <div className={`${upgrade.heroCommand} ${final.heroCommandFinal}`}>
           <span className={upgrade.eyebrow}>ICONIC PRESENTS / TAMPA</span>
           <h1><b>NIGHTMARE</b><em>ON CHANNELSIDE</em></h1>
           <h2>HALLOWEEN 2027</h2>
@@ -136,7 +137,7 @@ export default async function NightmareMerchPage() {
           <div><span>BROWSE THE NIGHTMARE</span><h2>SHOP BY COLLECTION</h2></div>
           <p>Every artist, Tampa, the full lineup and Halloween culture keep their own identity.</p>
         </div>
-        <div className={`${styles.miniGrid} ${upgrade.miniGrid}`}>
+        <div className={`${styles.miniGrid} ${upgrade.miniGrid} ${final.miniGridFinal}`}>
           {catalog.collections.map((collection) => <CollectionTile key={collection.slug} collection={collection} compact />)}
         </div>
       </section>
