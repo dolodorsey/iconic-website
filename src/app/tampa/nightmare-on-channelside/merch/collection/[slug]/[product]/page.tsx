@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import styles from "../../../merch.module.css";
 import upgrade from "../../../merch-upgrade.module.css";
+import final from "../../../merch-final.module.css";
 import { collections as fallbackCollections, getCollection as getFallbackCollection, getProductSlots } from "../../../merch-data";
 import { formatPrice, getMerchCatalog } from "../../../catalog";
 import { getFinishedSpriteArtwork } from "../../../artwork-sprite";
@@ -54,7 +55,7 @@ export default async function ProductPage({ params }: Props) {
       <div className={`${styles.eventTicker} ${upgrade.eventTicker}`}><div className={styles.eventTickerTrack}><span>NIGHTMARE ON CHANNELSIDE · {collection.name} · DROP {number}</span><span>NIGHTMARE ON CHANNELSIDE · {collection.name} · DROP {number}</span></div></div>
 
       <section className={styles.productDetailNew}>
-        <div className={`${styles.productDetailVisual} ${upgrade.productDetailVisual} ${upgrade.productDetailVisualTight}`}>
+        <div className={`${styles.productDetailVisual} ${upgrade.productDetailVisual} ${final.productDetailVisualTight}`}>
           <ProductGallery artwork={artwork} collectionName={collection.name} designNumber={product.design_number} />
         </div>
 
@@ -65,7 +66,7 @@ export default async function ProductPage({ params }: Props) {
           <div className={styles.detailPrice}>{formatPrice(product.price_cents)}</div>
           <p>{artwork ? `Finished artwork from the ${collection.name} Nightmare on Channelside capsule. Built as a collectible concert piece with the full visual world carried into the product experience.` : product.description}</p>
 
-          <div className={upgrade.dropCounter}>
+          <div className={final.dropCounter}>
             <div><span>CAPSULE COUNTER</span><b>{number} / 10</b></div>
             <div><span>ART STATUS</span><b>{artwork ? "FINISHED" : "IN PRODUCTION"}</b></div>
             <div><span>RUN</span><b>LIMITED</b></div>
@@ -79,7 +80,7 @@ export default async function ProductPage({ params }: Props) {
             <div className={styles.dropLocked}><strong>ARTWORK IN PRODUCTION</strong><span>This SKU is built and ready. Sales unlock when the finished merch graphic is loaded.</span></div>
           )}
 
-          <div className={upgrade.storyBlock}>
+          <div className={final.storyBlock}>
             <span>THE PIECE</span>
             <p>Designed to feel like something collected from the night—not a generic event shirt. Horror atmosphere, Tampa energy and the collection’s own identity stay intact from the website to the garment.</p>
           </div>
