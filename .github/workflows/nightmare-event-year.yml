@@ -1,0 +1,49 @@
+name: Nightmare Event-Year Integrity
+
+on:
+  pull_request:
+    paths:
+      - 'src/app/tampa/nightmare-on-channelside/**'
+      - '.github/workflows/nightmare-event-year.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/app/tampa/nightmare-on-channelside/**'
+      - '.github/workflows/nightmare-event-year.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify Nightmare 2026 integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='src/app/tampa/nightmare-on-channelside'
+
+          if grep -R --line-number --fixed-strings 'HALLOWEEN 2027' "$ROOT"; then
+            echo 'Nightmare customer-facing event year drifted to 2027.'
+            exit 1
+          fi
+
+          grep -q 'year: 2026' "$ROOT/event-config.ts"
+          grep -q 'October 31, 2026' "$ROOT/page.tsx"
+          grep -q 'NIGHTMARE_EVENT.year' "$ROOT/merch/page.tsx"
+          grep -q 'NIGHTMARE_EVENT.year' "$ROOT/merch/collection/[slug]/page.tsx"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Build ICONIC release candidate
+        run: npm run build
