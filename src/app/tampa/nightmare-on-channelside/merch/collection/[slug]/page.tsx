@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { NIGHTMARE_EVENT } from "../../../event-config";
 import styles from "../../merch.module.css";
 import upgrade from "../../merch-upgrade.module.css";
 import final from "../../merch-final.module.css";
@@ -46,7 +47,7 @@ export default async function CollectionPage({ params }: Props) {
         <nav className={styles.desktopNav}><Link href="/tampa/nightmare-on-channelside/merch">MERCH HOME</Link><Link href="/tampa">EVENTS</Link><a href="#products">DROP</a></nav>
         <div className={styles.headerTools}><BagIndicator /></div>
       </header>
-      <div className={`${styles.eventTicker} ${upgrade.eventTicker}`}><div className={styles.eventTickerTrack}><span>NIGHTMARE ON CHANNELSIDE · {collection.name} · HALLOWEEN 2027 · TAMPA, FL</span><span>NIGHTMARE ON CHANNELSIDE · {collection.name} · HALLOWEEN 2027 · TAMPA, FL</span></div></div>
+      <div className={`${styles.eventTicker} ${upgrade.eventTicker}`}><div className={styles.eventTickerTrack}><span>NIGHTMARE ON CHANNELSIDE · {collection.name} · HALLOWEEN {NIGHTMARE_EVENT.year} · TAMPA, FL</span><span>NIGHTMARE ON CHANNELSIDE · {collection.name} · HALLOWEEN {NIGHTMARE_EVENT.year} · TAMPA, FL</span></div></div>
 
       <section className={styles.collectionHeroNew}>
         <div className={`${styles.collectionPosterLarge} ${upgrade.collectionPosterLarge}`}>

@@ -1,0 +1,56 @@
+name: Nightmare Event-Year Integrity
+
+on:
+  pull_request:
+    paths:
+      - 'src/app/tampa/nightmare-on-channelside/**'
+      - '.github/workflows/nightmare-event-year.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/app/tampa/nightmare-on-channelside/**'
+      - '.github/workflows/nightmare-event-year.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify Nightmare 2026 integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='src/app/tampa/nightmare-on-channelside'
+          MERCH_HOME="$ROOT/merch/page.tsx"
+          COLLECTION_PAGE="$ROOT/merch/collection/[slug]/page.tsx"
+
+          # The separate HALLOWEEN 2027 merchandise collection is intentional.
+          # Only event-year messaging in the 2026 Nightmare funnel is protected here.
+          if grep -q --fixed-strings '<h2>HALLOWEEN 2027</h2>' "$MERCH_HOME"; then
+            echo 'Nightmare merch hero drifted from the 2026 event year.'
+            exit 1
+          fi
+          if grep -q --fixed-strings 'HALLOWEEN 2027 · TAMPA, FL' "$MERCH_HOME" "$COLLECTION_PAGE"; then
+            echo 'Nightmare event ticker drifted from the 2026 event year.'
+            exit 1
+          fi
+
+          grep -q 'year: 2026' "$ROOT/event-config.ts"
+          grep -q 'October 31, 2026' "$ROOT/page.tsx"
+          grep -q 'HALLOWEEN {NIGHTMARE_EVENT.year}' "$MERCH_HOME"
+          grep -q 'HALLOWEEN {NIGHTMARE_EVENT.year}' "$COLLECTION_PAGE"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Build ICONIC release candidate
+        run: npm run build
