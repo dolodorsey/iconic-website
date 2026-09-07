@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import Link from "next/link";
+import { NIGHTMARE_EVENT } from "../event-config";
 import styles from "./merch.module.css";
 import upgrade from "./merch-upgrade.module.css";
 import final from "./merch-final.module.css";
@@ -109,7 +110,7 @@ export default async function NightmareMerchPage() {
 
       <div className={`${styles.eventTicker} ${upgrade.eventTicker}`}>
         <div className={styles.eventTickerTrack}>
-          {ticker.map((collection, index) => <span key={`${collection.slug}-${index}`}>NIGHTMARE ON CHANNELSIDE · HALLOWEEN 2027 · TAMPA, FL · {collection.name}</span>)}
+          {ticker.map((collection, index) => <span key={`${collection.slug}-${index}`}>NIGHTMARE ON CHANNELSIDE · HALLOWEEN {NIGHTMARE_EVENT.year} · TAMPA, FL · {collection.name}</span>)}
         </div>
       </div>
 
@@ -120,7 +121,7 @@ export default async function NightmareMerchPage() {
         <div className={`${upgrade.heroCommand} ${final.heroCommandFinal}`}>
           <span className={upgrade.eyebrow}>ICONIC PRESENTS / TAMPA</span>
           <h1><b>NIGHTMARE</b><em>ON CHANNELSIDE</em></h1>
-          <h2>HALLOWEEN 2027</h2>
+          <h2>HALLOWEEN {NIGHTMARE_EVENT.year}</h2>
           <p>A limited merch universe built like the night itself: loud, dark, collectible and impossible to mistake for anybody else.</p>
           <div className={upgrade.heroActions}>
             <a href="#featured" className={`${styles.primaryCta} ${upgrade.primaryCta}`}>SHOP THE DROP <span>→</span></a>
