@@ -2,7 +2,7 @@ const DISCOVERY_BASE = "https://app.ticketmaster.com/discovery/v2";
 const PARTNER_PROD_BASE = "https://app.ticketmaster.com/partners/v1";
 const PARTNER_PREPROD_BASE = "https://app.ticketmaster.com/partners-preprod/v1";
 
-const CORE_EVENT_IDS = new Set(["0D006514C6E3B429"]);
+const CORE_EVENT_IDS = ["0D006514C6E3B429"] as const;
 
 function configuredEventIds() {
   const ids = (process.env.ICONIC_TICKETMASTER_ALLOWED_EVENT_IDS ?? "")
