@@ -30,6 +30,7 @@ jobs:
           if (p.dependencies?.react !== '19.2.8') fail(`react must be exactly 19.2.8; found ${p.dependencies?.react}`);
           if (p.dependencies?.['react-dom'] !== '19.2.8') fail(`react-dom must be exactly 19.2.8; found ${p.dependencies?.['react-dom']}`);
           if (p.dependencies?.sharp !== '0.35.4') fail(`sharp must be exactly 0.35.4; found ${p.dependencies?.sharp}`);
+          if (p.overrides?.postcss !== '8.5.28') fail(`postcss override must be exactly 8.5.28; found ${p.overrides?.postcss}`);
           NODE
 
       - name: Install dependencies
