@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./mobile-polish.css";
 
-const SITE_URL = "https://iconic-website-ten.vercel.app";
+const SITE_URL = "https://iconic-atl.com";
 
 export const viewport: Viewport = {
   themeColor: "#050507",
@@ -18,7 +18,6 @@ export const metadata: Metadata = {
   description: "ICONIC is the live entertainment platform behind headline concerts, recurring series and arena-scale cultural events in Atlanta, New York and Las Vegas.",
   applicationName: "ICONIC",
   keywords: ["ICONIC", "concerts", "festivals", "arena events", "Atlanta concerts", "New York concerts", "Resorts World", "Las Vegas entertainment", "GROWN-ISH", "Soul Session", "ENCORE", "Funny Business", "BRAVO", "Nightmare on Channelside"],
-  alternates: { canonical: "/" },
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
