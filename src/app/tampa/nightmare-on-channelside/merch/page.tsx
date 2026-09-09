@@ -108,7 +108,7 @@ export default async function NightmareMerchPage() {
 
       <section className={final.videoHero} aria-label="Nightmare on Channelside animated campaign hero">
         <img src={HERO_ANIMATION} alt="Nightmare on Channelside animated campaign" className={final.heroAnimationFallback} />
-        <video className={final.heroVideo} autoPlay muted loop playsInline preload="metadata" poster={CAMPAIGN_SCENES[9]}>
+        <video className={final.heroVideo} autoPlay muted loop playsInline preload="metadata">
           <source src={HERO_VIDEO} type="video/mp4" />
         </video>
       </section>
