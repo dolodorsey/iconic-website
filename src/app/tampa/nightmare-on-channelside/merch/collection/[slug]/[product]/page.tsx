@@ -10,7 +10,8 @@ import { formatPrice, getMerchCatalog } from "../../../catalog";
 import { getFinishedSpriteArtwork } from "../../../artwork-sprite";
 import { AddToBag, BagIndicator, ProductGallery } from "../../../shop-client";
 
-type Props = { params: { slug: string; product: string } };
+type RouteParams = { slug: string; product: string };
+type Props = { params: Promise<RouteParams> };
 const spritePositions = ["0% 0%","100% 0%","0% 25%","100% 25%","0% 50%","100% 50%","0% 75%","100% 75%","0% 100%","100% 100%"];
 
 export function generateStaticParams() {
@@ -19,20 +20,22 @@ export function generateStaticParams() {
   );
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const collection = getFallbackCollection(params.slug);
-  const product = collection ? getProductSlots(collection).find((item) => item.id === params.product) : undefined;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug, product: productId } = await params;
+  const collection = getFallbackCollection(slug);
+  const product = collection ? getProductSlots(collection).find((item) => item.id === productId) : undefined;
   if (!collection || !product) return {};
   return {
     title: `${product.title} — Nightmare on Channelside`,
-    alternates: { canonical: `/tampa/nightmare-on-channelside/merch/collection/${params.slug}/${params.product}` },
+    alternates: { canonical: `/tampa/nightmare-on-channelside/merch/collection/${slug}/${productId}` },
   };
 }
 
 export default async function ProductPage({ params }: Props) {
+  const { slug, product: productId } = await params;
   const catalog = await getMerchCatalog();
-  const collection = catalog.collections.find((item) => item.slug === params.slug);
-  const product = catalog.products.find((item) => item.sku === params.product && item.collection_slug === params.slug);
+  const collection = catalog.collections.find((item) => item.slug === slug);
+  const product = catalog.products.find((item) => item.sku === productId && item.collection_slug === slug);
   if (!collection || !product) notFound();
 
   const artPos = spritePositions[(Math.max(product.design_number, 1) - 1) % spritePositions.length];
