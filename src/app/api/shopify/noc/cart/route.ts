@@ -13,8 +13,9 @@ type CartBody = {
   quantity?: number;
 };
 
-function readCart(): StoredLine[] {
-  const raw = cookies().get(CART_COOKIE)?.value;
+async function readCart(): Promise<StoredLine[]> {
+  const cookieStore = await cookies();
+  const raw = cookieStore.get(CART_COOKIE)?.value;
   if (!raw) return [];
   try {
     const parsed = JSON.parse(decodeURIComponent(raw)) as StoredLine[];
@@ -28,8 +29,9 @@ function readCart(): StoredLine[] {
   }
 }
 
-function writeCart(lines: StoredLine[]) {
-  cookies().set(CART_COOKIE, encodeURIComponent(JSON.stringify(lines.slice(0, MAX_LINES))), {
+async function writeCart(lines: StoredLine[]) {
+  const cookieStore = await cookies();
+  cookieStore.set(CART_COOKIE, encodeURIComponent(JSON.stringify(lines.slice(0, MAX_LINES))), {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -100,9 +102,9 @@ function json(data: unknown, status = 200) {
 }
 
 export async function GET() {
-  const lines = readCart();
+  const lines = await readCart();
   const payload = await cartPayload(lines);
-  if (payload.items.length !== lines.length) writeCart(payload.items.map((item) => ({ variantId: item.variantId, quantity: item.quantity })));
+  if (payload.items.length !== lines.length) await writeCart(payload.items.map((item) => ({ variantId: item.variantId, quantity: item.quantity })));
   return json(payload);
 }
 
@@ -114,11 +116,11 @@ export async function POST(request: Request) {
   const variant = index.get(variantId);
   if (!variant || !variant.available) return json({ error: "This NOC variant is not available." }, 400);
 
-  const lines = readCart();
+  const lines = await readCart();
   const existing = lines.find((line) => line.variantId === variantId);
   if (existing) existing.quantity = Math.min(existing.quantity + quantity, MAX_QUANTITY);
   else if (lines.length < MAX_LINES) lines.push({ variantId, quantity });
-  writeCart(lines);
+  await writeCart(lines);
   return json(await cartPayload(lines));
 }
 
@@ -129,17 +131,17 @@ export async function PATCH(request: Request) {
   const { index } = await getVariantIndex();
   if (!index.has(variantId)) return json({ error: "This variant is outside the NOC catalog." }, 400);
 
-  let lines = readCart();
+  let lines = await readCart();
   if (quantity === 0) lines = lines.filter((line) => line.variantId !== variantId);
   else lines = lines.map((line) => line.variantId === variantId ? { ...line, quantity } : line);
-  writeCart(lines);
+  await writeCart(lines);
   return json(await cartPayload(lines));
 }
 
 export async function DELETE(request: Request) {
   const body = (await request.json().catch(() => ({}))) as CartBody;
   const variantId = String(body.variantId || "");
-  const lines = readCart().filter((line) => line.variantId !== variantId);
-  writeCart(lines);
+  const lines = (await readCart()).filter((line) => line.variantId !== variantId);
+  await writeCart(lines);
   return json(await cartPayload(lines));
 }
