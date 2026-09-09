@@ -35,8 +35,31 @@ jobs:
       - name: Install dependencies
         run: npm install --no-fund
 
-      - name: Production dependency audit
-        run: npm audit --omit=dev --audit-level=high
+      - name: Capture production dependency audit
+        shell: bash
+        run: |
+          set +e
+          npm audit --omit=dev --json > npm-audit.json
+          echo "audit_exit=$?" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Upload production audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: iconic-production-audit
+          path: npm-audit.json
+          if-no-files-found: error
+
+      - name: Enforce production dependency audit
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const audit = JSON.parse(fs.readFileSync('npm-audit.json','utf8'));
+          const v = audit.metadata?.vulnerabilities || {};
+          console.log(`production vulnerabilities: critical=${v.critical||0}, high=${v.high||0}, moderate=${v.moderate||0}, low=${v.low||0}`);
+          if ((v.critical || 0) > 0 || (v.high || 0) > 0) process.exit(1);
+          NODE
 
       - name: TypeScript check
         run: npx tsc --noEmit
