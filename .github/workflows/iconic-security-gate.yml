@@ -1,0 +1,78 @@
+name: ICONIC Security Gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enforce patched deterministic runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const p = require('./package.json');
+          const lock = require('./package-lock.json');
+          const packages = lock.packages || {};
+          const fail = (m) => { console.error(m); process.exit(1); };
+          const expected = {
+            next: '15.5.24',
+            react: '19.2.8',
+            'react-dom': '19.2.8',
+            sharp: '0.35.4',
+          };
+          for (const [name, version] of Object.entries(expected)) {
+            if (p.dependencies?.[name] !== version) fail(`${name} must be exactly ${version}; found ${p.dependencies?.[name]}`);
+            if (packages[`node_modules/${name}`]?.version !== version) fail(`lockfile ${name} must resolve exactly ${version}; found ${packages[`node_modules/${name}`]?.version}`);
+          }
+          if (p.overrides?.postcss !== '8.5.28') fail(`postcss override must be exactly 8.5.28; found ${p.overrides?.postcss}`);
+          if (packages['node_modules/postcss']?.version !== '8.5.28') fail(`lockfile postcss must resolve exactly 8.5.28; found ${packages['node_modules/postcss']?.version}`);
+          NODE
+
+      - name: Deterministic install
+        run: npm ci --no-fund
+
+      - name: Capture production dependency audit
+        shell: bash
+        run: |
+          set +e
+          npm audit --omit=dev --json > npm-audit.json
+          echo "audit_exit=$?" >> "$GITHUB_ENV"
+          exit 0
+
+      - name: Upload production audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: iconic-production-audit
+          path: npm-audit.json
+          if-no-files-found: error
+
+      - name: Enforce production dependency audit
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const audit = JSON.parse(fs.readFileSync('npm-audit.json','utf8'));
+          const v = audit.metadata?.vulnerabilities || {};
+          console.log(`production vulnerabilities: critical=${v.critical||0}, high=${v.high||0}, moderate=${v.moderate||0}, low=${v.low||0}`);
+          if ((v.critical || 0) > 0 || (v.high || 0) > 0) process.exit(1);
+          NODE
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Production build
+        run: npm run build
