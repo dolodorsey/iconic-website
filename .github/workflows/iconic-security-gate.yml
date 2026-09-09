@@ -1,0 +1,44 @@
+name: ICONIC Security Gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Enforce patched maintenance-LTS floor
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const p = require('./package.json');
+          const fail = (m) => { console.error(m); process.exit(1); };
+          if (p.dependencies?.next !== '15.5.24') fail(`next must be exactly 15.5.24; found ${p.dependencies?.next}`);
+          if (p.dependencies?.react !== '19.2.8') fail(`react must be exactly 19.2.8; found ${p.dependencies?.react}`);
+          if (p.dependencies?.['react-dom'] !== '19.2.8') fail(`react-dom must be exactly 19.2.8; found ${p.dependencies?.['react-dom']}`);
+          NODE
+
+      - name: Install dependencies
+        run: npm install --no-fund
+
+      - name: Production dependency audit
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Production build
+        run: npm run build
