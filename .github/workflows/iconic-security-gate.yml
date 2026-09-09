@@ -19,29 +19,31 @@ jobs:
         with:
           node-version: 20
 
-      - name: Enforce patched maintenance-LTS floor
+      - name: Enforce patched deterministic runtime
         shell: bash
         run: |
           set -euo pipefail
           node <<'NODE'
           const p = require('./package.json');
+          const lock = require('./package-lock.json');
+          const packages = lock.packages || {};
           const fail = (m) => { console.error(m); process.exit(1); };
-          if (p.dependencies?.next !== '15.5.24') fail(`next must be exactly 15.5.24; found ${p.dependencies?.next}`);
-          if (p.dependencies?.react !== '19.2.8') fail(`react must be exactly 19.2.8; found ${p.dependencies?.react}`);
-          if (p.dependencies?.['react-dom'] !== '19.2.8') fail(`react-dom must be exactly 19.2.8; found ${p.dependencies?.['react-dom']}`);
-          if (p.dependencies?.sharp !== '0.35.4') fail(`sharp must be exactly 0.35.4; found ${p.dependencies?.sharp}`);
+          const expected = {
+            next: '15.5.24',
+            react: '19.2.8',
+            'react-dom': '19.2.8',
+            sharp: '0.35.4',
+          };
+          for (const [name, version] of Object.entries(expected)) {
+            if (p.dependencies?.[name] !== version) fail(`${name} must be exactly ${version}; found ${p.dependencies?.[name]}`);
+            if (packages[`node_modules/${name}`]?.version !== version) fail(`lockfile ${name} must resolve exactly ${version}; found ${packages[`node_modules/${name}`]?.version}`);
+          }
           if (p.overrides?.postcss !== '8.5.28') fail(`postcss override must be exactly 8.5.28; found ${p.overrides?.postcss}`);
+          if (packages['node_modules/postcss']?.version !== '8.5.28') fail(`lockfile postcss must resolve exactly 8.5.28; found ${packages['node_modules/postcss']?.version}`);
           NODE
 
-      - name: Install dependencies
-        run: npm install --no-fund
-
-      - name: Upload generated lockfile evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: iconic-package-lock
-          path: package-lock.json
-          if-no-files-found: error
+      - name: Deterministic install
+        run: npm ci --no-fund
 
       - name: Capture production dependency audit
         shell: bash
