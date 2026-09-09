@@ -1,3 +1,4 @@
+import { NIGHTMARE_EVENT } from "../event-config";
 import { collections as fallbackCollections, getProductSlots } from "./merch-data";
 
 export type CatalogCollection = {
@@ -40,7 +41,7 @@ const fallbackProducts: CatalogProduct[] = fallbackCollections.flatMap((collecti
     design_number: index + 1,
     price_cents: 4500,
     status: product.status,
-    description: `${collection.name} collectible tee from the ICONIC Nightmare on Channelside Halloween 2027 capsule.`,
+    description: `${collection.name} collectible tee from the ICONIC Nightmare on Channelside Halloween ${NIGHTMARE_EVENT.year} capsule.`,
     primary_image_url: null,
     secondary_image_url: null,
     featured: index === 0 && ["nightmare-on-channelside", "21-savage", "halloween-culture", "tampa"].includes(collection.slug),
