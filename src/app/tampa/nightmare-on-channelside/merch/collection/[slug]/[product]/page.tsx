@@ -5,28 +5,21 @@ import { notFound } from "next/navigation";
 import styles from "../../../merch.module.css";
 import upgrade from "../../../merch-upgrade.module.css";
 import final from "../../../merch-final.module.css";
-import { collections as fallbackCollections, getCollection as getFallbackCollection, getProductSlots } from "../../../merch-data";
 import { formatPrice, getMerchCatalog } from "../../../catalog";
-import { getFinishedSpriteArtwork } from "../../../artwork-sprite";
 import { AddToBag, BagIndicator, ProductGallery } from "../../../shop-client";
 
 type RouteParams = { slug: string; product: string };
 type Props = { params: Promise<RouteParams> };
 const spritePositions = ["0% 0%","100% 0%","0% 25%","100% 25%","0% 50%","100% 50%","0% 75%","100% 75%","0% 100%","100% 100%"];
 
-export function generateStaticParams() {
-  return fallbackCollections.flatMap((collection) =>
-    getProductSlots(collection).map((product) => ({ slug: collection.slug, product: product.id }))
-  );
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, product: productId } = await params;
-  const collection = getFallbackCollection(slug);
-  const product = collection ? getProductSlots(collection).find((item) => item.id === productId) : undefined;
-  if (!collection || !product) return {};
+  const catalog = await getMerchCatalog();
+  const product = catalog.products.find((item) => item.sku === productId && item.collection_slug === slug);
+  if (!product) return {};
   return {
     title: `${product.title} — Nightmare on Channelside`,
+    description: product.description || `Official Nightmare on Channelside ${product.product_type}.`,
     alternates: { canonical: `/tampa/nightmare-on-channelside/merch/collection/${slug}/${productId}` },
   };
 }
@@ -40,11 +33,7 @@ export default async function ProductPage({ params }: Props) {
 
   const artPos = spritePositions[(Math.max(product.design_number, 1) - 1) % spritePositions.length];
   const vars = { "--accent": collection.accent, "--secondary": collection.secondary, "--art-pos": artPos } as CSSProperties;
-  const localArtwork = getFinishedSpriteArtwork(product.collection_slug, product.design_number);
-  const artwork = product.primary_image_url
-    ? { url: product.primary_image_url, position: "center", label: product.title }
-    : localArtwork;
-  const canSell = Boolean(artwork) || product.status.toUpperCase() === "LIVE";
+  const canSell = product.variants.some((variant) => variant.available);
   const number = String(product.design_number).padStart(2,"0");
 
   return (
@@ -52,44 +41,44 @@ export default async function ProductPage({ params }: Props) {
       <div className={styles.noise} />
       <header className={`${styles.storeHeader} ${upgrade.storeHeader}`}>
         <Link href="/" className={`${styles.logo} ${upgrade.logo}`}>ICONIC</Link>
-        <nav className={styles.desktopNav}><Link href="/tampa/nightmare-on-channelside/merch">MERCH HOME</Link><Link href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}>COLLECTION</Link><Link href="/tampa">EVENT</Link></nav>
+        <nav className={styles.desktopNav}><Link href="/tampa/nightmare-on-channelside/merch">MERCH HOME</Link><Link href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}>COLLECTION</Link><Link href="/tampa/nightmare-on-channelside">EVENT</Link></nav>
         <div className={styles.headerTools}><BagIndicator /></div>
       </header>
       <div className={`${styles.eventTicker} ${upgrade.eventTicker}`}><div className={styles.eventTickerTrack}><span>NIGHTMARE ON CHANNELSIDE · {collection.name} · DROP {number}</span><span>NIGHTMARE ON CHANNELSIDE · {collection.name} · DROP {number}</span></div></div>
 
       <section className={styles.productDetailNew}>
         <div className={`${styles.productDetailVisual} ${upgrade.productDetailVisual} ${final.productDetailVisualTight}`}>
-          <ProductGallery artwork={artwork} collectionName={collection.name} designNumber={product.design_number} />
+          <ProductGallery images={product.images} title={product.title} />
         </div>
 
         <div className={`${styles.productDetailCopy} ${upgrade.productDetailCopy}`}>
           <Link className={styles.back} href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}>← BACK TO {collection.name}</Link>
-          <span className={styles.productKicker}>{collection.name} / {product.product_type} / DESIGN {number}</span>
+          <span className={styles.productKicker}>{collection.name} / {product.product_type} / DROP {number}</span>
           <h1>{product.title}</h1>
           <div className={styles.detailPrice}>{formatPrice(product.price_cents)}</div>
-          <p>{artwork ? `Finished artwork from the ${collection.name} Nightmare on Channelside capsule. Built as a collectible concert piece with the full visual world carried into the product experience.` : product.description}</p>
+          <p>{product.description || `Official ${collection.name} merchandise from the Nightmare on Channelside Halloween 2026 capsule.`}</p>
 
           <div className={final.dropCounter}>
-            <div><span>CAPSULE COUNTER</span><b>{number} / 10</b></div>
-            <div><span>ART STATUS</span><b>{artwork ? "FINISHED" : "IN PRODUCTION"}</b></div>
-            <div><span>RUN</span><b>LIMITED</b></div>
-            <small>Final unit quantities are set at production. This counter shows the design’s position inside the 10-piece collection, not fabricated stock.</small>
+            <div><span>DROP</span><b>{number}</b></div>
+            <div><span>CATALOG</span><b>SHOPIFY LIVE</b></div>
+            <div><span>STATUS</span><b>{canSell ? "AVAILABLE" : "SOLD OUT"}</b></div>
+            <small>Price, garment options and variant availability on this page come directly from the official NOC Shopify catalog.</small>
           </div>
 
           <div className={styles.detailRule}/>
           {canSell ? (
-            <AddToBag sku={product.sku} title={product.title} priceCents={product.price_cents} sizes={product.sizes} />
+            <AddToBag variants={product.variants} options={product.options} />
           ) : (
-            <div className={styles.dropLocked}><strong>ARTWORK IN PRODUCTION</strong><span>This SKU is built and ready. Sales unlock when the finished merch graphic is loaded.</span></div>
+            <div className={styles.dropLocked}><strong>SOLD OUT</strong><span>This product remains in the NOC archive, but no Shopify variant is currently available.</span></div>
           )}
 
           <div className={final.storyBlock}>
             <span>THE PIECE</span>
-            <p>Designed to feel like something collected from the night—not a generic event shirt. Horror atmosphere, Tampa energy and the collection’s own identity stay intact from the website to the garment.</p>
+            <p>Official Nightmare on Channelside merchandise connected directly to the event’s Shopify catalog. The product shown here is the same product and variant that enters Shopify checkout.</p>
           </div>
 
-          <div className={styles.productAssurances}><span>✦ PREMIUM HEAVYWEIGHT TEE</span><span>✦ LIMITED HALLOWEEN CAPSULE</span><span>✦ TAMPA / ICONIC</span></div>
-          <div className={styles.skuLine}>SKU / {product.sku.toUpperCase()}</div>
+          <div className={styles.productAssurances}><span>✦ OFFICIAL NOC PRODUCT</span><span>✦ LIVE SHOPIFY VARIANTS</span><span>✦ SECURE SHOPIFY CHECKOUT</span></div>
+          <div className={styles.skuLine}>SHOPIFY PRODUCT / {product.shopify_product_id}</div>
         </div>
       </section>
     </main>
