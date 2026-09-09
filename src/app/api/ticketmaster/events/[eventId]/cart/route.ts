@@ -17,7 +17,7 @@ export async function POST(
       return Response.json({ error: "reserve payload is required." }, { status: 400 });
     }
 
-    const cart = await reserveTicketmasterCart(params.eventId, body.reserve);
+    const cart = await reserveTicketmasterCart(params.eventId, body);
     return Response.json(cart, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     return ticketmasterErrorResponse(error);
