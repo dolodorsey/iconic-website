@@ -3,9 +3,19 @@ import Link from "next/link";
 import { C, InfoGrid, Section, Shell, drive } from "../../_components/IconicPage";
 import { EventActionCenter, EventTracker } from "../../_components/EventActionCenter";
 
+const EVENT_PATH = "/tampa/nightmare-on-channelside";
+const EVENT_DESCRIPTION = "Nightmare on Channelside at Benchmark International Arena in Tampa on Saturday, October 31, 2026.";
+
 export const metadata: Metadata = {
   title: "Nightmare on Channelside — Halloween 2026 | Tampa",
-  description: "Nightmare on Channelside at Benchmark International Arena in Tampa on Saturday, October 31, 2026.",
+  description: EVENT_DESCRIPTION,
+  alternates: { canonical: EVENT_PATH },
+  openGraph: {
+    title: "Nightmare on Channelside — Halloween 2026 | Tampa",
+    description: EVENT_DESCRIPTION,
+    url: EVENT_PATH,
+    type: "website",
+  },
 };
 
 const TICKETMASTER="https://www.ticketmaster.com/nightmare-on-channelside-tampa-10-31-2026/event/0D006514C6E3B429";
