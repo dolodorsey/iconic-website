@@ -159,53 +159,53 @@ async function readShopifyNocProducts(): Promise<ShopifyPublicProduct[]> {
 
 function normalizeProducts(products: ShopifyPublicProduct[]): CatalogProduct[] {
   const collectionCounts: Record<string, number> = {};
+  const normalized: CatalogProduct[] = [];
 
-  return products
-    .map((product) => {
-      const tags = normalizeTags(product.tags);
-      if (!tags.includes(SHOPIFY_NOC_TAG) || !tags.includes(SHOPIFY_BRAND_TAG) || !tags.includes(SHOPIFY_EVENT_TAG)) return null;
+  products.forEach((product) => {
+    const tags = normalizeTags(product.tags);
+    if (!tags.includes(SHOPIFY_NOC_TAG) || !tags.includes(SHOPIFY_BRAND_TAG) || !tags.includes(SHOPIFY_EVENT_TAG)) return;
 
-      const options = (product.options || []).map((option) => ({ name: option.name, values: option.values || [] }));
-      const rawOptions = product.options || [];
-      const variants = (product.variants || []).map<CatalogVariant>((variant) => ({
-        id: String(variant.id),
-        title: variant.title,
-        price_cents: priceToCents(variant.price),
-        available: variant.available !== false,
-        selected_options: selectedOptions(variant, rawOptions),
-      }));
-      if (!variants.length) return null;
+    const options = (product.options || []).map((option) => ({ name: option.name, values: option.values || [] }));
+    const rawOptions = product.options || [];
+    const variants = (product.variants || []).map<CatalogVariant>((variant) => ({
+      id: String(variant.id),
+      title: variant.title,
+      price_cents: priceToCents(variant.price),
+      available: variant.available !== false,
+      selected_options: selectedOptions(variant, rawOptions),
+    }));
+    if (!variants.length) return;
 
-      const collection_slug = getCollectionSlug(tags);
-      collectionCounts[collection_slug] = (collectionCounts[collection_slug] || 0) + 1;
-      const design_number = collectionCounts[collection_slug];
-      const images = (product.images || []).map((image) => image.src).filter(Boolean);
-      const price_cents = Math.min.apply(null, variants.map((variant) => variant.price_cents));
-      const sizeOption = options.find((option) => /size/i.test(option.name));
+    const collection_slug = getCollectionSlug(tags);
+    collectionCounts[collection_slug] = (collectionCounts[collection_slug] || 0) + 1;
+    const design_number = collectionCounts[collection_slug];
+    const images = (product.images || []).map((image) => image.src).filter(Boolean);
+    const price_cents = Math.min.apply(null, variants.map((variant) => variant.price_cents));
+    const sizeOption = options.find((option) => /size/i.test(option.name));
 
-      return {
-        sku: product.handle,
-        shopify_product_id: String(product.id),
-        collection_slug,
-        title: product.title,
-        product_type: product.product_type || "Merch",
-        design_number,
-        price_cents,
-        status: "LIVE",
-        description: stripHtml(product.body_html),
-        primary_image_url: images[0] || null,
-        secondary_image_url: images[1] || null,
-        images,
-        featured: false,
-        is_active: true,
-        sizes: sizeOption ? sizeOption.values : [],
-        tags,
-        options,
-        variants,
-      } satisfies CatalogProduct;
-    })
-    .filter((product): product is CatalogProduct => Boolean(product))
-    .map((product, index) => ({ ...product, featured: index < 8 }));
+    normalized.push({
+      sku: product.handle,
+      shopify_product_id: String(product.id),
+      collection_slug,
+      title: product.title,
+      product_type: product.product_type || "Merch",
+      design_number,
+      price_cents,
+      status: "LIVE",
+      description: stripHtml(product.body_html),
+      primary_image_url: images[0] || null,
+      secondary_image_url: images[1] || null,
+      images,
+      featured: false,
+      is_active: true,
+      sizes: sizeOption ? sizeOption.values : [],
+      tags,
+      options,
+      variants,
+    });
+  });
+
+  return normalized.map((product, index) => ({ ...product, featured: index < 8 }));
 }
 
 export async function getMerchCatalog() {
