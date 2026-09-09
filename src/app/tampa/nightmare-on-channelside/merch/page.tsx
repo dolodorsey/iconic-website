@@ -4,6 +4,7 @@ import Link from "next/link";
 import styles from "./merch.module.css";
 import upgrade from "./merch-upgrade.module.css";
 import final from "./merch-final.module.css";
+import home from "./merch-home-graphic.module.css";
 import { formatPrice, getMerchCatalog, type CatalogCollection, type CatalogProduct } from "./catalog";
 import { BagIndicator } from "./shop-client";
 
@@ -18,7 +19,6 @@ export const metadata: Metadata = {
   },
 };
 
-const HERO_VIDEO = "/api/media/drive/12QESmkNpPPwz6F8466NnwdGOP46ithQL";
 const CAMPAIGN_SCENES = [
   "/api/media/drive/1TYE4F9bsN5rv2Ji1X1uRYqpHduP8jVd7",
   "/api/media/drive/1kSAXAOq3ne3RlvNdpMzc5SF8axuTZSlA",
@@ -31,6 +31,9 @@ const CAMPAIGN_SCENES = [
   "/api/media/drive/1UmxvAvLp28OApwunma86ikWrlizqIEmm",
   "/api/media/drive/1qpLsJipcsQuw5dHFF3g_MrKa9fGh_hm3",
 ];
+
+const HOME_HERO = CAMPAIGN_SCENES[9];
+const FEATURE_SCENES = [CAMPAIGN_SCENES[4], CAMPAIGN_SCENES[6], CAMPAIGN_SCENES[7], CAMPAIGN_SCENES[8]];
 
 const collectionSceneIndex: Record<string, number> = {
   "21-savage": 4,
@@ -57,47 +60,21 @@ const collectionLanguage: Record<string, { title: string; line: string }> = {
 function CollectionTile({ collection }: { collection: CatalogCollection }) {
   const art = CAMPAIGN_SCENES[collectionSceneIndex[collection.slug] ?? 1];
   const language = collectionLanguage[collection.slug] || { title: collection.mood, line: collection.subtitle };
-  const vars = {
-    "--accent": collection.accent,
-    "--collection-art": `url(${art})`,
-  } as CSSProperties;
-  return (
-    <Link
-      href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}
-      className={final.worldCard}
-      style={vars}
-    >
-      <span className={final.worldArtist}>{collection.name}</span>
-      <div className={final.worldCopy}>
-        <strong>{language.title}</strong>
-        <span>{language.line}</span>
-        <em>ENTER WORLD →</em>
-      </div>
-    </Link>
-  );
+  const vars = { "--accent": collection.accent, "--collection-art": `url(${art})` } as CSSProperties;
+  return <Link href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`} className={final.worldCard} style={vars}>
+    <span className={final.worldArtist}>{collection.name}</span>
+    <div className={final.worldCopy}><strong>{language.title}</strong><span>{language.line}</span><em>ENTER WORLD →</em></div>
+  </Link>;
 }
 
 function ProductCard({ product, collection }: { product: CatalogProduct; collection?: CatalogCollection }) {
   const vars = { "--accent": collection?.accent || "#ff3528" } as CSSProperties;
-  return (
-    <Link
-      href={`/tampa/nightmare-on-channelside/merch/collection/${product.collection_slug}/${product.sku}`}
-      className={final.productCardCinematic}
-      style={vars}
-    >
-      <div className={final.productStageBlack}>
-        {product.primary_image_url ? (
-          <img src={product.primary_image_url} alt={product.title} className={final.productStageImage} />
-        ) : (
-          <div className={styles.teeShape}><span>{collection?.name || "NIGHTMARE"}</span><b>{String(product.design_number).padStart(2, "0")}</b></div>
-        )}
-      </div>
-      <div className={final.productCardMeta}>
-        <div><strong>{product.title}</strong><span>{product.product_type}</span></div>
-        <b>{formatPrice(product.price_cents)}</b>
-      </div>
-    </Link>
-  );
+  return <Link href={`/tampa/nightmare-on-channelside/merch/collection/${product.collection_slug}/${product.sku}`} className={final.productCardCinematic} style={vars}>
+    <div className={final.productStageBlack}>
+      {product.primary_image_url ? <img src={product.primary_image_url} alt={product.title} className={final.productStageImage} /> : <div className={styles.teeShape}><span>{collection?.name || "NIGHTMARE"}</span><b>{String(product.design_number).padStart(2, "0")}</b></div>}
+    </div>
+    <div className={final.productCardMeta}><div><strong>{product.title}</strong><span>{product.product_type}</span></div><b>{formatPrice(product.price_cents)}</b></div>
+  </Link>;
 }
 
 export default async function NightmareMerchPage() {
@@ -105,102 +82,55 @@ export default async function NightmareMerchPage() {
   const featured = catalog.products.filter((product) => product.featured).slice(0, 8);
   const collectionMap = new Map(catalog.collections.map((collection) => [collection.slug, collection]));
 
-  return (
-    <main className={`${styles.shell} ${upgrade.shell} ${final.cinematicShell}`}>
-      <div className={styles.noise} />
+  return <main className={`${styles.shell} ${upgrade.shell} ${final.cinematicShell}`}>
+    <div className={styles.noise} />
+    <header className={`${styles.storeHeader} ${upgrade.storeHeader} ${final.cleanHeader}`}>
+      <Link href="/" className={`${styles.logo} ${upgrade.logo}`}>ICONIC</Link>
+      <nav className={styles.desktopNav} aria-label="Store navigation"><a href="#featured">SHOP</a><a href="#collections">WORLDS</a><Link href="/tampa/nightmare-on-channelside">EVENT</Link><a href="#world">CAMPAIGN</a></nav>
+      <div className={styles.headerTools}><BagIndicator /></div>
+    </header>
 
-      <header className={`${styles.storeHeader} ${upgrade.storeHeader} ${final.cleanHeader}`}>
-        <Link href="/" className={`${styles.logo} ${upgrade.logo}`}>ICONIC</Link>
-        <nav className={styles.desktopNav} aria-label="Store navigation">
-          <a href="#featured">SHOP</a><a href="#collections">WORLDS</a><Link href="/tampa/nightmare-on-channelside">EVENT</Link><a href="#world">CAMPAIGN</a>
-        </nav>
-        <div className={styles.headerTools}><BagIndicator /></div>
-      </header>
+    <section className={home.graphicHero} aria-label="Nightmare on Channelside animated arena campaign hero">
+      <img src={HOME_HERO} alt="Nightmare on Channelside arena under the red moon" />
+      <div className={home.heroPulse} />
+    </section>
 
-      <section className={final.videoHero} aria-label="Nightmare on Channelside animated campaign hero">
-        <img src={CAMPAIGN_SCENES[0]} alt="Nightmare on Channelside campaign" className={final.heroAnimationFallback} />
-        <video className={final.heroVideo} autoPlay muted loop playsInline preload="metadata" poster={CAMPAIGN_SCENES[0]}>
-          <source src={HERO_VIDEO} type="video/mp4" />
-        </video>
+    <section className={final.centeredIntro}>
+      <span>NIGHTMARE ON CHANNELSIDE · HALLOWEEN 2026</span>
+      <h1>WEAR THE NIGHTMARE.</h1>
+      <p>Tampa after dark. Arena energy. Limited pieces built from the world of Nightmare on Channelside.</p>
+      <a href="#featured">ENTER THE DROP ↓</a>
+    </section>
+
+    {catalog.source === "unavailable" ? <section className={final.centeredUnavailable}><span>THE DROP IS TEMPORARILY OFFLINE</span><h2>THE NIGHTMARE IS RELOADING.</h2><p>The storefront is intentionally hiding stale inventory until the live catalog reconnects.</p></section> : <>
+      <section className={final.centeredSection} id="featured">
+        <div className={final.centeredSectionHead}><span>FROM THE NIGHT</span><h2>AFTER DARK PICKS.</h2><p>Artist issues, Tampa editions and event-only heat pulled straight from the Nightmare.</p></div>
+        <div className={final.cinematicProductGrid}>{featured.map((product) => <ProductCard key={product.shopify_product_id} product={product} collection={collectionMap.get(product.collection_slug)} />)}</div>
+        <div className={final.centeredAction}><a href="#collections">CHOOSE YOUR WORLD ↓</a></div>
       </section>
 
-      <section className={final.centeredIntro}>
-        <span>NIGHTMARE ON CHANNELSIDE · HALLOWEEN 2026</span>
-        <h1>WEAR THE NIGHTMARE.</h1>
-        <p>Tampa after dark. Arena energy. Limited pieces built from the world of Nightmare on Channelside.</p>
-        <a href="#featured">ENTER THE DROP ↓</a>
+      <section className={home.editorialStack} aria-label="Nightmare on Channelside campaign features">
+        <figure className={home.editorialHero}><img src={FEATURE_SCENES[0]} alt="Nightmare on Channelside merch overlooking the arena" /><figcaption className={home.editorialCaption}><span>ARENA ISSUE</span><strong>BUILT FOR THE NIGHT.</strong></figcaption></figure>
+        <div className={home.editorialSplitGrid}>
+          <figure className={home.editorialSplit}><img src={FEATURE_SCENES[1]} alt="Nightmare on Channelside seated merch campaign scene" /><figcaption className={home.editorialCaption}><span>AFTER DARK</span><strong>THE FIT BECOMES THE FLYER.</strong></figcaption></figure>
+          <figure className={home.editorialSplit}><img src={FEATURE_SCENES[2]} alt="Nightmare on Channelside backstage merch campaign scene" /><figcaption className={home.editorialCaption}><span>BACKSTAGE</span><strong>NO GENERIC TOUR MERCH.</strong></figcaption></figure>
+        </div>
+        <figure className={home.editorialHero}><img src={FEATURE_SCENES[3]} alt="Nightmare on Channelside full merch collection in Tampa" /><figcaption className={home.editorialCaption}><span>THE COLLECTION</span><strong>ONE CITY. ONE NIGHT. EVERY WORLD.</strong></figcaption></figure>
       </section>
 
-      {catalog.source === "unavailable" ? (
-        <section className={final.centeredUnavailable}>
-          <span>THE DROP IS TEMPORARILY OFFLINE</span>
-          <h2>THE NIGHTMARE IS RELOADING.</h2>
-          <p>The storefront is intentionally hiding stale inventory until the live catalog reconnects.</p>
-        </section>
-      ) : (
-        <>
-          <section className={final.centeredSection} id="featured">
-            <div className={final.centeredSectionHead}>
-              <span>FROM THE NIGHT</span>
-              <h2>AFTER DARK PICKS.</h2>
-              <p>Artist issues, Tampa editions and event-only heat pulled straight from the Nightmare.</p>
-            </div>
-            <div className={final.cinematicProductGrid}>
-              {featured.map((product) => <ProductCard key={product.shopify_product_id} product={product} collection={collectionMap.get(product.collection_slug)} />)}
-            </div>
-            <div className={final.centeredAction}><a href="#collections">CHOOSE YOUR WORLD ↓</a></div>
-          </section>
+      <section className={final.centeredSection} id="collections">
+        <div className={final.centeredSectionHead}><span>CHOOSE YOUR SIDE</span><h2>SHOP BY WORLD.</h2><p>Every artist gets a universe. Every piece belongs to the night.</p></div>
+        <div className={final.worldGrid}>{catalog.collections.map((collection) => <CollectionTile key={collection.slug} collection={collection} />)}</div>
+      </section>
 
-          <section className={final.centeredSection} id="collections">
-            <div className={final.centeredSectionHead}>
-              <span>CHOOSE YOUR SIDE</span>
-              <h2>SHOP BY WORLD.</h2>
-              <p>Every artist gets a universe. Every piece belongs to the night.</p>
-            </div>
-            <div className={final.worldGrid}>
-              {catalog.collections.map((collection) => <CollectionTile key={collection.slug} collection={collection} />)}
-            </div>
-          </section>
+      <section className={final.campaignSection} id="world">
+        <div className={final.centeredSectionHead}><span>THE CAMPAIGN WORLD</span><h2>CHANNELSIDE AFTER DARK.</h2><p>Concert night, carnival glow, Tampa skyline and the merch built to survive all of it.</p></div>
+        <div className={home.campaignMosaicCompact}>{CAMPAIGN_SCENES.slice(0, 6).map((scene, index) => <figure key={scene}><img src={scene} alt={`Nightmare on Channelside campaign scene ${index + 1}`} /></figure>)}</div>
+      </section>
 
-          <section className={final.campaignSection} id="world">
-            <div className={final.centeredSectionHead}>
-              <span>THE CAMPAIGN WORLD</span>
-              <h2>CHANNELSIDE AFTER DARK.</h2>
-              <p>Concert night, carnival glow, Tampa skyline and the merch built to survive all of it.</p>
-            </div>
-            <div className={final.campaignMosaic}>
-              {CAMPAIGN_SCENES.slice(0, 8).map((scene, index) => (
-                <figure className={index === 0 || index === 3 || index === 6 ? final.campaignWide : final.campaignTile} key={scene}>
-                  <img src={scene} alt={`Nightmare on Channelside campaign scene ${index + 1}`} />
-                </figure>
-              ))}
-            </div>
-          </section>
+      {collectionMap.has("all-artists") && <section className={final.lineupFeature}><img src={CAMPAIGN_SCENES[8]} alt="Nightmare on Channelside full lineup merchandise" /><div className={final.lineupCopy}><span>FULL LINEUP</span><h2>ONE STAGE.<br/>ONE NIGHTMARE.</h2><p>The whole cast. One night. Wear the bill.</p><Link href="/tampa/nightmare-on-channelside/merch/collection/all-artists">WEAR THE FULL LINEUP →</Link></div></section>}
+    </>}
 
-          {collectionMap.has("all-artists") && (
-            <section className={final.lineupFeature}>
-              <img src={CAMPAIGN_SCENES[8]} alt="Nightmare on Channelside full lineup merchandise" />
-              <div className={final.lineupCopy}>
-                <span>FULL LINEUP</span>
-                <h2>ONE STAGE.<br/>ONE NIGHTMARE.</h2>
-                <p>The whole cast. One night. Wear the bill.</p>
-                <Link href="/tampa/nightmare-on-channelside/merch/collection/all-artists">WEAR THE FULL LINEUP →</Link>
-              </div>
-            </section>
-          )}
-
-          <section className={final.lastScene}>
-            <img src={CAMPAIGN_SCENES[9]} alt="Benchmark International Arena inside the Nightmare on Channelside world" />
-            <div><span>OCTOBER 31 · TAMPA</span><strong>MEET US AFTER DARK.</strong></div>
-          </section>
-        </>
-      )}
-
-      <footer className={final.minimalFooter} id="footer">
-        <div><strong>ICONIC</strong><p>Live entertainment turned into collectible culture.</p></div>
-        <nav><a href="#featured">SHOP</a><a href="#collections">WORLDS</a><Link href="/tampa/nightmare-on-channelside">EVENT</Link><Link href="/tampa/nightmare-on-channelside/merch/cart">CART</Link></nav>
-        <span>NIGHTMARE ON CHANNELSIDE · TAMPA, FL</span>
-      </footer>
-    </main>
-  );
+    <footer className={final.minimalFooter} id="footer"><div><strong>ICONIC</strong><p>Live entertainment turned into collectible culture.</p></div><nav><a href="#featured">SHOP</a><a href="#collections">WORLDS</a><Link href="/tampa/nightmare-on-channelside">EVENT</Link><Link href="/tampa/nightmare-on-channelside/merch/cart">CART</Link></nav><span>NIGHTMARE ON CHANNELSIDE · TAMPA, FL</span></footer>
+  </main>;
 }
