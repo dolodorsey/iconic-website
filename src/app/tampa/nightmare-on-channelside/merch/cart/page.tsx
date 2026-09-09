@@ -3,6 +3,7 @@ import Link from "next/link";
 import styles from "../merch.module.css";
 import upgrade from "../merch-upgrade.module.css";
 import final from "../merch-final.module.css";
+import cart from "./cart-cinematic.module.css";
 import { BagIndicator, CartView } from "../shop-client";
 
 export const metadata: Metadata = {
@@ -24,8 +25,8 @@ export default function NightmareCartPage() {
         <div className={styles.headerTools}><BagIndicator /></div>
       </header>
 
-      <section className={final.cartShell}>
-        <div className={final.cartIntro}>
+      <section className={cart.cartShell}>
+        <div className={cart.cartIntro}>
           <span>YOUR PIECES / YOUR NIGHT</span>
           <h1>TAKE THE NIGHTMARE HOME.</h1>
           <p>Review your selections, make any final changes, then continue into secure checkout.</p>
