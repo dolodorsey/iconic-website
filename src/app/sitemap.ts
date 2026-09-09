@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const base = "https://iconic-atl.com";
+import { SITE_URL } from "../lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
@@ -24,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return routes.map((route, index) => ({
-    url: `${base}${route}`,
+    url: `${SITE_URL}${route}`,
     lastModified: new Date(),
     changeFrequency: index === 0 ? "daily" : "weekly",
     priority: index === 0 ? 1 : route.includes("nightmare-on-channelside") || route === "/atlanta/bravo" ? 0.95 : 0.8,
