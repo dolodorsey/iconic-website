@@ -11,7 +11,8 @@ import { formatPrice, getMerchCatalog } from "../../catalog";
 import { getFinishedSpriteArtwork } from "../../artwork-sprite";
 import { BagIndicator } from "../../shop-client";
 
-type Props = { params: { slug: string } };
+type RouteParams = { slug: string };
+type Props = { params: Promise<RouteParams> };
 
 const spritePositions = ["0% 0%","100% 0%","0% 25%","100% 25%","0% 50%","100% 50%","0% 75%","100% 75%","0% 100%","100% 100%"];
 
@@ -19,19 +20,21 @@ export function generateStaticParams() {
   return fallbackCollections.map((collection) => ({ slug: collection.slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const collection = getFallbackCollection(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const collection = getFallbackCollection(slug);
   if (!collection) return {};
   return {
     title: `${collection.name} Halloween Merch — Nightmare on Channelside`,
     description: `${collection.subtitle} Ten official designs in the ICONIC Nightmare on Channelside collection.`,
-    alternates: { canonical: `/tampa/nightmare-on-channelside/merch/collection/${params.slug}` },
+    alternates: { canonical: `/tampa/nightmare-on-channelside/merch/collection/${slug}` },
   };
 }
 
 export default async function CollectionPage({ params }: Props) {
+  const { slug } = await params;
   const catalog = await getMerchCatalog();
-  const collection = catalog.collections.find((item) => item.slug === params.slug);
+  const collection = catalog.collections.find((item) => item.slug === slug);
   if (!collection) notFound();
   const products = catalog.products.filter((item) => item.collection_slug === collection.slug).sort((a,b) => a.design_number - b.design_number);
   const rawCode = Number.parseInt(collection.code.replace(/\D/g, ""), 10);
