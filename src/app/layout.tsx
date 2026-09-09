@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./mobile-polish.css";
-
-const SITE_URL = "https://iconic-atl.com";
+import { SITE_URL } from "../lib/site-url";
 
 export const viewport: Viewport = {
   themeColor: "#050507",
