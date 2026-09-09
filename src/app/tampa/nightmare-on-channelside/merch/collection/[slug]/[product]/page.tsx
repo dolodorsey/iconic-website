@@ -5,8 +5,10 @@ import { notFound } from "next/navigation";
 import styles from "../../../merch.module.css";
 import upgrade from "../../../merch-upgrade.module.css";
 import final from "../../../merch-final.module.css";
+import premium from "../../../noc-premium.module.css";
 import { formatPrice, getMerchCatalog } from "../../../catalog";
-import { AddToBag, BagIndicator, ProductGallery } from "../../../shop-client";
+import { AddToBag, ProductGallery } from "../../../shop-client";
+import { StoreFooter, StoreHeader } from "../../../noc-ui";
 
 type RouteParams = { slug: string; product: string };
 type Props = { params: Promise<RouteParams> };
@@ -34,22 +36,17 @@ export default async function ProductPage({ params }: Props) {
   const canSell = product.variants.some((variant) => variant.available);
 
   return (
-    <main className={`${styles.shell} ${upgrade.shell} ${final.cinematicShell}`} style={vars}>
-      <div className={styles.noise} />
-      <header className={`${styles.storeHeader} ${upgrade.storeHeader} ${final.cleanHeader}`}>
-        <Link href="/" className={`${styles.logo} ${upgrade.logo}`}>ICONIC</Link>
-        <nav className={styles.desktopNav}><Link href="/tampa/nightmare-on-channelside/merch">MERCH HOME</Link><Link href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}>THE WORLD</Link><Link href="/tampa/nightmare-on-channelside">EVENT</Link></nav>
-        <div className={styles.headerTools}><BagIndicator /></div>
-      </header>
+    <main className={`${premium.shell} ${styles.shell} ${upgrade.shell} ${final.cinematicShell}`} style={vars}>
+      <StoreHeader />
 
       <section className={styles.productDetailNew}>
-        <div className={`${styles.productDetailVisual} ${upgrade.productDetailVisual} ${final.productDetailVisualTight}`}>
+        <div className={`${styles.productDetailVisual} ${upgrade.productDetailVisual} ${final.productDetailVisualTight} ${premium.productDetailStage}`}>
           <ProductGallery images={product.images} title={product.title} />
         </div>
 
         <div className={`${styles.productDetailCopy} ${upgrade.productDetailCopy}`}>
-          <Link className={styles.back} href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}>← BACK TO {collection.mood}</Link>
-          <span className={styles.productKicker}>{collection.name} / {collection.mood}</span>
+          <Link className={styles.back} href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}>← BACK TO {collection.name}</Link>
+          <span className={styles.productKicker}>{collection.name} / NIGHTMARE ON CHANNELSIDE</span>
           <h1>{product.title}</h1>
           <div className={styles.detailPrice}>{formatPrice(product.price_cents)}</div>
           <p>{product.description || `Official ${collection.name} merchandise from the Nightmare on Channelside Halloween 2026 world.`}</p>
@@ -76,6 +73,7 @@ export default async function ProductPage({ params }: Props) {
           <div className={styles.productAssurances}><span>✦ OFFICIAL NOC ISSUE</span><span>✦ LIVE GARMENT OPTIONS</span><span>✦ SECURE CHECKOUT</span></div>
         </div>
       </section>
+      <StoreFooter />
     </main>
   );
 }
