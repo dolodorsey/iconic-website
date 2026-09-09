@@ -18,19 +18,18 @@ export const metadata: Metadata = {
   },
 };
 
-const HERO_ANIMATION = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-hero-animation.webp?v=1788992759";
-const HERO_VIDEO = "/api/media/drive/10Qei7bsQXaZ6ycZ9UWGwVQssspFc2q7P";
+const HERO_VIDEO = "/api/media/drive/12QESmkNpPPwz6F8466NnwdGOP46ithQL";
 const CAMPAIGN_SCENES = [
-  "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-01.webp?v=1788992156",
-  "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-02.webp?v=1788992166",
-  "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-03.webp?v=1788992178",
-  "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-04.webp?v=1788992188",
-  "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-05.webp?v=1788992200",
-  "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-06.webp?v=1788992210",
-  "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-07.webp?v=1788992224",
-  "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-08.webp?v=1788992234",
-  "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-09.webp?v=1788992246",
-  "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-10.webp?v=1788992257",
+  "/api/media/drive/1TYE4F9bsN5rv2Ji1X1uRYqpHduP8jVd7",
+  "/api/media/drive/1kSAXAOq3ne3RlvNdpMzc5SF8axuTZSlA",
+  "/api/media/drive/1eiU8zt30jzfEcHXPS9TpoXQrJXEG62UH",
+  "/api/media/drive/1XiA7ZqoTsrNPT-gWRlAQRyZOu5aF6T8W",
+  "/api/media/drive/1jQZd9sMH7zhNvNE2darywiHooR9OnuFY",
+  "/api/media/drive/1sTPQ66G8KvHYmsZFFKkjbdIq9t46RXz9",
+  "/api/media/drive/1UBMuDTJ9TxwRY_eBf21bEOoAOtYb9KTP",
+  "/api/media/drive/1_k3IyN7DjAJWL1AVuMTgQr6cjj-vpEEr",
+  "/api/media/drive/1UmxvAvLp28OApwunma86ikWrlizqIEmm",
+  "/api/media/drive/1qpLsJipcsQuw5dHFF3g_MrKa9fGh_hm3",
 ];
 
 const collectionSceneIndex: Record<string, number> = {
@@ -44,8 +43,20 @@ const collectionSceneIndex: Record<string, number> = {
   "nightmare-on-channelside": 0,
 };
 
+const collectionLanguage: Record<string, { title: string; line: string }> = {
+  "21-savage": { title: "SAVAGE MODE", line: "STAGE MENACE" },
+  "kodak-black": { title: "PROJECT NIGHT", line: "FLORIDA PRESSURE" },
+  "da-baby": { title: "BABY ON BOARD", line: "CHAOS IN MOTION" },
+  "meek-mill": { title: "DREAMCHASER", line: "HEADLINE PRESSURE" },
+  "belly-gang-kush": { title: "BELLY GANG", line: "RAW ISSUE" },
+  "all-artists": { title: "FULL LINEUP", line: "ONE STAGE. ONE NIGHTMARE." },
+  tampa: { title: "813 FOREVER", line: "CITY EDITION" },
+  "nightmare-on-channelside": { title: "OFFICIAL EVENT", line: "THE CORE COLLECTION" },
+};
+
 function CollectionTile({ collection }: { collection: CatalogCollection }) {
   const art = CAMPAIGN_SCENES[collectionSceneIndex[collection.slug] ?? 1];
+  const language = collectionLanguage[collection.slug] || { title: collection.mood, line: collection.subtitle };
   const vars = {
     "--accent": collection.accent,
     "--collection-art": `url(${art})`,
@@ -58,8 +69,8 @@ function CollectionTile({ collection }: { collection: CatalogCollection }) {
     >
       <span className={final.worldArtist}>{collection.name}</span>
       <div className={final.worldCopy}>
-        <strong>{collection.mood}</strong>
-        <span>{collection.subtitle}</span>
+        <strong>{language.title}</strong>
+        <span>{language.line}</span>
         <em>ENTER WORLD →</em>
       </div>
     </Link>
@@ -107,8 +118,8 @@ export default async function NightmareMerchPage() {
       </header>
 
       <section className={final.videoHero} aria-label="Nightmare on Channelside animated campaign hero">
-        <img src={HERO_ANIMATION} alt="Nightmare on Channelside animated campaign" className={final.heroAnimationFallback} />
-        <video className={final.heroVideo} autoPlay muted loop playsInline preload="metadata">
+        <img src={CAMPAIGN_SCENES[0]} alt="Nightmare on Channelside campaign" className={final.heroAnimationFallback} />
+        <video className={final.heroVideo} autoPlay muted loop playsInline preload="metadata" poster={CAMPAIGN_SCENES[0]}>
           <source src={HERO_VIDEO} type="video/mp4" />
         </video>
       </section>
@@ -158,8 +169,8 @@ export default async function NightmareMerchPage() {
               <p>Concert night, carnival glow, Tampa skyline and the merch built to survive all of it.</p>
             </div>
             <div className={final.campaignMosaic}>
-              {CAMPAIGN_SCENES.slice(0, 6).map((scene, index) => (
-                <figure className={index === 0 || index === 3 ? final.campaignWide : final.campaignTile} key={scene}>
+              {CAMPAIGN_SCENES.slice(0, 8).map((scene, index) => (
+                <figure className={index === 0 || index === 3 || index === 6 ? final.campaignWide : final.campaignTile} key={scene}>
                   <img src={scene} alt={`Nightmare on Channelside campaign scene ${index + 1}`} />
                 </figure>
               ))}
@@ -168,7 +179,7 @@ export default async function NightmareMerchPage() {
 
           {collectionMap.has("all-artists") && (
             <section className={final.lineupFeature}>
-              <img src={CAMPAIGN_SCENES[6]} alt="Nightmare on Channelside full lineup merchandise" />
+              <img src={CAMPAIGN_SCENES[8]} alt="Nightmare on Channelside full lineup merchandise" />
               <div className={final.lineupCopy}>
                 <span>FULL LINEUP</span>
                 <h2>ONE STAGE.<br/>ONE NIGHTMARE.</h2>
