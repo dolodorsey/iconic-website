@@ -1,5 +1,4 @@
-import { NIGHTMARE_EVENT } from "../event-config";
-import { collections as fallbackCollections, getProductSlots } from "./merch-data";
+import { collections as collectionWorlds } from "./merch-data";
 
 export type CatalogCollection = {
   slug: string;
@@ -13,8 +12,22 @@ export type CatalogCollection = {
   is_active: boolean;
 };
 
+export type CatalogOption = {
+  name: string;
+  values: string[];
+};
+
+export type CatalogVariant = {
+  id: string;
+  title: string;
+  price_cents: number;
+  available: boolean;
+  selected_options: Record<string, string>;
+};
+
 export type CatalogProduct = {
   sku: string;
+  shopify_product_id: string;
   collection_slug: string;
   title: string;
   product_type: string;
@@ -24,66 +37,203 @@ export type CatalogProduct = {
   description: string;
   primary_image_url: string | null;
   secondary_image_url: string | null;
+  images: string[];
   featured: boolean;
   is_active: boolean;
   sizes: string[];
+  tags: string[];
+  options: CatalogOption[];
+  variants: CatalogVariant[];
 };
 
-const SUPABASE_URL = "https://wfkohcwxxsrhcxhepfql.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_zKej0f4ql6VSR9rtHXaU0w_0yhVNAGL";
+const SHOPIFY_STORE_DOMAIN = "1tnkwp-vn.myshopify.com";
+const SHOPIFY_NOC_COLLECTION = "nightmare-on-channelside";
+const SHOPIFY_NOC_TAG = "noc-2026";
+const SHOPIFY_BRAND_TAG = "brand:noc";
+const SHOPIFY_EVENT_TAG = "event:noc-2026";
 
-const fallbackProducts: CatalogProduct[] = fallbackCollections.flatMap((collection) =>
-  getProductSlots(collection).map((product, index) => ({
-    sku: product.id,
-    collection_slug: collection.slug,
-    title: product.title,
-    product_type: product.type,
-    design_number: index + 1,
-    price_cents: 4500,
-    status: product.status,
-    description: `${collection.name} collectible tee from the ICONIC Nightmare on Channelside Halloween ${NIGHTMARE_EVENT.year} capsule.`,
-    primary_image_url: null,
-    secondary_image_url: null,
-    featured: index === 0 && ["nightmare-on-channelside", "21-savage", "halloween-culture", "tampa"].includes(collection.slug),
-    is_active: true,
-    sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
-  }))
-);
+export const SHOPIFY_NOC_CART_BASE = `https://${SHOPIFY_STORE_DOMAIN}/cart`;
 
-const fallbackCatalogCollections: CatalogCollection[] = fallbackCollections.map((collection, index) => ({
-  ...collection,
-  sort_order: index + 1,
-  is_active: true,
-}));
+const subjectToCollection: Record<string, string> = {
+  "21-savage": "21-savage",
+  "kodak-black": "kodak-black",
+  dababy: "da-baby",
+  "meek-mill": "meek-mill",
+  "bellygang-kush": "belly-gang-kush",
+  "yk-niece": "yk-niece",
+  "baby-drill": "baby-drill",
+  "diamond-the-body": "diamond-the-body",
+  "all-artist": "all-artists",
+  "cheeksbossman-gemg": "cheeksbossman-gemg",
+  tampa: "tampa",
+  noc: "nightmare-on-channelside",
+  "halloween-culture": "halloween-culture",
+  "halloween-2027": "halloween-2027",
+};
 
-async function readTable<T>(path: string): Promise<T[]> {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    headers: {
-      apikey: SUPABASE_PUBLISHABLE_KEY,
-      Accept: "application/json",
-    },
-    next: { revalidate: 60 },
+type ShopifyPublicVariant = {
+  id: number | string;
+  title: string;
+  option1?: string | null;
+  option2?: string | null;
+  option3?: string | null;
+  price: string;
+  available?: boolean;
+};
+
+type ShopifyPublicOption = {
+  name: string;
+  position: number;
+  values: string[];
+};
+
+type ShopifyPublicImage = {
+  src: string;
+};
+
+type ShopifyPublicProduct = {
+  id: number | string;
+  title: string;
+  handle: string;
+  body_html?: string;
+  product_type?: string;
+  tags?: string[] | string;
+  variants?: ShopifyPublicVariant[];
+  options?: ShopifyPublicOption[];
+  images?: ShopifyPublicImage[];
+};
+
+function normalizeTags(tags: ShopifyPublicProduct["tags"]): string[] {
+  if (Array.isArray(tags)) return tags.map((tag) => String(tag).trim()).filter(Boolean);
+  if (typeof tags === "string") return tags.split(",").map((tag) => tag.trim()).filter(Boolean);
+  return [];
+}
+
+function stripHtml(value = "") {
+  return value
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function priceToCents(value: string | number | undefined) {
+  const parsed = Number(value || 0);
+  return Number.isFinite(parsed) ? Math.round(parsed * 100) : 0;
+}
+
+function getSubject(tags: string[]) {
+  const tag = tags.find((item) => item.startsWith("subject:"));
+  return tag ? tag.slice("subject:".length) : "noc";
+}
+
+function getCollectionSlug(tags: string[]) {
+  return subjectToCollection[getSubject(tags)] || "nightmare-on-channelside";
+}
+
+function selectedOptions(variant: ShopifyPublicVariant, options: ShopifyPublicOption[]) {
+  const values = [variant.option1, variant.option2, variant.option3];
+  return options.reduce<Record<string, string>>((result, option, index) => {
+    const value = values[index];
+    if (value) result[option.name] = value;
+    return result;
+  }, {});
+}
+
+async function readShopifyNocProducts(): Promise<ShopifyPublicProduct[]> {
+  const response = await fetch(
+    `https://${SHOPIFY_STORE_DOMAIN}/collections/${SHOPIFY_NOC_COLLECTION}/products.json?limit=250`,
+    {
+      headers: { Accept: "application/json" },
+      next: { revalidate: 60 },
+    }
+  );
+
+  if (!response.ok) throw new Error(`Shopify NOC catalog request failed: ${response.status}`);
+  const payload = (await response.json()) as { products?: ShopifyPublicProduct[] };
+  return payload.products || [];
+}
+
+function normalizeProducts(products: ShopifyPublicProduct[]): CatalogProduct[] {
+  const collectionCounts: Record<string, number> = {};
+  const normalized: CatalogProduct[] = [];
+
+  products.forEach((product) => {
+    const tags = normalizeTags(product.tags);
+    if (!tags.includes(SHOPIFY_NOC_TAG) || !tags.includes(SHOPIFY_BRAND_TAG) || !tags.includes(SHOPIFY_EVENT_TAG)) return;
+
+    const options = (product.options || []).map((option) => ({ name: option.name, values: option.values || [] }));
+    const rawOptions = product.options || [];
+    const variants = (product.variants || []).map<CatalogVariant>((variant) => ({
+      id: String(variant.id),
+      title: variant.title,
+      price_cents: priceToCents(variant.price),
+      available: variant.available !== false,
+      selected_options: selectedOptions(variant, rawOptions),
+    }));
+    if (!variants.length) return;
+
+    const collection_slug = getCollectionSlug(tags);
+    collectionCounts[collection_slug] = (collectionCounts[collection_slug] || 0) + 1;
+    const design_number = collectionCounts[collection_slug];
+    const images = (product.images || []).map((image) => image.src).filter(Boolean);
+    const price_cents = Math.min.apply(null, variants.map((variant) => variant.price_cents));
+    const sizeOption = options.find((option) => /size/i.test(option.name));
+
+    normalized.push({
+      sku: product.handle,
+      shopify_product_id: String(product.id),
+      collection_slug,
+      title: product.title,
+      product_type: product.product_type || "Merch",
+      design_number,
+      price_cents,
+      status: "LIVE",
+      description: stripHtml(product.body_html),
+      primary_image_url: images[0] || null,
+      secondary_image_url: images[1] || null,
+      images,
+      featured: false,
+      is_active: true,
+      sizes: sizeOption ? sizeOption.values : [],
+      tags,
+      options,
+      variants,
+    });
   });
 
-  if (!response.ok) throw new Error(`Catalog request failed: ${response.status}`);
-  return response.json() as Promise<T[]>;
+  return normalized.map((product, index) => ({ ...product, featured: index < 8 }));
 }
 
 export async function getMerchCatalog() {
   try {
-    const [collections, products] = await Promise.all([
-      readTable<CatalogCollection>("iconic_noc_collections?select=slug,name,code,subtitle,mood,accent,secondary,sort_order,is_active&is_active=eq.true&order=sort_order.asc"),
-      readTable<CatalogProduct>("iconic_noc_products?select=sku,collection_slug,title,product_type,design_number,price_cents,status,description,primary_image_url,secondary_image_url,featured,is_active,sizes&is_active=eq.true&order=design_number.asc"),
-    ]);
+    const products = normalizeProducts(await readShopifyNocProducts());
+    const activeSlugs = products.reduce<Record<string, true>>((result, product) => {
+      result[product.collection_slug] = true;
+      return result;
+    }, {});
+    const collections: CatalogCollection[] = collectionWorlds
+      .map((collection, index) => ({ ...collection, sort_order: index + 1, is_active: Boolean(activeSlugs[collection.slug]) }))
+      .filter((collection) => collection.is_active);
 
-    if (collections.length === 14 && products.length >= 140) return { collections, products, source: "supabase" as const };
+    return { collections, products, source: "shopify" as const };
   } catch {
-    // The storefront keeps a complete local catalog fallback so a catalog API interruption never blanks the store.
+    // Never fall back to fabricated prices or products. If Shopify is unavailable,
+    // the storefront fails closed rather than selling stale/fake inventory.
+    return { collections: [] as CatalogCollection[], products: [] as CatalogProduct[], source: "unavailable" as const };
   }
-
-  return { collections: fallbackCatalogCollections, products: fallbackProducts, source: "fallback" as const };
 }
 
 export function formatPrice(priceCents: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(priceCents / 100);
+}
+
+export function buildShopifyCheckoutUrl(lines: Array<{ variantId: string; quantity: number }>) {
+  const clean = lines
+    .filter((line) => /^\d+$/.test(line.variantId) && Number.isInteger(line.quantity) && line.quantity > 0)
+    .map((line) => `${line.variantId}:${line.quantity}`);
+  return clean.length ? `${SHOPIFY_NOC_CART_BASE}/${clean.join(",")}` : null;
 }
