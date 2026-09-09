@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import styles from "../merch.module.css";
-import upgrade from "../merch-upgrade.module.css";
-import final from "../merch-final.module.css";
 import cart from "./cart-cinematic.module.css";
-import { BagIndicator, CartView } from "../shop-client";
+import premium from "../noc-premium.module.css";
+import { CartView } from "../shop-client";
+import { StoreFooter, StoreHeader } from "../noc-ui";
 
 export const metadata: Metadata = {
   title: "Cart — Nightmare on Channelside Official Merch",
@@ -14,25 +12,17 @@ export const metadata: Metadata = {
 
 export default function NightmareCartPage() {
   return (
-    <main className={`${styles.shell} ${upgrade.shell} ${final.cinematicShell}`}>
-      <div className={styles.noise} />
-      <header className={`${styles.storeHeader} ${upgrade.storeHeader} ${final.cleanHeader}`}>
-        <Link href="/" className={`${styles.logo} ${upgrade.logo}`}>ICONIC</Link>
-        <nav className={styles.desktopNav} aria-label="Store navigation">
-          <Link href="/tampa/nightmare-on-channelside/merch">MERCH HOME</Link>
-          <Link href="/tampa/nightmare-on-channelside">EVENT</Link>
-        </nav>
-        <div className={styles.headerTools}><BagIndicator /></div>
-      </header>
-
-      <section className={cart.cartShell}>
+    <main className={premium.shell}>
+      <StoreHeader />
+      <section className={`${cart.cartShell} ${premium.cartWrap}`}>
         <div className={cart.cartIntro}>
           <span>YOUR PIECES / YOUR NIGHT</span>
           <h1>TAKE THE NIGHTMARE HOME.</h1>
-          <p>Review your selections, make any final changes, then continue into secure checkout.</p>
+          <p>Review your selections, make any final changes, then continue into secure Shopify checkout.</p>
         </div>
         <CartView />
       </section>
+      <StoreFooter />
     </main>
   );
 }
