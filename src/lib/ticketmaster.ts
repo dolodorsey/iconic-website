@@ -19,6 +19,12 @@ function assertAllowedEvent(eventId: string) {
   }
 }
 
+function assertCommerceEnabled() {
+  if (process.env.ICONIC_TICKETMASTER_COMMERCE_ENABLED !== "true") {
+    throw new TicketmasterBridgeError(503, "ICONIC direct ticket commerce is not enabled.");
+  }
+}
+
 function parseBody(text: string) {
   if (!text) return null;
   try {
@@ -74,6 +80,9 @@ export function getTicketmasterBridgeStatus() {
   return {
     discoveryEnabled: Boolean(process.env.TICKETMASTER_DISCOVERY_API_KEY),
     partnerEnabled: Boolean(process.env.TICKETMASTER_PARTNER_API_KEY),
+    commerceEnabled:
+      Boolean(process.env.TICKETMASTER_PARTNER_API_KEY) &&
+      process.env.ICONIC_TICKETMASTER_COMMERCE_ENABLED === "true",
     partnerEnvironment:
       process.env.TICKETMASTER_PARTNER_ENV === "preprod" ? "preprod" : "production",
     enabledEventIds: Array.from(configuredEventIds()),
@@ -111,17 +120,19 @@ export async function getTicketmasterAvailability(eventId: string) {
   return requestTicketmaster(url, partnerKey(), { method: "GET" });
 }
 
-export async function reserveTicketmasterCart(eventId: string, reserve: unknown) {
+export async function reserveTicketmasterCart(eventId: string, reservePayload: unknown) {
   assertAllowedEvent(eventId);
+  assertCommerceEnabled();
   const url = `${partnerBase()}/events/${encodeURIComponent(eventId)}/cart`;
   return requestTicketmaster(url, partnerKey(), {
     method: "POST",
-    body: JSON.stringify({ reserve }),
+    body: JSON.stringify(reservePayload),
   });
 }
 
 export async function addTicketmasterPayment(eventId: string, paymentPayload: unknown) {
   assertAllowedEvent(eventId);
+  assertCommerceEnabled();
   const url = `${partnerBase()}/events/${encodeURIComponent(eventId)}/cart/payment`;
   return requestTicketmaster(url, partnerKey(), {
     method: "PUT",
@@ -131,6 +142,7 @@ export async function addTicketmasterPayment(eventId: string, paymentPayload: un
 
 export async function commitTicketmasterCart(eventId: string, commitPayload: unknown) {
   assertAllowedEvent(eventId);
+  assertCommerceEnabled();
   const url = `${partnerBase()}/events/${encodeURIComponent(eventId)}/cart`;
   return requestTicketmaster(url, partnerKey(), {
     method: "PUT",
