@@ -36,6 +36,7 @@ export function StoreFooter() {
         <Link href={`${BASE}/archive`}>ARCHIVE</Link>
         <Link href="/tampa/nightmare-on-channelside">EVENT</Link>
         <Link href={`${BASE}/cart`}>CART</Link>
+        <Link href={`${BASE}/policies`}>POLICIES</Link>
       </nav>
       <span>NIGHTMARE ON CHANNELSIDE · TAMPA, FL · HALLOWEEN 2026</span>
     </footer>
