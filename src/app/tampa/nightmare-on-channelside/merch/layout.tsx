@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { NOC_MEDIA } from "./noc-assets";
 import "./noc-top-tier.css";
 import "./noc-refinement.css";
+import "./noc-artist-fixes.css";
 import "./noc-cart-hardening.css";
 
 const BASE = "/tampa/nightmare-on-channelside/merch";
