@@ -1,5 +1,5 @@
-.noc-video-hero{position:relative;width:100%;aspect-ratio:16/9;max-height:calc(100svh - 84px);min-height:560px;background:#000;overflow:hidden;border-bottom:1px solid rgba(255,76,49,.2)}
-.noc-video-hero video{width:100%;height:100%;display:block;object-fit:cover;background:#000}
+.noc-video-hero{position:relative;width:100%;aspect-ratio:16/9;min-height:0;background:#000;overflow:hidden;border-bottom:1px solid rgba(255,76,49,.2)}
+.noc-video-hero :is(video,img){width:100%;height:100%;display:block;object-fit:contain;background:#000}
 .noc-editorial-display,.noc-editorial-heading{font-family:Georgia,"Times New Roman",serif!important;font-weight:700!important;letter-spacing:-.055em!important;line-height:.88!important;text-transform:uppercase}
 .noc-editorial-display{font-size:clamp(48px,7.6vw,110px)!important}
 .noc-editorial-heading{font-size:clamp(46px,6.2vw,88px)!important}
