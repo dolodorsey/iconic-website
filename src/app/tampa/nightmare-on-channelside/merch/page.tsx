@@ -21,13 +21,10 @@ export default async function NightmareMerchPage() {
     <main className={premium.shell}>
       <StoreHeader />
 
-      <section className="noc-video-hero" aria-label="Nightmare on Channelside animated campaign home graphic">
-        <img
-          src={NOC_MEDIA.homeAnimation}
-          alt="Nightmare on Channelside Tampa home animation"
-          fetchPriority="high"
-          decoding="async"
-        />
+      <section className="noc-video-hero" aria-label="Nightmare on Channelside home animation">
+        <video autoPlay muted loop playsInline preload="auto" poster={NOC_MEDIA.homeHero}>
+          <source src={NOC_MEDIA.homeAnimation} type="video/mp4" />
+        </video>
       </section>
 
       <div className={premium.ticker}>
