@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { CatalogCollection, CatalogProduct } from "./catalog";
 import { formatPrice } from "./catalog";
+import { worldLanguage } from "./noc-assets";
 import { BagIndicator } from "./shop-client";
 import premium from "./noc-premium.module.css";
 
@@ -76,22 +77,22 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
   );
 }
 
-export function WorldCard({ collection, products }: { collection: CatalogCollection; products: CatalogProduct[] }) {
-  const previews = products.filter((product) => product.primary_image_url).slice(0, 2);
+export function WorldCard({ collection, products: _products }: { collection: CatalogCollection; products: CatalogProduct[] }) {
+  const identity = worldLanguage(collection.slug, collection.name, collection.subtitle);
   return (
-    <Link href={`${BASE}/collection/${collection.slug}`} className="noc-world-card-v2">
-      <div className="noc-world-product-stage" aria-hidden="true">
-        {previews.map((product, index) => (
-          <div className="noc-world-product" key={product.shopify_product_id}>
-            <img src={product.primary_image_url || ""} alt="" loading="lazy" decoding="async" />
-            <span>{index === 0 ? "FEATURED" : "COLLECTION"}</span>
-          </div>
-        ))}
+    <Link href={`${BASE}/collection/${collection.slug}`} className="noc-world-card-v3">
+      <div className="noc-world-artist-stage">
+        <img
+          src={identity.image}
+          alt={`${collection.name} Nightmare on Channelside collection artwork`}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <div className="noc-world-card-copy">
         <span className="noc-world-kicker">OFFICIAL NOC COLLECTION</span>
         <strong className="noc-world-name">{collection.name}</strong>
-        <em>SHOP COLLECTION →</em>
+        <em>SHOP {collection.name} →</em>
       </div>
     </Link>
   );
