@@ -6,6 +6,7 @@ import premium from "../noc-premium.module.css";
 export const metadata: Metadata = {
   title: "Nightmare Archive — Channelside Tampa",
   description: "The visual world behind Nightmare on Channelside — Tampa, the arena, the artists and the merch culture.",
+  alternates: { canonical: "/tampa/nightmare-on-channelside/merch/archive" },
 };
 
 const labels = [
@@ -21,7 +22,7 @@ export default function NightmareArchivePage() {
     <main className={premium.shell}>
       <StoreHeader />
       <section className={premium.collectionHero}>
-        <img src={NOC_MEDIA.archiveFacade} alt="Nightmare Archive Tampa" />
+        <img src={NOC_MEDIA.archiveFacade} alt="Nightmare Archive Tampa" fetchPriority="high" decoding="async" />
         <div className={premium.collectionHeroCopy}>
           <span>THE VISUAL WORLD</span>
           <h1>NIGHTMARE ARCHIVE.</h1>
@@ -38,7 +39,7 @@ export default function NightmareArchivePage() {
         <section className={premium.archiveGrid} aria-label="Nightmare on Channelside campaign archive">
           {NOC_SCENES.map((scene, index) => (
             <figure className={premium.archiveFrame} key={scene}>
-              <img src={scene} alt={`Nightmare on Channelside campaign archive scene ${index + 1}`} />
+              <img src={scene} alt={`Nightmare on Channelside campaign archive scene ${index + 1}`} loading="lazy" decoding="async" />
               <figcaption className={premium.archiveLabel}><span>{labels[index][0]}</span><strong>{labels[index][1]}</strong></figcaption>
             </figure>
           ))}
