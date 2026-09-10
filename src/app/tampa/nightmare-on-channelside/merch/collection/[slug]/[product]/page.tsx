@@ -98,7 +98,7 @@ export default async function ProductPage({ params }: Props) {
 
           <div className={styles.detailRule}/>
           {canSell ? (
-            <AddToBag variants={product.variants} options={product.options} />
+            <AddToBag variants={product.variants} options={product.options} productTitle={product.title} />
           ) : (
             <div className={styles.dropLocked}><strong>GONE DARK</strong><span>This piece remains in the archive, but no size is available right now.</span></div>
           )}
