@@ -7,6 +7,7 @@ import premium from "../noc-premium.module.css";
 export const metadata: Metadata = {
   title: "Artist Worlds — Nightmare on Channelside",
   description: "Enter the artist, Tampa and official event worlds of Nightmare on Channelside.",
+  alternates: { canonical: "/tampa/nightmare-on-channelside/merch/worlds" },
 };
 
 export default async function NightmareWorldsPage() {
@@ -15,7 +16,7 @@ export default async function NightmareWorldsPage() {
     <main className={premium.shell}>
       <StoreHeader />
       <section className={premium.collectionHero}>
-        <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside Hall of Headliners" />
+        <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside Hall of Headliners" fetchPriority="high" decoding="async" />
         <div className={premium.collectionHeroCopy}>
           <span>THE HALL OF HEADLINERS</span>
           <h1>CHOOSE YOUR NIGHTMARE.</h1>
