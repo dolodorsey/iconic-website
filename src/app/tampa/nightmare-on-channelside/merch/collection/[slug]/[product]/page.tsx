@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SITE_URL } from "@/lib/site-url";
 import styles from "../../../merch.module.css";
 import upgrade from "../../../merch-upgrade.module.css";
 import final from "../../../merch-final.module.css";
@@ -18,10 +19,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const catalog = await getMerchCatalog();
   const product = catalog.products.find((item) => item.sku === productId && item.collection_slug === slug);
   if (!product) return {};
+  const path = `/tampa/nightmare-on-channelside/merch/collection/${slug}/${productId}`;
+  const description = product.description || `Official Nightmare on Channelside ${product.product_type}.`;
   return {
     title: `${product.title} — Nightmare on Channelside`,
-    description: product.description || `Official Nightmare on Channelside ${product.product_type}.`,
-    alternates: { canonical: `/tampa/nightmare-on-channelside/merch/collection/${slug}/${productId}` },
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      type: "website",
+      siteName: "ICONIC",
+      title: product.title,
+      description,
+      url: path,
+      images: product.primary_image_url ? [{ url: product.primary_image_url, alt: product.title }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.title,
+      description,
+      images: product.primary_image_url ? [product.primary_image_url] : undefined,
+    },
   };
 }
 
@@ -34,6 +51,27 @@ export default async function ProductPage({ params }: Props) {
 
   const vars = { "--accent": collection.accent, "--secondary": collection.secondary } as CSSProperties;
   const canSell = product.variants.some((variant) => variant.available);
+  const prices = product.variants.map((variant) => variant.price_cents / 100);
+  const productPath = `/tampa/nightmare-on-channelside/merch/collection/${collection.slug}/${product.sku}`;
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    description: product.description || `Official ${collection.name} merchandise from Nightmare on Channelside Halloween 2026.`,
+    image: product.images,
+    sku: product.sku,
+    category: product.product_type,
+    brand: { "@type": "Brand", name: "Nightmare on Channelside" },
+    offers: {
+      "@type": "AggregateOffer",
+      url: `${SITE_URL}${productPath}`,
+      priceCurrency: "USD",
+      lowPrice: Math.min(...prices).toFixed(2),
+      highPrice: Math.max(...prices).toFixed(2),
+      offerCount: product.variants.length,
+      availability: canSell ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+    },
+  };
 
   return (
     <main className={`${premium.shell} ${styles.shell} ${upgrade.shell} ${final.cinematicShell}`} style={vars}>
@@ -73,6 +111,7 @@ export default async function ProductPage({ params }: Props) {
           <div className={styles.productAssurances}><span>✦ OFFICIAL NOC ISSUE</span><span>✦ LIVE GARMENT OPTIONS</span><span>✦ SECURE CHECKOUT</span></div>
         </div>
       </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema).replace(/</g, "\\u003c") }} />
       <StoreFooter />
     </main>
   );
