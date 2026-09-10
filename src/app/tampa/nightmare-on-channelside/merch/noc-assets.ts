@@ -1,5 +1,5 @@
 export const NOC_MEDIA = {
-  homeAnimation: "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-home-hero-animated.webp?v=1789029896",
+  homeAnimation: "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-home-hero-hq2.webp?v=1789034116",
   homeHero: "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-05.png?v=1788994208",
   archiveFacade: "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-04.png?v=1788994197",
   hall: "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-03.png?v=1788994188",
