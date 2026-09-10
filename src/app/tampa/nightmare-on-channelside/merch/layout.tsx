@@ -1,24 +1,25 @@
 import type { Metadata } from "next";
 import { NOC_MEDIA } from "./noc-assets";
 import "./noc-top-tier.css";
+import "./noc-refinement.css";
 import "./noc-cart-hardening.css";
 
 const BASE = "/tampa/nightmare-on-channelside/merch";
 
 export const metadata: Metadata = {
-  description: "Official Nightmare on Channelside Halloween 2026 merchandise, artist worlds, Tampa editions and event collectibles.",
+  description: "Official Nightmare on Channelside Halloween 2026 merchandise, artist collections, Tampa editions and event collectibles.",
   openGraph: {
     type: "website",
     siteName: "ICONIC",
     title: "Nightmare on Channelside — Official Merch",
-    description: "Enter the official Nightmare on Channelside Halloween 2026 merch world — live artist issues, Tampa editions and event pieces.",
+    description: "Shop the official Nightmare on Channelside Halloween 2026 merch — artist collections, Tampa editions and event pieces.",
     url: BASE,
-    images: [{ url: NOC_MEDIA.homeHero, alt: "Nightmare on Channelside official merch world" }],
+    images: [{ url: NOC_MEDIA.homeHero, alt: "Nightmare on Channelside official merch" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Nightmare on Channelside — Official Merch",
-    description: "Official Halloween 2026 artist issues, Tampa editions and event merchandise from ICONIC.",
+    description: "Official Halloween 2026 artist collections, Tampa editions and event merchandise from ICONIC.",
     images: [NOC_MEDIA.homeHero],
   },
 };

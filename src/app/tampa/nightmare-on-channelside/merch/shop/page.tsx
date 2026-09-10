@@ -7,8 +7,8 @@ import ShopGrid from "./shop-grid";
 import premium from "../noc-premium.module.css";
 
 export const metadata: Metadata = {
-  title: "The Drop — Nightmare on Channelside",
-  description: "Shop the official Nightmare on Channelside live merchandise drop.",
+  title: "Shop — Nightmare on Channelside",
+  description: "Shop the official Nightmare on Channelside live merchandise collection.",
   alternates: { canonical: "/tampa/nightmare-on-channelside/merch/shop" },
 };
 
@@ -17,26 +17,26 @@ export default async function NightmareShopPage() {
   return (
     <main className={premium.shell}>
       <StoreHeader />
-      <section className={premium.collectionHero}>
-        <img src={NOC_MEDIA.market} alt="Nightmare on Channelside merch market" fetchPriority="high" decoding="async" />
-        <div className={premium.collectionHeroCopy}>
-          <span>THE MERCH FLOOR</span>
-          <h1>THE DROP.</h1>
-          <p>Official event pieces, artist issues and Tampa editions. Everything here resolves to the live NOC Shopify catalog.</p>
+      <section className={`${premium.collectionHero} noc-page-hero-v2`}>
+        <img src={NOC_MEDIA.market} alt="Nightmare on Channelside official merch floor" fetchPriority="high" decoding="async" />
+        <div className={`${premium.collectionHeroCopy} noc-page-hero-copy-v2`}>
+          <span>OFFICIAL NIGHTMARE ON CHANNELSIDE MERCH</span>
+          <h1>SHOP.</h1>
+          <p>Artist pieces, Tampa editions and official event merch. Every item below resolves to the live NOC Shopify catalog.</p>
         </div>
       </section>
       <StoreSubnav />
       <div className={premium.container}>
         {catalog.source === "unavailable" ? (
-          <section className={premium.empty}><div><h1>THE FLOOR IS CLOSED.</h1><p>The live Shopify catalog is unavailable, so the storefront is intentionally hiding inventory instead of fabricating products.</p></div></section>
+          <section className={premium.empty}><div><h1>THE SHOP IS RELOADING.</h1><p>The live Shopify catalog is unavailable, so the storefront is intentionally hiding inventory instead of fabricating products.</p></div></section>
         ) : (
           <section className={premium.section}>
             <div className={premium.sectionHead}>
               <span className={premium.eyebrow}>LIVE EVENT MERCH</span>
-              <h2>WEAR THE BILL.</h2>
-              <p>Search the drop, filter by world or garment, and sort without loading all 93 product images at once.</p>
+              <h2 className="noc-editorial-heading">THE DROP</h2>
+              <p>Search by artist, collection or garment. Product cards show front and back at a glance whenever both Shopify views are available.</p>
             </div>
-            <nav className={premium.subnav} aria-label="Shop collection shortcuts">
+            <nav className={`${premium.subnav} noc-collection-shortcuts`} aria-label="Shop collection shortcuts">
               {catalog.collections.map((collection) => <Link key={collection.slug} href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}>{collection.name}</Link>)}
             </nav>
             <ShopGrid products={catalog.products} collections={catalog.collections} />

@@ -5,8 +5,8 @@ import { StoreFooter, StoreHeader, StoreSubnav, WorldCard } from "../noc-ui";
 import premium from "../noc-premium.module.css";
 
 export const metadata: Metadata = {
-  title: "Artist Worlds — Nightmare on Channelside",
-  description: "Enter the artist, Tampa and official event worlds of Nightmare on Channelside.",
+  title: "Collections — Nightmare on Channelside",
+  description: "Shop Nightmare on Channelside merchandise by artist, Tampa, full lineup or official event collection.",
   alternates: { canonical: "/tampa/nightmare-on-channelside/merch/worlds" },
 };
 
@@ -15,26 +15,34 @@ export default async function NightmareWorldsPage() {
   return (
     <main className={premium.shell}>
       <StoreHeader />
-      <section className={premium.collectionHero}>
-        <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside Hall of Headliners" fetchPriority="high" decoding="async" />
-        <div className={premium.collectionHeroCopy}>
-          <span>THE HALL OF HEADLINERS</span>
-          <h1>CHOOSE YOUR NIGHTMARE.</h1>
-          <p>Each live collection gets its own world. Enter through the artist, the city, the full bill or the official event issue.</p>
+      <section className={`${premium.collectionHero} noc-page-hero-v2`}>
+        <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside artist collections" fetchPriority="high" decoding="async" />
+        <div className={`${premium.collectionHeroCopy} noc-page-hero-copy-v2`}>
+          <span>SHOP BY ARTIST + COLLECTION</span>
+          <h1>WORLDS.</h1>
+          <p>Pick the artist, city or official event collection you want. Every page below has its own live Shopify merchandise.</p>
         </div>
       </section>
       <StoreSubnav />
       <div className={premium.container}>
         <section className={premium.section}>
           <div className={premium.sectionHead}>
-            <span className={premium.eyebrow}>THE NIGHT HAS SIDES</span>
-            <h2>ENTER A WORLD.</h2>
-            <p>No generic collection tiles. Each door leads to a dedicated live Shopify edit.</p>
+            <span className={premium.eyebrow}>OFFICIAL NOC COLLECTIONS</span>
+            <h2 className="noc-editorial-heading">SHOP BY NAME</h2>
+            <p>Simple names. Distinct collections. No recycled collection identity.</p>
           </div>
           {catalog.source === "unavailable" ? (
-            <div className={premium.empty}><div><h1>THE HALL IS DARK.</h1><p>The live catalog is unavailable. Collection worlds stay closed until the real inventory reconnects.</p></div></div>
+            <div className={premium.empty}><div><h1>COLLECTIONS ARE RELOADING.</h1><p>The live catalog is unavailable, so the collection pages stay closed until real inventory reconnects.</p></div></div>
           ) : (
-            <div className={premium.worldGrid}>{catalog.collections.map((collection) => <WorldCard key={collection.slug} collection={collection} />)}</div>
+            <div className="noc-world-grid-v2">
+              {catalog.collections.map((collection) => (
+                <WorldCard
+                  key={collection.slug}
+                  collection={collection}
+                  products={catalog.products.filter((product) => product.collection_slug === collection.slug)}
+                />
+              ))}
+            </div>
           )}
         </section>
       </div>

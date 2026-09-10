@@ -25,7 +25,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     MERCH_BASE,
     `${MERCH_BASE}/shop`,
     `${MERCH_BASE}/worlds`,
-    `${MERCH_BASE}/archive`,
     `${MERCH_BASE}/policies`,
   ];
 
