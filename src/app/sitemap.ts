@@ -26,6 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     `${MERCH_BASE}/shop`,
     `${MERCH_BASE}/worlds`,
     `${MERCH_BASE}/archive`,
+    `${MERCH_BASE}/policies`,
   ];
 
   const catalog = await getMerchCatalog();
@@ -37,11 +38,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const isProduct = route.split("/").length >= 8;
     const isCollection = route.includes(`${MERCH_BASE}/collection/`) && !isProduct;
     const isMerch = route.startsWith(MERCH_BASE);
+    const isPolicy = route === `${MERCH_BASE}/policies`;
     return {
       url: `${SITE_URL}${route}`,
       lastModified: new Date(),
-      changeFrequency: (isMerch ? "daily" : index === 0 ? "daily" : "weekly") as MetadataRoute.Sitemap[number]["changeFrequency"],
-      priority: index === 0 ? 1 : isProduct ? 0.8 : isCollection ? 0.9 : route.includes("nightmare-on-channelside") || route === "/atlanta/bravo" ? 0.95 : 0.8,
+      changeFrequency: (isPolicy ? "monthly" : isMerch ? "daily" : index === 0 ? "daily" : "weekly") as MetadataRoute.Sitemap[number]["changeFrequency"],
+      priority: index === 0 ? 1 : isPolicy ? 0.5 : isProduct ? 0.8 : isCollection ? 0.9 : route.includes("nightmare-on-channelside") || route === "/atlanta/bravo" ? 0.95 : 0.8,
     };
   });
 }
