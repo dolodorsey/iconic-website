@@ -20,7 +20,7 @@ export default async function NightmareWorldsPage() {
         <div className={`${premium.collectionHeroCopy} noc-page-hero-copy-v2`}>
           <span>SHOP BY ARTIST + COLLECTION</span>
           <h1>WORLDS.</h1>
-          <p>Pick the artist, city or official event collection you want. Every page below has its own live Shopify merchandise.</p>
+          <p>Choose the artist, Tampa collection, full lineup or official event collection.</p>
         </div>
       </section>
       <StoreSubnav />
@@ -29,19 +29,13 @@ export default async function NightmareWorldsPage() {
           <div className={premium.sectionHead}>
             <span className={premium.eyebrow}>OFFICIAL NOC COLLECTIONS</span>
             <h2 className="noc-editorial-heading">SHOP BY NAME</h2>
-            <p>Simple names. Distinct collections. No recycled collection identity.</p>
+            <p>Each collection has its own artwork and its own live merchandise.</p>
           </div>
           {catalog.source === "unavailable" ? (
             <div className={premium.empty}><div><h1>COLLECTIONS ARE RELOADING.</h1><p>The live catalog is unavailable, so the collection pages stay closed until real inventory reconnects.</p></div></div>
           ) : (
             <div className="noc-world-grid-v2">
-              {catalog.collections.map((collection) => (
-                <WorldCard
-                  key={collection.slug}
-                  collection={collection}
-                  products={catalog.products.filter((product) => product.collection_slug === collection.slug)}
-                />
-              ))}
+              {catalog.collections.map((collection) => <WorldCard key={collection.slug} collection={collection} />)}
             </div>
           )}
         </section>
