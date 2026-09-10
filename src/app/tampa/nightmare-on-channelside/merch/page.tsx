@@ -7,7 +7,7 @@ import premium from "./noc-premium.module.css";
 
 export const metadata: Metadata = {
   title: "Nightmare on Channelside — Official Merch",
-  description: "Official Nightmare on Channelside artist issues, Tampa editions and event merchandise.",
+  description: "Official Nightmare on Channelside artist collections, Tampa editions and event merchandise.",
   alternates: { canonical: "/tampa/nightmare-on-channelside/merch" },
 };
 
@@ -21,8 +21,18 @@ export default async function NightmareMerchPage() {
     <main className={premium.shell}>
       <StoreHeader />
 
-      <section className={premium.hero} aria-label="Nightmare on Channelside animated campaign home graphic">
-        <img src={NOC_MEDIA.homeHero} alt="Nightmare on Channelside Tampa campaign world" fetchPriority="high" decoding="async" />
+      <section className="noc-video-hero" aria-label="Nightmare on Channelside animated campaign home graphic">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={NOC_MEDIA.homeHero}
+          aria-label="Nightmare on Channelside Tampa home animation"
+        >
+          <source src="/api/media/noc-home" type="video/mp4" />
+        </video>
       </section>
 
       <div className={premium.ticker}>
@@ -32,22 +42,22 @@ export default async function NightmareMerchPage() {
       <div className={premium.container}>
         <section className={premium.intro}>
           <span className={premium.eyebrow}>WELCOME TO THE NIGHTMARE</span>
-          <h1 className={premium.display}>THE CONCERT HAS A WORLD.</h1>
-          <p className={premium.body}>This is not a product dump. Enter the event through the drop, the artist worlds or the Nightmare Archive.</p>
+          <h1 className={`${premium.display} noc-editorial-display`}>THE CONCERT HAS A WORLD.</h1>
+          <p className={premium.body}>Enter through the official drop, shop by artist and collection, or return to the live event.</p>
         </section>
 
-        <section className={premium.portalGrid} aria-label="Nightmare storefront sections">
+        <section className="noc-portal-grid" aria-label="Nightmare storefront sections">
           <Link href={`${BASE}/shop`} className={premium.portal}>
             <img src={NOC_MEDIA.market} alt="Nightmare on Channelside merch market" loading="lazy" decoding="async" />
-            <div className={premium.portalCopy}><span>THE MERCH FLOOR</span><strong>SHOP THE DROP</strong><em>ALL OFFICIAL PIECES →</em></div>
+            <div className={premium.portalCopy}><span>OFFICIAL MERCH</span><strong>SHOP THE DROP</strong><em>SHOP ALL PIECES →</em></div>
           </Link>
           <Link href={`${BASE}/worlds`} className={premium.portal}>
-            <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside hall of headliners" loading="lazy" decoding="async" />
-            <div className={premium.portalCopy}><span>THE HALL OF HEADLINERS</span><strong>ENTER A WORLD</strong><em>SHOP BY ARTIST / CITY / EVENT →</em></div>
+            <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside artist collections" loading="lazy" decoding="async" />
+            <div className={premium.portalCopy}><span>ARTIST + CITY COLLECTIONS</span><strong>SHOP BY NAME</strong><em>21 SAVAGE / KODAK / MEEK / MORE →</em></div>
           </Link>
-          <Link href={`${BASE}/archive`} className={premium.portal}>
-            <img src={NOC_MEDIA.archiveFacade} alt="Nightmare Archive Tampa" loading="lazy" decoding="async" />
-            <div className={premium.portalCopy}><span>THE VISUAL ARCHIVE</span><strong>SEE THE NIGHT</strong><em>CAMPAIGN / CULTURE / TAMPA →</em></div>
+          <Link href="/tampa/nightmare-on-channelside" className={premium.portal}>
+            <img src={NOC_MEDIA.hall} alt="Nightmare on Channelside Tampa event" loading="lazy" decoding="async" />
+            <div className={premium.portalCopy}><span>HALLOWEEN 2026</span><strong>THE EVENT</strong><em>CONCERT DETAILS + TICKETS →</em></div>
           </Link>
         </section>
 
@@ -57,17 +67,18 @@ export default async function NightmareMerchPage() {
           <section className={premium.section}>
             <div className={premium.sectionHead}>
               <span className={premium.eyebrow}>ON THE FLOOR NOW</span>
-              <h2>FIRST LOOK.</h2>
-              <p>A short preview from the live drop. The full catalog lives on its own shop page now.</p>
+              <h2 className="noc-editorial-heading">FIRST LOOK</h2>
+              <p>Front and back at a glance. Open any piece for sizes, variants and checkout.</p>
             </div>
             <div className={premium.productGrid}>{featured.map((product) => <ProductCard key={product.shopify_product_id} product={product} />)}</div>
-            <div className={premium.more}><Link href={`${BASE}/shop`} className={premium.button}>ENTER THE FULL DROP →</Link></div>
+            <div className={premium.more}><Link href={`${BASE}/shop`} className={premium.button}>SHOP THE FULL DROP →</Link></div>
           </section>
         )}
       </div>
 
-      <Link href={`${BASE}/archive`} className={premium.cinemaBand} aria-label="Enter the Nightmare Archive">
-        <img src={NOC_MEDIA.hall} alt="Nightmare on Channelside campaign hall" loading="lazy" decoding="async" />
+      <Link href="/tampa/nightmare-on-channelside" className="noc-campaign-exit" aria-label="Return to the Nightmare on Channelside event">
+        <img src={NOC_MEDIA.archiveFacade} alt="Nightmare on Channelside Tampa event world" loading="lazy" decoding="async" />
+        <span>ONE NIGHT · ONE ARENA · TAMPA</span>
       </Link>
 
       <StoreFooter />
