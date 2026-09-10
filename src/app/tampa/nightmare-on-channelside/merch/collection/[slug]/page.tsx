@@ -14,10 +14,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const fallback = getFallbackCollection(slug);
   if (!fallback) return {};
   const world = worldLanguage(slug, fallback.mood, fallback.subtitle);
+  const path = `/tampa/nightmare-on-channelside/merch/collection/${slug}`;
+  const title = `${world.title} — ${fallback.name} | Nightmare on Channelside`;
   return {
-    title: `${world.title} — ${fallback.name} | Nightmare on Channelside`,
+    title,
     description: world.story,
-    alternates: { canonical: `/tampa/nightmare-on-channelside/merch/collection/${slug}` },
+    alternates: { canonical: path },
+    openGraph: {
+      type: "website",
+      siteName: "ICONIC",
+      title,
+      description: world.story,
+      url: path,
+      images: [{ url: world.image, alt: `${fallback.name} Nightmare on Channelside collection` }],
+    },
+    twitter: { card: "summary_large_image", title, description: world.story, images: [world.image] },
   };
 }
 
@@ -35,7 +46,7 @@ export default async function CollectionPage({ params }: Props) {
     <main className={premium.shell}>
       <StoreHeader />
       <section className={premium.collectionHero}>
-        <img src={world.image} alt={`${collection.name} Nightmare on Channelside campaign world`} />
+        <img src={world.image} alt={`${collection.name} Nightmare on Channelside campaign world`} fetchPriority="high" decoding="async" />
         <div className={premium.collectionHeroCopy}>
           <span>{collection.name} · NIGHTMARE ON CHANNELSIDE</span>
           <h1>{world.title}</h1>

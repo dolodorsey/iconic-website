@@ -22,7 +22,7 @@ export default async function NightmareMerchPage() {
       <StoreHeader />
 
       <section className={premium.hero} aria-label="Nightmare on Channelside animated campaign home graphic">
-        <img src={NOC_MEDIA.homeHero} alt="Nightmare on Channelside Tampa campaign world" />
+        <img src={NOC_MEDIA.homeHero} alt="Nightmare on Channelside Tampa campaign world" fetchPriority="high" decoding="async" />
       </section>
 
       <div className={premium.ticker}>
@@ -38,15 +38,15 @@ export default async function NightmareMerchPage() {
 
         <section className={premium.portalGrid} aria-label="Nightmare storefront sections">
           <Link href={`${BASE}/shop`} className={premium.portal}>
-            <img src={NOC_MEDIA.market} alt="Nightmare on Channelside merch market" />
+            <img src={NOC_MEDIA.market} alt="Nightmare on Channelside merch market" loading="lazy" decoding="async" />
             <div className={premium.portalCopy}><span>THE MERCH FLOOR</span><strong>SHOP THE DROP</strong><em>ALL OFFICIAL PIECES →</em></div>
           </Link>
           <Link href={`${BASE}/worlds`} className={premium.portal}>
-            <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside hall of headliners" />
+            <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside hall of headliners" loading="lazy" decoding="async" />
             <div className={premium.portalCopy}><span>THE HALL OF HEADLINERS</span><strong>ENTER A WORLD</strong><em>SHOP BY ARTIST / CITY / EVENT →</em></div>
           </Link>
           <Link href={`${BASE}/archive`} className={premium.portal}>
-            <img src={NOC_MEDIA.archiveFacade} alt="Nightmare Archive Tampa" />
+            <img src={NOC_MEDIA.archiveFacade} alt="Nightmare Archive Tampa" loading="lazy" decoding="async" />
             <div className={premium.portalCopy}><span>THE VISUAL ARCHIVE</span><strong>SEE THE NIGHT</strong><em>CAMPAIGN / CULTURE / TAMPA →</em></div>
           </Link>
         </section>
@@ -67,7 +67,7 @@ export default async function NightmareMerchPage() {
       </div>
 
       <Link href={`${BASE}/archive`} className={premium.cinemaBand} aria-label="Enter the Nightmare Archive">
-        <img src={NOC_MEDIA.hall} alt="Nightmare on Channelside campaign hall" />
+        <img src={NOC_MEDIA.hall} alt="Nightmare on Channelside campaign hall" loading="lazy" decoding="async" />
       </Link>
 
       <StoreFooter />
