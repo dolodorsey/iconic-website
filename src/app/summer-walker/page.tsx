@@ -3,7 +3,7 @@ import LivePropertyPage from "@/app/_components/LivePropertyPage";
 import { drive } from "@/app/_components/IconicPage";
 
 export const metadata: Metadata = {
-  title: "Summer Walker — Soul Symphony | ICONIC LIVE",
+  title: "Summer Walker — Soul Symphony",
   description: "Summer Walker — Soul Symphony, a 10-city premium live experience through ICONIC LIVE. Request tour updates, presale, VIP, merch and partnership access.",
   openGraph: {
     title: "Summer Walker — Soul Symphony | ICONIC LIVE",
