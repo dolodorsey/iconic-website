@@ -3,7 +3,7 @@ import LivePropertyPage from "@/app/_components/LivePropertyPage";
 import { drive } from "@/app/_components/IconicPage";
 
 export const metadata: Metadata = {
-  title: "DJ Snake — Pardon My French | ICONIC LIVE",
+  title: "DJ Snake — Pardon My French",
   description: "DJ Snake — Pardon My French, a five-city U.S. stadium experience through ICONIC LIVE. Request presale, VIP, merch and partnership access.",
   openGraph: {
     title: "DJ Snake — Pardon My French | ICONIC LIVE",
