@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import AccessClient from "./AccessClient";
 
 export const metadata: Metadata = {
@@ -11,6 +12,10 @@ export const metadata: Metadata = {
   },
 };
 
+function AccessFallback(){
+  return <main style={{minHeight:"100vh",background:"#050403"}} />;
+}
+
 export default function AccessPage(){
-  return <AccessClient />;
+  return <Suspense fallback={<AccessFallback />}><AccessClient /></Suspense>;
 }
