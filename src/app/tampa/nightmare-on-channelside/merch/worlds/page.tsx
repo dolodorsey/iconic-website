@@ -19,8 +19,8 @@ export default async function NightmareWorldsPage() {
         <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside artist collections" fetchPriority="high" decoding="async" />
         <div className={`${premium.collectionHeroCopy} noc-page-hero-copy-v2`}>
           <span>SHOP BY ARTIST + COLLECTION</span>
-          <h1>WORLDS.</h1>
-          <p>Choose the artist, Tampa collection, full lineup or official event collection.</p>
+          <h1>COLLECTIONS.</h1>
+          <p>21 Savage, Kodak Black, DaBaby, Meek Mill, Belly Gang Kush, All Artists, Tampa and the official Nightmare on Channelside collection.</p>
         </div>
       </section>
       <StoreSubnav />
@@ -28,8 +28,8 @@ export default async function NightmareWorldsPage() {
         <section className={premium.section}>
           <div className={premium.sectionHead}>
             <span className={premium.eyebrow}>OFFICIAL NOC COLLECTIONS</span>
-            <h2 className="noc-editorial-heading">SHOP BY NAME</h2>
-            <p>Each collection has its own artwork and its own live merchandise.</p>
+            <h2 className="noc-editorial-heading">SHOP BY NAME.</h2>
+            <p>Each collection uses its own artist or collection artwork and its own live merchandise.</p>
           </div>
           {catalog.source === "unavailable" ? (
             <div className={premium.empty}><div><h1>COLLECTIONS ARE RELOADING.</h1><p>The live catalog is unavailable, so the collection pages stay closed until real inventory reconnects.</p></div></div>

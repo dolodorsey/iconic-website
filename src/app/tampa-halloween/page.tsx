@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import LivePropertyPage from "@/app/_components/LivePropertyPage";
 import { drive } from "@/app/_components/IconicPage";
+import { COLLECTION_ART, NOC_MEDIA } from "@/app/tampa/nightmare-on-channelside/merch/noc-assets";
 
 export const metadata: Metadata = {
   title: "Nightmare on Channelside — Tampa Halloween",
@@ -15,32 +16,45 @@ export const metadata: Metadata = {
 
 export default function TampaHalloweenPage(){
   return <LivePropertyPage
-    eyebrow="ICONIC LIVE · TAMPA · HALLOWEEN"
+    eyebrow="ICONIC LIVE · TAMPA HALLOWEEN"
     title="NIGHTMARE ON CHANNELSIDE."
-    sub="Tampa gets a full-scale Halloween concert built around music, spectacle, nightlife energy and collectible culture. 21 Savage leads the world; special guests, ticketing details and final venue information release through the ICONIC access system."
+    sub="Tampa gets a full-scale Halloween concert built around music, spectacle, nightlife energy and collectible culture. 21 Savage leads the world with Kodak Black, DaBaby, Meek Mill and Belly Gang Kush across the official event universe."
     visual={drive("1vyBkJOCw1uaIsc6KmO6ikJiwXSwT7K2n")}
     visualPosition="center 22%"
-    status="TAMPA · HALLOWEEN WEEKEND · ACCESS OPEN"
+    status="HALLOWEEN 2026 · TAMPA · ACCESS OPEN"
     accent="rgba(197,45,24,1)"
+    lineupEyebrow="THE LINEUP"
+    lineup={[
+      {name:"21 SAVAGE",src:COLLECTION_ART["21-savage"],href:"/tampa/nightmare-on-channelside/merch/collection/21-savage"},
+      {name:"KODAK BLACK",src:COLLECTION_ART["kodak-black"],href:"/tampa/nightmare-on-channelside/merch/collection/kodak-black"},
+      {name:"DABABY",src:COLLECTION_ART["da-baby"],href:"/tampa/nightmare-on-channelside/merch/collection/da-baby"},
+      {name:"MEEK MILL",src:COLLECTION_ART["meek-mill"],href:"/tampa/nightmare-on-channelside/merch/collection/meek-mill"},
+      {name:"BELLY GANG KUSH",src:COLLECTION_ART["belly-gang-kush"],href:"/tampa/nightmare-on-channelside/merch/collection/belly-gang-kush"},
+    ]}
     stats={[
-      {label:"Market",value:"Tampa",body:"A destination Halloween weekend built for Florida and fly-in traffic."},
-      {label:"Lead Artist",value:"21 Savage",body:"Headline creative direction with special guests released in campaign phases."},
-      {label:"Access",value:"Tickets + VIP",body:"Presale, premium hospitality and final event details flow through the live ICONIC intake system."},
-      {label:"Commerce",value:"Live Merch Shop",body:"The existing Nightmare storefront is connected directly to the current ICONIC slate."},
+      {label:"Market",value:"Tampa",body:"A destination Halloween event world built for Florida and fly-in traffic."},
+      {label:"Headline",value:"21 Savage",body:"The lead artist anchors a five-name lineup and artist-specific merch worlds."},
+      {label:"Access",value:"Presale + VIP",body:"Tickets, premium hospitality and fan access run through dedicated conversion paths."},
+      {label:"Commerce",value:"Official Merch",body:"Artist, Tampa, lineup and event collections are live in the connected NOC shop."},
     ]}
     pillars={[
       {label:"Show",title:"A concert with a cinematic horror world.",body:"The event should feel like stepping inside the campaign: dramatic arrival, immersive lighting, heavy stage language, visual reveals and an after-dark Tampa identity."},
-      {label:"Weekend",title:"Make Tampa the destination, not just the venue.",body:"Build travel, hospitality, nightlife and partner activations around the concert so the economic value extends beyond the ticket itself."},
-      {label:"Merch",title:"The concert becomes a collectible drop.",body:"Artist, city and Halloween capsules create multiple product lanes without flattening the show into generic tour merchandise."},
-      {label:"Partners",title:"Sponsors are integrated into the experience.",body:"Partner inventory should live inside arrivals, VIP, content, hospitality, beverage moments, fan capture and post-event media instead of logo walls."},
+      {label:"Weekend",title:"Make Tampa the destination, not just the venue.",body:"Travel, hospitality, nightlife and partner activations extend the value of the concert beyond a single ticket scan."},
+      {label:"Merch",title:"The concert becomes a collectible drop.",body:"Each artist gets a dedicated collection alongside Tampa, full-lineup and official-event merchandise."},
+      {label:"Partners",title:"Sponsors belong inside the experience.",body:"Partner inventory should live inside arrivals, VIP, content, hospitality, beverage moments and fan capture instead of passive logo walls."},
     ]}
-    primaryLabel="Join Tampa Presale"
+    gallery={[
+      {title:"THE GRAND HALL",src:NOC_MEDIA.homeHero},
+      {title:"THE NIGHTMARE MARKET",src:NOC_MEDIA.market},
+      {title:"THE HALL OF HEADLINERS",src:NOC_MEDIA.headliners},
+    ]}
+    primaryLabel="Get Tampa Access"
     primaryHref="/access?intent=presale&event=tampa-halloween"
     secondaryLabel="Sponsor Tampa"
     secondaryHref="/access?intent=sponsorship&event=tampa-halloween"
     merchLabel="Shop Tampa Merch"
     merchHref="/tampa/nightmare-on-channelside/merch/shop"
     footerEyebrow="HALLOWEEN · TAMPA"
-    footerTitle="ONE NIGHT SHOULD FEEL LIKE A WHOLE WORLD."
+    footerTitle="SAME CITY. A DARKER PLAYGROUND."
   />;
 }

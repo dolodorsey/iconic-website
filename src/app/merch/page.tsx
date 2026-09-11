@@ -1,55 +1,96 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Button, C, Hero, Section, Shell, drive } from "@/app/_components/IconicPage";
+import { Shell, drive } from "@/app/_components/IconicPage";
+import { getMerchCatalog } from "@/app/tampa/nightmare-on-channelside/merch/catalog";
+import { COLLECTION_ART, NOC_MEDIA } from "@/app/tampa/nightmare-on-channelside/merch/noc-assets";
 
 export const metadata: Metadata = {
   title: "Merch Vault",
   description: "Shop ICONIC LIVE event merchandise and join Summer Walker and DJ Snake tour drop lists.",
   openGraph: {
     title: "Merch Vault | ICONIC LIVE",
-    description: "Event capsules, city drops and limited tour merchandise from ICONIC LIVE.",
+    description: "Event capsules, artist collections and limited tour merchandise from ICONIC LIVE.",
     type: "website",
-    images: [{url:"/api/media/drive/1Gio-wmfrqQyKh8JSQIhvg_3K7VaQSuh8"}],
+    images: [{url:NOC_MEDIA.market}],
   },
 };
 
-const drops=[
-  {eyebrow:"TAMPA HALLOWEEN",title:"21 SAVAGE CAPSULE",src:drive("14w6pg3TA_RtOxV7TppU7WbI05MvRyqaN"),status:"SHOP LIVE",href:"/tampa/nightmare-on-channelside/merch/shop"},
-  {eyebrow:"TAMPA HALLOWEEN",title:"CITY + CULTURE",src:drive("1ctLFS3dy1zU-nKtB5fV-7-5dIpZc2xc2"),status:"EVENT SHOP",href:"/tampa/nightmare-on-channelside/merch/shop"},
-  {eyebrow:"TAMPA HALLOWEEN",title:"NIGHTMARE EDITION",src:drive("1FAGgotyr8ybyuIO4HjzlWXf2eK4aX3Ge"),status:"HALLOWEEN SHOP",href:"/tampa/nightmare-on-channelside/merch/shop"},
-  {eyebrow:"ICONIC LIVE",title:"VAULT EXCLUSIVES",src:drive("1YNtG29MKb9N3vGpsy2ehv1xvBteW_nh7"),status:"ACCESS LIST FIRST",href:"/access?intent=merch"},
-  {eyebrow:"SUMMER WALKER",title:"SOUL SYMPHONY DROP",src:drive("1VLMzdfR0ZPM028H6QPjVyzLHakSRG4oX"),status:"JOIN DROP LIST",href:"/access?intent=merch&event=summer-walker-soul-symphony"},
-  {eyebrow:"DJ SNAKE",title:"PARDON MY FRENCH DROP",src:drive("1FqMDPe63LypEQFK3iQW-dJLNJiRTRi9R"),status:"JOIN DROP LIST",href:"/access?intent=merch&event=dj-snake-pardon-my-french"},
+const artistSlugs = ["21-savage","kodak-black","da-baby","meek-mill","belly-gang-kush"] as const;
+const futureDrops = [
+  { title:"SUMMER WALKER", line:"SOUL SYMPHONY TOUR DROP", src:drive("1VLMzdfR0ZPM028H6QPjVyzLHakSRG4oX"), href:"/access?intent=merch&event=summer-walker-soul-symphony" },
+  { title:"DJ SNAKE", line:"PARDON MY FRENCH DROP", src:drive("1FqMDPe63LypEQFK3iQW-dJLNJiRTRi9R"), href:"/access?intent=merch&event=dj-snake-pardon-my-french" },
 ];
 
-export default function MerchPage(){return <Shell>
-  <Hero visual={drive("1Gio-wmfrqQyKh8JSQIhvg_3K7VaQSuh8")} visualPosition="center 35%" eyebrow="ICONIC LIVE · MERCH VAULT" title="WEAR THE MOMENT." sub="Event capsules should feel like real streetwear — not disposable concert souvenirs. The ICONIC merch vault connects the live Tampa storefront with separate Summer Walker, DJ Snake and master-brand drop lists." visualNote="LIVE SHOP · LIMITED DROPS · TOUR WAITLISTS">
-    <Button href="/tampa/nightmare-on-channelside/merch/shop">Shop Tampa Halloween</Button><Button href="/access?intent=merch" ghost>Join Vault Access</Button>
-  </Hero>
+export default async function MerchPage(){
+  const catalog = await getMerchCatalog();
+  const bySlug = new Map(catalog.collections.map((collection) => [collection.slug, collection]));
+  const productFor = (slug:string) => catalog.products.find((product) => product.collection_slug === slug);
 
-  <Section eyebrow="Current Vault" title="Shop what is live. Join what is next." dark>
-    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
-      {drops.map((drop)=><Link key={drop.title} href={drop.href} className="iconic-media-card" style={{position:"relative",minHeight:520,overflow:"hidden",border:`1px solid ${C.faint}`,borderRadius:24,color:C.white,textDecoration:"none"}}>
-        <img src={drop.src} alt={drop.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover"}}/>
-        <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(0,0,0,.02) 30%,rgba(0,0,0,.95))"}}/>
-        <div style={{position:"absolute",left:26,right:26,bottom:26}}>
-          <div style={{display:"flex",justifyContent:"space-between",gap:16,alignItems:"center",marginBottom:10}}><span style={{fontSize:8,fontWeight:900,letterSpacing:".22em",color:C.gold2}}>{drop.eyebrow}</span><span style={{fontSize:18}}>↗</span></div>
-          <h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(34px,4vw,58px)",lineHeight:.9,letterSpacing:"-.04em",margin:0}}>{drop.title}</h2>
-          <div style={{marginTop:16,fontSize:8,fontWeight:900,letterSpacing:".16em",color:C.muted}}>{drop.status}</div>
+  return <Shell>
+    <div className="ov-page">
+      <section className="ov-merch-hero">
+        <img src={NOC_MEDIA.market} alt="ICONIC live merchandise collections" fetchPriority="high"/>
+        <div className="ov-merch-hero-copy">
+          <div className="ov-kicker">ICONIC LIVE PRESENTS</div>
+          <h1 className="ov-display">SHOP THE LINEUP.</h1>
+          <p className="ov-copy">Tampa Halloween artist collections are live now. Tour drops for Summer Walker and DJ Snake remain separated so every property keeps its own visual world.</p>
+          <div className="ov-actions"><Link className="ov-btn" href="/tampa/nightmare-on-channelside/merch/shop">Shop Tampa Halloween →</Link><Link className="ov-btn ghost" href="/access?intent=merch">Join Drop Access</Link></div>
         </div>
-      </Link>)}
-    </div>
-  </Section>
+      </section>
 
-  <Section eyebrow="Commerce System" title="Each property keeps its own product lane.">
-    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(235px,1fr))",gap:14}}>
-      {[
-        ["01","ARTIST","Artist-led graphics and official concert capsule pieces."],
-        ["02","CITY","Market-specific marks, dates, culture references and location drops."],
-        ["03","EVENT","Show-specific collectible product tied to the actual live world."],
-        ["04","ICONIC","Master-brand essentials that travel across every ICONIC LIVE property."],
-      ].map(([n,title,body])=><div key={title} className="glass market-card" style={{padding:28,borderRadius:22}}><div style={{color:C.gold2,fontSize:9,fontWeight:900,letterSpacing:".2em"}}>{n}</div><h3 style={{fontFamily:"Georgia,serif",fontSize:34,margin:"18px 0 12px"}}>{title}</h3><p style={{color:C.muted,fontSize:13,lineHeight:1.7,margin:0}}>{body}</p></div>)}
+      <section style={{padding:"28px 0 34px",borderBottom:"1px solid rgba(226,176,74,.26)"}}>
+        <div className="ov-shell">
+          <div className="ov-section-label"><span>TAMPA HALLOWEEN COLLECTIONS</span><small>ARTIST-SPECIFIC MERCH · REAL SHOPIFY PRODUCT VIEWS</small></div>
+          <div className="ov-merch-collections">
+            {artistSlugs.map((slug) => {
+              const collection = bySlug.get(slug);
+              const product = productFor(slug);
+              if (!collection) return null;
+              return <Link href={`/tampa/nightmare-on-channelside/merch/collection/${slug}`} className="ov-merch-collection-card" key={slug}>
+                <div className="ov-merch-collection-art"><img src={COLLECTION_ART[slug]} alt={collection.name}/><div className="ov-merch-collection-name">{collection.name}</div></div>
+                <div className="ov-merch-collection-meta">
+                  <span>SHOP COLLECTION →</span>
+                  {product ? <div className="ov-mini-product-pair">
+                    {product.primary_image_url ? <figure><img src={product.primary_image_url} alt={`${product.title} front`}/><figcaption>FRONT</figcaption></figure> : null}
+                    {product.secondary_image_url ? <figure><img src={product.secondary_image_url} alt={`${product.title} back`}/><figcaption>BACK</figcaption></figure> : null}
+                  </div> : null}
+                </div>
+              </Link>;
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section style={{padding:"34px 0",borderBottom:"1px solid rgba(226,176,74,.26)",background:"rgba(226,176,74,.015)"}}>
+        <div className="ov-shell">
+          <div className="ov-section-label"><span>MORE FROM NIGHTMARE ON CHANNELSIDE</span><small>FULL LINEUP · TAMPA · OFFICIAL EVENT</small></div>
+          <div className="ov-property-strip">
+            {[
+              ["ALL ARTISTS","Full Lineup Collection",COLLECTION_ART["all-artists"],"all-artists"],
+              ["TAMPA","City Collection",COLLECTION_ART.tampa,"tampa"],
+              ["NIGHTMARE ON CHANNELSIDE","Official Event Collection",COLLECTION_ART["nightmare-on-channelside"],"nightmare-on-channelside"],
+              ["SHOP ALL","Full Live Catalog",NOC_MEDIA.homeHero,"shop"],
+            ].map(([title,meta,src,slug]) => <Link key={title} className="ov-property-card" href={slug === "shop" ? "/tampa/nightmare-on-channelside/merch/shop" : `/tampa/nightmare-on-channelside/merch/collection/${slug}`}><img src={src} alt={title}/><div className="ov-property-card-copy"><strong>{title}</strong><span>{meta} →</span></div></Link>)}
+          </div>
+        </div>
+      </section>
+
+      <section style={{padding:"34px 0"}}>
+        <div className="ov-shell">
+          <div className="ov-section-label"><span>NEXT DROPS</span><small>SEPARATE TOUR WORLDS · ACCESS LIST FIRST</small></div>
+          <div className="ov-gallery-grid">
+            {futureDrops.map((drop) => <Link href={drop.href} className="ov-gallery-card" key={drop.title} style={{color:"inherit",textDecoration:"none"}}><img src={drop.src} alt={drop.title}/><strong>{drop.title}<br/><span style={{fontSize:15,color:"#ffd978"}}>{drop.line}</span></strong></Link>)}
+            <Link href="/access?intent=merch" className="ov-access-card" style={{color:"inherit",textDecoration:"none"}}><div className="ov-kicker">MERCH ACCESS</div><h3>GET THE DROP BEFORE THE CROWD.</h3><p className="ov-copy">Future event and tour capsules stay gated to their own release lists.</p><span className="ov-btn ghost">Join Access →</span></Link>
+          </div>
+        </div>
+      </section>
+
+      <div className="ov-trust-strip">
+        <div><b>OFFICIAL EVENT MERCH</b><span>Artist, city and show-specific collections.</span></div>
+        <div><b>FRONT + BACK VIEWS</b><span>Quick-glance product presentation throughout the shop.</span></div>
+        <div><b>LIVE SHOPIFY INVENTORY</b><span>Real variants and real checkout, not placeholders.</span></div>
+        <div><b>SECURE CHECKOUT</b><span>Cart and checkout remain isolated to the NOC catalog.</span></div>
+      </div>
     </div>
-    <div style={{marginTop:30,display:"flex",gap:10,flexWrap:"wrap"}}><Button href="/tampa/nightmare-on-channelside/merch/shop">Open Live Shop</Button><Button href="/access?intent=merch" ghost>Get Drop Alerts</Button></div>
-  </Section>
-</Shell>}
+  </Shell>;
+}
