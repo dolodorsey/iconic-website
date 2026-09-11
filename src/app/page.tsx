@@ -1,17 +1,17 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Shell, drive } from "./_components/IconicPage";
-import { COLLECTION_ART } from "./tampa/nightmare-on-channelside/merch/noc-assets";
+import { Shell } from "./_components/IconicPage";
+import { COLLECTION_ART, NOC_MEDIA } from "./tampa/nightmare-on-channelside/merch/noc-assets";
 
 export const metadata: Metadata = {
   title: "Concerts, Tours & Culture",
   description: "ICONIC LIVE presents Tampa Halloween, Summer Walker — Soul Symphony, DJ Snake — Pardon My French, live concert merch and premium fan and partner experiences.",
 };
 
-const TAMPA = drive("1vyBkJOCw1uaIsc6KmO6ikJiwXSwT7K2n");
-const SUMMER = drive("1VLMzdfR0ZPM028H6QPjVyzLHakSRG4oX");
-const DJ = drive("1FqMDPe63LypEQFK3iQW-dJLNJiRTRi9R");
-const MERCH = drive("1Gio-wmfrqQyKh8JSQIhvg_3K7VaQSuh8");
+const TAMPA = NOC_MEDIA.headliners;
+const SUMMER = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summer-walker-soul-symphony.jpg?v=1789170574";
+const DJ = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-dj-snake-pardon-my-french.jpg?v=1789170586";
+const MERCH = NOC_MEDIA.market;
 
 const properties = [
   { title: "TAMPA HALLOWEEN", meta: "Nightmare on Channelside", href: "/tampa-halloween", src: TAMPA },
