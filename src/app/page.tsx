@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Button, C, Hero, InfoGrid, Section, Shell, drive } from "./_components/IconicPage";
 
 export const metadata: Metadata = {
-  title: "ICONIC LIVE — Concerts, Tours & Culture",
-  description: "ICONIC LIVE presents Tampa Halloween, Summer Walker — Soul Symphony, DJ Snake — Pardon My French, limited merch drops and premium live experiences.",
+  title: "Concerts, Tours & Culture",
+  description: "ICONIC LIVE presents Tampa Halloween, Summer Walker — Soul Symphony, DJ Snake — Pardon My French, live concert merch and premium fan and partner experiences.",
 };
 
 const HOME_HERO=drive("1_EJ4MGIcBT0pFi29cHQoHE_tfrFL-sVe");
@@ -13,7 +13,7 @@ const liveSlate=[
   {
     eyebrow:"TAMPA · HALLOWEEN",
     title:"NIGHTMARE ON CHANNELSIDE",
-    meta:"21 Savage · Halloween Weekend · Access Open",
+    meta:"21 Savage · Halloween Weekend · Presale + VIP + Live Merch",
     href:"/tampa-halloween",
     src:drive("1vyBkJOCw1uaIsc6KmO6ikJiwXSwT7K2n"),
     position:"center 22%",
@@ -21,15 +21,15 @@ const liveSlate=[
   {
     eyebrow:"10-CITY TOUR",
     title:"SUMMER WALKER — SOUL SYMPHONY",
-    meta:"R&B × Symphony · Cities Announcing",
+    meta:"R&B × Symphony · Tour Access + Partnerships",
     href:"/summer-walker",
     src:drive("1VLMzdfR0ZPM028H6QPjVyzLHakSRG4oX"),
     position:"center 22%",
   },
   {
-    eyebrow:"MULTI-CITY TOUR",
+    eyebrow:"5-CITY STADIUM TOUR",
     title:"DJ SNAKE — PARDON MY FRENCH",
-    meta:"5+ Cities · Access Open",
+    meta:"5 Cities · 5 Stadiums · Access Open",
     href:"/dj-snake-pardon-my-french",
     src:drive("1FqMDPe63LypEQFK3iQW-dJLNJiRTRi9R"),
     position:"center 20%",
@@ -37,7 +37,7 @@ const liveSlate=[
   {
     eyebrow:"ICONIC LIVE",
     title:"MERCH VAULT",
-    meta:"Event Capsules · City Drops · Limited Runs",
+    meta:"Tampa Shop Live · Summer + PMF Drop Lists",
     href:"/merch",
     src:drive("14w6pg3TA_RtOxV7TppU7WbI05MvRyqaN"),
     position:"center center",
@@ -54,15 +54,15 @@ const ecosystem=[
 ];
 
 export default function Home(){return <Shell>
-  <Hero visual={HOME_HERO} eyebrow="ICONIC LIVE · CURRENT SLATE" title="THE NEXT ICONIC ERA IS LIVE." sub="Four active lanes now lead the platform: Tampa Halloween, Summer Walker — Soul Symphony, DJ Snake — Pardon My French and the ICONIC merch vault. Every property keeps its own creative world, funnel and commercial architecture under one master live-entertainment platform." visualNote="CONCERTS · TOURS · MERCH · PARTNERSHIPS">
+  <Hero visual={HOME_HERO} eyebrow="ICONIC LIVE · CURRENT SLATE" title="THE NEXT ICONIC ERA IS LIVE." sub="Four active lanes now lead the platform: Tampa Halloween, Summer Walker — Soul Symphony, DJ Snake — Pardon My French and the ICONIC merch vault. Every property keeps its own creative world, conversion funnel and commercial architecture under one master live-entertainment platform." visualNote="CONCERTS · TOURS · MERCH · PARTNERSHIPS">
     <Button href="#current-slate">Explore The Slate</Button><Button href="/access?intent=presale" ghost>Get First Access</Button>
   </Hero>
 
   <section style={{position:"relative",zIndex:2,padding:"30px clamp(22px,6vw,90px) 90px"}}><div style={{maxWidth:1450,margin:"0 auto"}}><InfoGrid items={[
-    {label:"Priority 01",value:"Tampa Halloween",body:"Immediate concert, ticketing, sponsorship and merch conversion lane."},
-    {label:"Priority 02",value:"Summer Walker",body:"10-city premium Soul Symphony tour platform."},
-    {label:"Priority 03",value:"DJ Snake",body:"Pardon My French multi-city tour platform."},
-    {label:"Priority 04",value:"Merch Vault",body:"Event drops, city capsules and evergreen ICONIC product."},
+    {label:"Priority 01",value:"Tampa Halloween",body:"Immediate concert, presale, VIP, sponsor and live-merch conversion lane."},
+    {label:"Priority 02",value:"Summer Walker",body:"10-city premium Soul Symphony tour platform with direct fan and partner capture."},
+    {label:"Priority 03",value:"DJ Snake",body:"Five-city U.S. stadium Pardon My French route with city and venue architecture."},
+    {label:"Priority 04",value:"Merch Vault",body:"Live Tampa commerce plus property-specific Summer Walker and PMF drop lists."},
   ]}/></div></section>
 
   <Section eyebrow="Now On ICONIC" title="Four properties. Four distinct worlds." dark>
@@ -79,13 +79,13 @@ export default function Home(){return <Shell>
     </div>
   </Section>
 
-  <Section eyebrow="Conversion System" title="Every page should move somebody to a next action.">
+  <Section eyebrow="Conversion System" title="Every page moves somebody to a real next action.">
     <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))",gap:14}}>
       {[
-        ["TICKETS + PRESALE","Get release alerts before the public rush.","/access?intent=presale"],
-        ["VIP + HOSPITALITY","Premium seating, hosted moments and elevated arrival.","/access?intent=vip"],
-        ["SPONSORSHIPS","Build brand integrations into the actual fan journey.","/access?intent=sponsorship"],
-        ["MERCH DROPS","Get first access to limited event and city capsules.","/access?intent=merch"],
+        ["TICKETS + PRESALE","Join release alerts and city-specific access before the public rush.","/access?intent=presale"],
+        ["VIP + HOSPITALITY","Request premium seating, hosted moments and elevated arrival.","/access?intent=vip"],
+        ["SPONSORSHIPS","Route brand opportunities into the dedicated commercial intake system.","/access?intent=sponsorship"],
+        ["MERCH","Shop Tampa now or join property-specific future drop lists.","/merch"],
       ].map(([title,body,href])=><Link key={title} href={href} className="glass market-card" style={{padding:30,borderRadius:24,color:C.white,textDecoration:"none",minHeight:230,display:"flex",flexDirection:"column",justifyContent:"space-between"}}><div style={{fontSize:8,fontWeight:900,letterSpacing:".2em",color:C.gold2}}>{title}</div><div><p style={{fontFamily:"Georgia,serif",fontSize:30,lineHeight:1.02,margin:"0 0 18px"}}>{body}</p><span style={{fontSize:20}}>↗</span></div></Link>)}
     </div>
   </Section>
@@ -105,5 +105,3 @@ export default function Home(){return <Shell>
     </div>
   </section>
 </Shell>}
-
-// Production deployment refresh — 2026-09-11
