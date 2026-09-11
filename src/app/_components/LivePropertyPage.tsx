@@ -1,8 +1,9 @@
+import Link from "next/link";
 import { Button, C, Hero, InfoGrid, Section, Shell } from "./IconicPage";
 
 type Stat = { label: string; value: string; body?: string };
 type Pillar = { label: string; title: string; body: string };
-type Stop = { city: string; venue: string; meta?: string; note?: string };
+type Stop = { city: string; venue: string; meta?: string; note?: string; href?: string };
 
 type LivePropertyPageProps = {
   eyebrow: string;
@@ -73,10 +74,14 @@ export default function LivePropertyPage({
 
       {stops && stops.length > 0 && <Section eyebrow={stopsEyebrow} title={stopsTitle}>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(245px,1fr))",gap:12}}>
-          {stops.map((stop,index)=><article key={`${stop.city}-${stop.venue}`} className="glass market-card" style={{padding:26,borderRadius:22,minHeight:205,display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
-            <div style={{display:"flex",justifyContent:"space-between",gap:16,alignItems:"center"}}><span style={{fontSize:8,fontWeight:900,letterSpacing:".2em",color:C.gold2}}>{String(index+1).padStart(2,"0")}</span>{stop.meta && <span style={{fontSize:8,fontWeight:900,letterSpacing:".12em",color:C.muted,textTransform:"uppercase"}}>{stop.meta}</span>}</div>
-            <div style={{marginTop:32}}><h3 style={{fontFamily:"Georgia,serif",fontSize:36,lineHeight:.95,margin:"0 0 9px",letterSpacing:"-.03em"}}>{stop.city}</h3><div style={{fontSize:11,fontWeight:900,letterSpacing:".09em",textTransform:"uppercase",color:C.white}}>{stop.venue}</div>{stop.note && <p style={{fontSize:12,lineHeight:1.65,color:C.muted,margin:"12px 0 0"}}>{stop.note}</p>}</div>
-          </article>)}
+          {stops.map((stop,index)=>{
+            const card=<>
+              <div style={{display:"flex",justifyContent:"space-between",gap:16,alignItems:"center"}}><span style={{fontSize:8,fontWeight:900,letterSpacing:".2em",color:C.gold2}}>{String(index+1).padStart(2,"0")}</span><div style={{display:"flex",gap:10,alignItems:"center"}}>{stop.meta && <span style={{fontSize:8,fontWeight:900,letterSpacing:".12em",color:C.muted,textTransform:"uppercase"}}>{stop.meta}</span>}{stop.href && <span style={{fontSize:17}}>↗</span>}</div></div>
+              <div style={{marginTop:32}}><h3 style={{fontFamily:"Georgia,serif",fontSize:36,lineHeight:.95,margin:"0 0 9px",letterSpacing:"-.03em"}}>{stop.city}</h3><div style={{fontSize:11,fontWeight:900,letterSpacing:".09em",textTransform:"uppercase",color:C.white}}>{stop.venue}</div>{stop.note && <p style={{fontSize:12,lineHeight:1.65,color:C.muted,margin:"12px 0 0"}}>{stop.note}</p>}</div>
+            </>;
+            const style={padding:26,borderRadius:22,minHeight:205,display:"flex",flexDirection:"column" as const,justifyContent:"space-between",color:C.white,textDecoration:"none"};
+            return stop.href ? <Link key={`${stop.city}-${stop.venue}`} href={stop.href} className="glass market-card" style={style}>{card}</Link> : <article key={`${stop.city}-${stop.venue}`} className="glass market-card" style={style}>{card}</article>;
+          })}
         </div>
         <div style={{marginTop:28,display:"flex",gap:10,flexWrap:"wrap"}}><Button href={primaryHref}>{primaryLabel}</Button><Button href={merchHref} ghost>{merchLabel}</Button></div>
       </Section>}
