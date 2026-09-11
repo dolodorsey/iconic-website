@@ -4,8 +4,13 @@ import { C, Section, Shell } from "@/app/_components/IconicPage";
 import AccessForm from "./AccessForm";
 
 export const metadata: Metadata = {
-  title: "Access | ICONIC LIVE",
-  description: "Tickets, presale, VIP, travel, merch and partnership access for ICONIC live entertainment.",
+  title: "Access",
+  description: "Tickets, presale, VIP, sponsorship, merch, media and partnership access for ICONIC LIVE concerts and tours.",
+  openGraph: {
+    title: "Access | ICONIC LIVE",
+    description: "Request tickets, VIP, sponsorship, merch, media or partnership access for ICONIC LIVE.",
+    type: "website",
+  },
 };
 
 const intents = {
