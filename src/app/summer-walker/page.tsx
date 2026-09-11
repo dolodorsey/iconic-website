@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import LivePropertyPage from "@/app/_components/LivePropertyPage";
-import { drive } from "@/app/_components/IconicPage";
+
+const SUMMER_VISUAL = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summer-walker-soul-symphony.jpg?v=1789170574";
 
 export const metadata: Metadata = {
   title: "Summer Walker — Soul Symphony",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
     title: "Summer Walker — Soul Symphony | ICONIC LIVE",
     description: "A 10-city premium R&B × Symphony live experience. Request presale, VIP and partnership access.",
     type: "website",
-    images: [{url:"/api/media/drive/1VLMzdfR0ZPM028H6QPjVyzLHakSRG4oX"}],
+    images: [{url:SUMMER_VISUAL}],
   },
 };
 
@@ -18,7 +19,7 @@ export default function SummerWalkerPage(){
     eyebrow="ICONIC LIVE · SUMMER WALKER"
     title="SOUL SYMPHONY."
     sub="Summer Walker in a premium 10-city live format where modern R&B meets orchestral scale. The experience is intimate in emotion and arena-level in production — built for cinematic reveals, elevated hospitality, sponsor integration and a city-by-city cultural moment."
-    visual={drive("1VLMzdfR0ZPM028H6QPjVyzLHakSRG4oX")}
+    visual={SUMMER_VISUAL}
     visualPosition="center 24%"
     status="10-CITY TOUR · CITY ACCESS OPEN"
     accent="rgba(151,83,118,1)"
