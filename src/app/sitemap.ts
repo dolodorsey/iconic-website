@@ -7,6 +7,11 @@ const MERCH_BASE = "/tampa/nightmare-on-channelside/merch";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const coreRoutes = [
     "",
+    "/access",
+    "/tampa-halloween",
+    "/summer-walker",
+    "/dj-snake-pardon-my-french",
+    "/merch",
     "/atlanta",
     "/southlake-arena",
     "/ball-series",
@@ -32,6 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const collectionRoutes = catalog.collections.map((collection) => `${MERCH_BASE}/collection/${collection.slug}`);
   const productRoutes = catalog.products.map((product) => `${MERCH_BASE}/collection/${product.collection_slug}/${product.sku}`);
   const routes = Array.from(new Set([...coreRoutes, ...collectionRoutes, ...productRoutes]));
+  const priorityRoutes = new Set(["/tampa-halloween","/summer-walker","/dj-snake-pardon-my-french","/merch"]);
 
   return routes.map((route, index) => {
     const isProduct = route.split("/").length >= 8;
@@ -41,8 +47,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return {
       url: `${SITE_URL}${route}`,
       lastModified: new Date(),
-      changeFrequency: (isPolicy ? "monthly" : isMerch ? "daily" : index === 0 ? "daily" : "weekly") as MetadataRoute.Sitemap[number]["changeFrequency"],
-      priority: index === 0 ? 1 : isPolicy ? 0.5 : isProduct ? 0.8 : isCollection ? 0.9 : route.includes("nightmare-on-channelside") || route === "/atlanta/bravo" ? 0.95 : 0.8,
+      changeFrequency: (isPolicy ? "monthly" : isMerch || priorityRoutes.has(route) ? "daily" : index === 0 ? "daily" : "weekly") as MetadataRoute.Sitemap[number]["changeFrequency"],
+      priority: index === 0 ? 1 : priorityRoutes.has(route) ? 0.98 : isPolicy ? 0.5 : isProduct ? 0.8 : isCollection ? 0.9 : route.includes("nightmare-on-channelside") || route === "/atlanta/bravo" ? 0.95 : 0.8,
     };
   });
 }
