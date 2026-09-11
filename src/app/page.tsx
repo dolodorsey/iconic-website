@@ -1,107 +1,115 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Button, C, Hero, InfoGrid, Section, Shell, drive } from "./_components/IconicPage";
+import { Shell, drive } from "./_components/IconicPage";
+import { COLLECTION_ART } from "./tampa/nightmare-on-channelside/merch/noc-assets";
 
 export const metadata: Metadata = {
   title: "Concerts, Tours & Culture",
   description: "ICONIC LIVE presents Tampa Halloween, Summer Walker — Soul Symphony, DJ Snake — Pardon My French, live concert merch and premium fan and partner experiences.",
 };
 
-const HOME_HERO=drive("1_EJ4MGIcBT0pFi29cHQoHE_tfrFL-sVe");
+const TAMPA = drive("1vyBkJOCw1uaIsc6KmO6ikJiwXSwT7K2n");
+const SUMMER = drive("1VLMzdfR0ZPM028H6QPjVyzLHakSRG4oX");
+const DJ = drive("1FqMDPe63LypEQFK3iQW-dJLNJiRTRi9R");
+const MERCH = drive("1Gio-wmfrqQyKh8JSQIhvg_3K7VaQSuh8");
 
-const liveSlate=[
-  {
-    eyebrow:"TAMPA · HALLOWEEN",
-    title:"NIGHTMARE ON CHANNELSIDE",
-    meta:"21 Savage · Halloween Weekend · Presale + VIP + Live Merch",
-    href:"/tampa-halloween",
-    src:drive("1vyBkJOCw1uaIsc6KmO6ikJiwXSwT7K2n"),
-    position:"center 22%",
-  },
-  {
-    eyebrow:"10-CITY TOUR",
-    title:"SUMMER WALKER — SOUL SYMPHONY",
-    meta:"R&B × Symphony · Tour Access + Partnerships",
-    href:"/summer-walker",
-    src:drive("1VLMzdfR0ZPM028H6QPjVyzLHakSRG4oX"),
-    position:"center 22%",
-  },
-  {
-    eyebrow:"5-CITY STADIUM TOUR",
-    title:"DJ SNAKE — PARDON MY FRENCH",
-    meta:"5 Cities · 5 Stadiums · Access Open",
-    href:"/dj-snake-pardon-my-french",
-    src:drive("1FqMDPe63LypEQFK3iQW-dJLNJiRTRi9R"),
-    position:"center 20%",
-  },
-  {
-    eyebrow:"ICONIC LIVE",
-    title:"MERCH VAULT",
-    meta:"Tampa Shop Live · Summer + PMF Drop Lists",
-    href:"/merch",
-    src:drive("14w6pg3TA_RtOxV7TppU7WbI05MvRyqaN"),
-    position:"center center",
-  },
+const properties = [
+  { title: "TAMPA HALLOWEEN", meta: "Nightmare on Channelside", href: "/tampa-halloween", src: TAMPA },
+  { title: "SUMMER WALKER", meta: "Soul Symphony", href: "/summer-walker", src: SUMMER },
+  { title: "DJ SNAKE", meta: "Pardon My French", href: "/dj-snake-pardon-my-french", src: DJ },
+  { title: "MERCH", meta: "ICONIC Live Collections", href: "/merch", src: MERCH },
 ];
 
-const ecosystem=[
-  {title:"SOUTHLAKE ARENA",meta:"ICONIC venue platform",href:"/southlake-arena"},
-  {title:"THE BALL SERIES",meta:"Formal + themed event series",href:"/ball-series"},
-  {title:"GROWN-ISH",meta:"21+ concert property",href:"/series/21-plus"},
-  {title:"SOUL SESSION",meta:"30+ concert property",href:"/series/30-plus"},
-  {title:"NEW YORK",meta:"Resorts World platform",href:"/new-york/resorts-world"},
-  {title:"NATIONAL MARKETS",meta:"Las Vegas · DC · Tampa",href:"/#national-circuit"},
+const merchTiles = [
+  { label: "21 SAVAGE", href: "/tampa/nightmare-on-channelside/merch/collection/21-savage", src: COLLECTION_ART["21-savage"] },
+  { label: "KODAK BLACK", href: "/tampa/nightmare-on-channelside/merch/collection/kodak-black", src: COLLECTION_ART["kodak-black"] },
+  { label: "DABABY", href: "/tampa/nightmare-on-channelside/merch/collection/da-baby", src: COLLECTION_ART["da-baby"] },
+  { label: "MEEK MILL", href: "/tampa/nightmare-on-channelside/merch/collection/meek-mill", src: COLLECTION_ART["meek-mill"] },
 ];
 
-export default function Home(){return <Shell>
-  <Hero visual={HOME_HERO} eyebrow="ICONIC LIVE · CURRENT SLATE" title="THE NEXT ICONIC ERA IS LIVE." sub="Four active lanes now lead the platform: Tampa Halloween, Summer Walker — Soul Symphony, DJ Snake — Pardon My French and the ICONIC merch vault. Every property keeps its own creative world, conversion funnel and commercial architecture under one master live-entertainment platform." visualNote="CONCERTS · TOURS · MERCH · PARTNERSHIPS">
-    <Button href="#current-slate">Explore The Slate</Button><Button href="/access?intent=presale" ghost>Get First Access</Button>
-  </Hero>
+export default function Home() {
+  return (
+    <Shell>
+      <div className="ov-page">
+        <section className="ov-home-hero">
+          <img src={TAMPA} alt="Nightmare on Channelside at Tampa Halloween" fetchPriority="high" />
+          <div className="ov-home-hero-copy">
+            <div className="ov-kicker">ICONIC LIVE PRESENTS</div>
+            <h1 className="ov-display">MORE THAN A CONCERT.</h1>
+            <h2>A WORLD OF ICONIC EXPERIENCES.</h2>
+            <p className="ov-copy">Music, culture, premium hospitality, collectible merch and city-scale live moments — built as distinct worlds under one ICONIC platform.</p>
+            <div className="ov-actions">
+              <Link className="ov-btn" href="/tampa-halloween">Explore Tampa Halloween →</Link>
+              <Link className="ov-btn ghost" href="/access?intent=presale">Get First Access</Link>
+            </div>
+          </div>
+          <div className="ov-hero-note">LEGENDS LIVE FOREVER</div>
+          <div className="ov-hero-rail" aria-hidden="true"><span/><span/><span/><span/></div>
+        </section>
 
-  <section style={{position:"relative",zIndex:2,padding:"30px clamp(22px,6vw,90px) 90px"}}><div style={{maxWidth:1450,margin:"0 auto"}}><InfoGrid items={[
-    {label:"Priority 01",value:"Tampa Halloween",body:"Immediate concert, presale, VIP, sponsor and live-merch conversion lane."},
-    {label:"Priority 02",value:"Summer Walker",body:"10-city premium Soul Symphony tour platform with direct fan and partner capture."},
-    {label:"Priority 03",value:"DJ Snake",body:"Five-city U.S. stadium Pardon My French route with city and venue architecture."},
-    {label:"Priority 04",value:"Merch Vault",body:"Live Tampa commerce plus property-specific Summer Walker and PMF drop lists."},
-  ]}/></div></section>
+        <section className="ov-featured-section">
+          <div className="ov-shell">
+            <div className="ov-section-label"><span>FEATURED PROPERTIES</span><small>FOUR WORLDS · ONE ICONIC PLATFORM</small></div>
+            <div className="ov-property-strip">
+              {properties.map((property) => (
+                <Link className="ov-property-card" href={property.href} key={property.title}>
+                  <img src={property.src} alt={property.title} />
+                  <div className="ov-property-card-copy"><strong>{property.title}</strong><span>{property.meta} →</span></div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
 
-  <Section eyebrow="Now On ICONIC" title="Four properties. Four distinct worlds." dark>
-    <div id="current-slate" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(310px,1fr))",gap:14}}>
-      {liveSlate.map((item,index)=><Link key={item.title} href={item.href} className="iconic-media-card" style={{position:"relative",minHeight:index<2?620:540,overflow:"hidden",border:`1px solid ${C.faint}`,borderRadius:26,color:C.white,textDecoration:"none"}}>
-        <img src={item.src} alt={item.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:item.position,transition:"transform .7s cubic-bezier(.16,1,.3,1)"}}/>
-        <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.94) 87%)"}}/>
-        <div style={{position:"absolute",left:28,right:28,bottom:28}}>
-          <div style={{display:"flex",justifyContent:"space-between",gap:16,alignItems:"center",marginBottom:14}}><span style={{fontSize:8,fontWeight:900,letterSpacing:".22em",color:C.gold2}}>{item.eyebrow}</span><span style={{fontSize:19}}>↗</span></div>
-          <h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(38px,4.5vw,66px)",lineHeight:.87,letterSpacing:"-.045em",margin:0}}>{item.title}</h2>
-          <div style={{marginTop:20,paddingTop:16,borderTop:`1px solid ${C.faint}`,fontSize:9,fontWeight:900,letterSpacing:".11em",textTransform:"uppercase",color:C.muted}}>{item.meta}</div>
+        <section className="ov-feature-band">
+          <img src={TAMPA} alt="Tampa Halloween — Nightmare on Channelside" />
+          <div className="ov-feature-band-copy">
+            <div className="ov-kicker">ICONIC LIVE · TAMPA</div>
+            <h2 className="ov-display">TAMPA HALLOWEEN.</h2>
+            <p className="ov-copy">Nightmare on Channelside leads the current slate with a full event world: headline talent, Halloween spectacle, VIP, partner integrations and an official merchandise ecosystem.</p>
+            <div className="ov-actions">
+              <Link className="ov-btn" href="/tampa-halloween">Event + Access →</Link>
+              <Link className="ov-btn ghost" href="/tampa/nightmare-on-channelside/merch/shop">Shop Merch</Link>
+            </div>
+          </div>
+        </section>
+
+        <div className="ov-shell">
+          <div className="ov-quick-grid">
+            <Link href="/access?intent=presale" className="ov-quick-card"><span>TICKETS + PRESALE</span><strong>Get release access before the public rush.</strong></Link>
+            <Link href="/access?intent=vip" className="ov-quick-card"><span>VIP + HOSPITALITY</span><strong>Premium seating, hosted moments and elevated arrival.</strong></Link>
+            <Link href="/access?intent=sponsorship" className="ov-quick-card"><span>SPONSORSHIPS</span><strong>Build brands into the actual fan journey.</strong></Link>
+            <Link href="/merch" className="ov-quick-card"><span>MERCH DROPS</span><strong>Wear the event after the stage goes dark.</strong></Link>
+          </div>
         </div>
-      </Link>)}
-    </div>
-  </Section>
 
-  <Section eyebrow="Conversion System" title="Every page moves somebody to a real next action.">
-    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))",gap:14}}>
-      {[
-        ["TICKETS + PRESALE","Join release alerts and city-specific access before the public rush.","/access?intent=presale"],
-        ["VIP + HOSPITALITY","Request premium seating, hosted moments and elevated arrival.","/access?intent=vip"],
-        ["SPONSORSHIPS","Route brand opportunities into the dedicated commercial intake system.","/access?intent=sponsorship"],
-        ["MERCH","Shop Tampa now or join property-specific future drop lists.","/merch"],
-      ].map(([title,body,href])=><Link key={title} href={href} className="glass market-card" style={{padding:30,borderRadius:24,color:C.white,textDecoration:"none",minHeight:230,display:"flex",flexDirection:"column",justifyContent:"space-between"}}><div style={{fontSize:8,fontWeight:900,letterSpacing:".2em",color:C.gold2}}>{title}</div><div><p style={{fontFamily:"Georgia,serif",fontSize:30,lineHeight:1.02,margin:"0 0 18px"}}>{body}</p><span style={{fontSize:20}}>↗</span></div></Link>)}
-    </div>
-  </Section>
+        <section className="ov-merch-band">
+          <div className="ov-shell ov-merch-layout">
+            <div className="ov-merch-copy">
+              <div className="ov-kicker">ICONIC MERCH</div>
+              <h2 className="ov-display">WEAR THE CULTURE.</h2>
+              <p className="ov-copy">Official event pieces and artist collections from the live Nightmare on Channelside shop.</p>
+              <div className="ov-actions"><Link className="ov-btn ghost" href="/tampa/nightmare-on-channelside/merch/shop">Shop All →</Link></div>
+            </div>
+            <div className="ov-merch-gallery">
+              {merchTiles.map((item) => <Link href={item.href} key={item.label}><img src={item.src} alt={item.label}/><span>{item.label}</span></Link>)}
+            </div>
+            <div className="ov-access-card">
+              <div className="ov-kicker">EXCLUSIVE ACCESS</div>
+              <h3>A HIGHER LEVEL OF LIVE.</h3>
+              <p className="ov-copy">Presale. VIP. hospitality. merch drops. partner experiences.</p>
+              <div className="ov-actions"><Link className="ov-btn" href="/access?intent=presale">Get Access →</Link></div>
+            </div>
+          </div>
+        </section>
 
-  <Section eyebrow="The Wider ICONIC Platform" title="Current priorities lead. Existing properties stay connected." dark>
-    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(245px,1fr))",gap:12}}>
-      {ecosystem.map((item)=><Link key={item.title} href={item.href} className="glass market-card" style={{padding:26,borderRadius:22,color:C.white,textDecoration:"none",minHeight:180,display:"flex",flexDirection:"column",justifyContent:"space-between"}}><div style={{fontSize:8,fontWeight:900,letterSpacing:".17em",color:C.gold2}}>ICONIC PROPERTY</div><div><h3 style={{fontFamily:"Georgia,serif",fontSize:31,lineHeight:.96,margin:"0 0 10px"}}>{item.title}</h3><div style={{fontSize:10,fontWeight:800,letterSpacing:".08em",textTransform:"uppercase",color:C.muted}}>{item.meta}</div></div></Link>)}
-    </div>
-  </Section>
-
-  <section id="national-circuit" style={{position:"relative",zIndex:2,padding:"120px clamp(22px,6vw,90px)",borderTop:`1px solid ${C.faint}`,overflow:"hidden"}}>
-    <div style={{position:"absolute",left:"20%",right:"20%",bottom:-120,height:300,background:"rgba(224,173,69,.2)",filter:"blur(150px)"}}/>
-    <div style={{position:"relative",maxWidth:1180,margin:"0 auto",textAlign:"center"}}>
-      <div style={{color:C.gold2,fontSize:9,fontWeight:900,letterSpacing:".3em",textTransform:"uppercase",marginBottom:18}}>Talent · Sponsors · Venues · Partners</div>
-      <h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(54px,8vw,124px)",lineHeight:.82,letterSpacing:"-.055em",margin:"0 0 30px"}}>BUILD THE NEXT ICONIC MOMENT.</h2>
-      <Button href="/access?intent=presale">Get Access</Button><Button href="/access?intent=partners" ghost>Partner With ICONIC</Button>
-    </div>
-  </section>
-</Shell>}
+        <div className="ov-trust-strip">
+          <div><b>LIVE EXPERIENCES</b><span>Concerts, tours and destination moments.</span></div>
+          <div><b>PREMIUM ACCESS</b><span>VIP, hospitality and priority release windows.</span></div>
+          <div><b>OFFICIAL MERCH</b><span>Artist, city and event collections.</span></div>
+          <div><b>PARTNER PLATFORM</b><span>Sponsorship, content and activation opportunities.</span></div>
+        </div>
+      </div>
+    </Shell>
+  );
+}
