@@ -29,9 +29,9 @@ export default function SummerWalkerPage(){
       {label:"Partners",title:"Brands enter through emotion and ritual.",body:"Beauty, fashion, beverage, travel and lifestyle partners fit best when they enhance the audience journey instead of interrupting the performance."},
     ]}
     primaryLabel="Get Tour Access"
-    primaryHref="/access?intent=presale"
+    primaryHref="/access?intent=presale&event=summer-walker-soul-symphony"
     secondaryLabel="Tour Partnerships"
-    secondaryHref="/access?intent=sponsorship"
+    secondaryHref="/access?intent=sponsorship&event=summer-walker-soul-symphony"
     footerEyebrow="SUMMER WALKER · SOUL SYMPHONY"
     footerTitle="HEAR THE SONGS BIGGER THAN BEFORE."
   />;
