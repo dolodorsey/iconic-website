@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { Button, C, Hero, InfoGrid, Section, Shell } from "./IconicPage";
+import { Button, Shell } from "./IconicPage";
 
 type Stat = { label: string; value: string; body?: string };
 type Pillar = { label: string; title: string; body: string };
 type Stop = { city: string; venue: string; meta?: string; note?: string; href?: string };
+type LineupItem = { name: string; src: string; href?: string };
+type GalleryItem = { title: string; src: string };
 
 type LivePropertyPageProps = {
   eyebrow: string;
@@ -15,6 +17,9 @@ type LivePropertyPageProps = {
   accent: string;
   stats: Stat[];
   pillars: Pillar[];
+  lineup?: LineupItem[];
+  lineupEyebrow?: string;
+  gallery?: GalleryItem[];
   stops?: Stop[];
   stopsEyebrow?: string;
   stopsTitle?: string;
@@ -38,6 +43,9 @@ export default function LivePropertyPage({
   accent,
   stats,
   pillars,
+  lineup,
+  lineupEyebrow = "THE LINEUP",
+  gallery,
   stops,
   stopsEyebrow = "Tour Architecture",
   stopsTitle = "The route becomes part of the campaign.",
@@ -52,48 +60,93 @@ export default function LivePropertyPage({
 }: LivePropertyPageProps) {
   return (
     <Shell>
-      <Hero visual={visual} visualPosition={visualPosition} eyebrow={eyebrow} title={title} sub={sub} visualNote={status}>
-        <Button href={primaryHref}>{primaryLabel}</Button>
-        <Button href={secondaryHref} ghost>{secondaryLabel}</Button>
-      </Hero>
+      <div className="ov-page">
+        <section className="ov-live-hero">
+          <img src={visual} alt={title} style={{objectPosition: visualPosition}} fetchPriority="high" />
+          <div className="ov-live-hero-inner">
+            <div className="ov-live-hero-copy">
+              <div className="ov-kicker">{eyebrow}</div>
+              <h1 className="ov-display">{title}</h1>
+              <p className="ov-copy">{sub}</p>
+              <div className="ov-actions">
+                <Link className="ov-btn" href={primaryHref}>{primaryLabel} →</Link>
+                <Link className="ov-btn ghost" href={secondaryHref}>{secondaryLabel}</Link>
+                <Link className="ov-btn ghost" href={merchHref}>{merchLabel}</Link>
+              </div>
+            </div>
+            <aside className="ov-live-media-card" style={{boxShadow:`inset 0 0 80px ${accent}18`}}>
+              <div className="ov-kicker">CURRENT STATUS</div>
+              <strong>{status}</strong>
+              <p className="ov-copy">Tickets, premium access, merch and partner opportunities live on separate conversion paths so the event can grow without flattening into one generic page.</p>
+              <Link className="ov-btn ghost" href={primaryHref}>Open Access →</Link>
+            </aside>
+          </div>
+        </section>
 
-      <section style={{position:"relative",zIndex:2,padding:"28px clamp(22px,6vw,90px) 88px"}}>
-        <div style={{maxWidth:1450,margin:"0 auto"}}><InfoGrid items={stats}/></div>
-      </section>
+        {lineup && lineup.length > 0 ? (
+          <section className="ov-lineup">
+            <div className="ov-shell">
+              <div className="ov-section-label"><span>{lineupEyebrow}</span><small>ARTIST-SPECIFIC WORLDS</small></div>
+              <div className="ov-lineup-grid">
+                {lineup.map((artist) => {
+                  const card = <><img src={artist.src} alt={artist.name}/><strong>{artist.name}</strong></>;
+                  return artist.href ? <Link className="ov-lineup-card" href={artist.href} key={artist.name}>{card}</Link> : <div className="ov-lineup-card" key={artist.name}>{card}</div>;
+                })}
+              </div>
+            </div>
+          </section>
+        ) : null}
 
-      <Section eyebrow="The Experience" title="Built as a world — not just a date on a flyer." dark>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
-          {pillars.map((pillar,index)=><article key={pillar.title} className="glass market-card" style={{padding:30,borderRadius:24,minHeight:290,position:"relative",overflow:"hidden"}}>
-            <div style={{position:"absolute",width:180,height:180,borderRadius:"50%",right:-80,top:-80,background:accent,filter:"blur(65px)",opacity:.17}}/>
-            <div style={{position:"relative",zIndex:2,color:C.gold2,fontSize:8,fontWeight:900,letterSpacing:".22em",textTransform:"uppercase"}}>{String(index+1).padStart(2,"0")} / {pillar.label}</div>
-            <h2 style={{position:"relative",zIndex:2,fontFamily:"Georgia,serif",fontSize:"clamp(32px,3.1vw,48px)",lineHeight:.96,letterSpacing:"-.035em",margin:"20px 0 16px"}}>{pillar.title}</h2>
-            <p style={{position:"relative",zIndex:2,color:C.muted,fontSize:13,lineHeight:1.75,margin:0}}>{pillar.body}</p>
-          </article>)}
+        <div className="ov-shell">
+          <div className="ov-stat-row">
+            {stats.map((stat) => <div className="ov-stat-card" key={stat.label}><span>{stat.label}</span><strong>{stat.value}</strong>{stat.body ? <p>{stat.body}</p> : null}</div>)}
+          </div>
         </div>
-      </Section>
 
-      {stops && stops.length > 0 && <Section eyebrow={stopsEyebrow} title={stopsTitle}>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(245px,1fr))",gap:12}}>
-          {stops.map((stop,index)=>{
-            const card=<>
-              <div style={{display:"flex",justifyContent:"space-between",gap:16,alignItems:"center"}}><span style={{fontSize:8,fontWeight:900,letterSpacing:".2em",color:C.gold2}}>{String(index+1).padStart(2,"0")}</span><div style={{display:"flex",gap:10,alignItems:"center"}}>{stop.meta && <span style={{fontSize:8,fontWeight:900,letterSpacing:".12em",color:C.muted,textTransform:"uppercase"}}>{stop.meta}</span>}{stop.href && <span style={{fontSize:17}}>↗</span>}</div></div>
-              <div style={{marginTop:32}}><h3 style={{fontFamily:"Georgia,serif",fontSize:36,lineHeight:.95,margin:"0 0 9px",letterSpacing:"-.03em"}}>{stop.city}</h3><div style={{fontSize:11,fontWeight:900,letterSpacing:".09em",textTransform:"uppercase",color:C.white}}>{stop.venue}</div>{stop.note && <p style={{fontSize:12,lineHeight:1.65,color:C.muted,margin:"12px 0 0"}}>{stop.note}</p>}</div>
-            </>;
-            const style={padding:26,borderRadius:22,minHeight:205,display:"flex",flexDirection:"column" as const,justifyContent:"space-between",color:C.white,textDecoration:"none"};
-            return stop.href ? <Link key={`${stop.city}-${stop.venue}`} href={stop.href} className="glass market-card" style={style}>{card}</Link> : <article key={`${stop.city}-${stop.venue}`} className="glass market-card" style={style}>{card}</article>;
-          })}
-        </div>
-        <div style={{marginTop:28,display:"flex",gap:10,flexWrap:"wrap"}}><Button href={primaryHref}>{primaryLabel}</Button><Button href={merchHref} ghost>{merchLabel}</Button></div>
-      </Section>}
+        <section style={{borderTop:"1px solid rgba(226,176,74,.26)",borderBottom:"1px solid rgba(226,176,74,.26)",background:"rgba(226,176,74,.015)"}}>
+          <div className="ov-shell">
+            <div style={{paddingTop:30}}><div className="ov-kicker">THE EXPERIENCE</div><h2 className="ov-display" style={{fontSize:"clamp(44px,5vw,76px)",maxWidth:880,marginTop:14}}>BUILT AS A WORLD — NOT JUST A DATE ON A FLYER.</h2></div>
+            <div className="ov-pillar-grid">
+              {pillars.map((pillar,index) => <article className="ov-pillar-card" key={pillar.title} style={{boxShadow:`inset 0 0 65px ${accent}10`}}><span>{String(index+1).padStart(2,"0")} / {pillar.label}</span><h3>{pillar.title}</h3><p>{pillar.body}</p></article>)}
+            </div>
+          </div>
+        </section>
 
-      <section style={{position:"relative",zIndex:2,padding:"110px clamp(22px,6vw,90px)",borderTop:`1px solid ${C.faint}`,overflow:"hidden"}}>
-        <div style={{position:"absolute",inset:"20% -10% auto",height:280,background:accent,filter:"blur(150px)",opacity:.11}}/>
-        <div style={{position:"relative",maxWidth:1150,margin:"0 auto",textAlign:"center"}}>
-          <div style={{color:C.gold2,fontSize:9,fontWeight:900,letterSpacing:".3em",textTransform:"uppercase",marginBottom:18}}>{footerEyebrow}</div>
-          <h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(52px,8vw,118px)",lineHeight:.82,letterSpacing:"-.055em",margin:"0 0 30px"}}>{footerTitle}</h2>
-          <Button href={primaryHref}>{primaryLabel}</Button><Button href={merchHref} ghost>{merchLabel}</Button>
-        </div>
-      </section>
+        {gallery && gallery.length > 0 ? (
+          <section style={{paddingTop:30}}>
+            <div className="ov-shell">
+              <div className="ov-section-label"><span>THE VISUAL WORLD</span><small>CAMPAIGN · CITY · MERCH · CULTURE</small></div>
+              <div className="ov-gallery-grid">
+                {gallery.map((item) => <article className="ov-gallery-card" key={item.title}><img src={item.src} alt={item.title}/><strong>{item.title}</strong></article>)}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {stops && stops.length > 0 ? (
+          <section style={{padding:"34px 0",borderTop:"1px solid rgba(226,176,74,.26)"}}>
+            <div className="ov-shell">
+              <div className="ov-kicker">{stopsEyebrow}</div>
+              <h2 className="ov-display" style={{fontSize:"clamp(42px,5vw,72px)",maxWidth:900,margin:"14px 0 24px"}}>{stopsTitle}</h2>
+              <div className="ov-pillar-grid">
+                {stops.map((stop,index) => {
+                  const content = <><span>{String(index+1).padStart(2,"0")}{stop.meta ? ` / ${stop.meta}` : ""}</span><h3>{stop.city}</h3><p><b style={{color:"#fff7e7"}}>{stop.venue}</b>{stop.note ? ` — ${stop.note}` : ""}</p></>;
+                  return stop.href ? <Link href={stop.href} className="ov-pillar-card" style={{color:"inherit",textDecoration:"none"}} key={`${stop.city}-${stop.venue}`}>{content}</Link> : <article className="ov-pillar-card" key={`${stop.city}-${stop.venue}`}>{content}</article>;
+                })}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        <section className="ov-feature-band" style={{minHeight:380,borderTop:"1px solid rgba(226,176,74,.26)"}}>
+          <img src={visual} alt="" style={{objectPosition:visualPosition}} />
+          <div className="ov-feature-band-copy">
+            <div className="ov-kicker">{footerEyebrow}</div>
+            <h2 className="ov-display">{footerTitle}</h2>
+            <div className="ov-actions"><Link className="ov-btn" href={primaryHref}>{primaryLabel} →</Link><Link className="ov-btn ghost" href={merchHref}>{merchLabel}</Link></div>
+          </div>
+        </section>
+      </div>
     </Shell>
   );
 }
