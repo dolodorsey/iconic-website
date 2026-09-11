@@ -29,9 +29,9 @@ export default function TampaHalloweenPage(){
       {label:"Partners",title:"Sponsors are integrated into the experience.",body:"Partner inventory should live inside arrivals, VIP, content, hospitality, beverage moments, fan capture and post-event media instead of logo walls."},
     ]}
     primaryLabel="Join Tampa Presale"
-    primaryHref="/access?intent=presale"
+    primaryHref="/access?intent=presale&event=tampa-halloween"
     secondaryLabel="Sponsor Tampa"
-    secondaryHref="/access?intent=sponsorship"
+    secondaryHref="/access?intent=sponsorship&event=tampa-halloween"
     footerEyebrow="HALLOWEEN · TAMPA"
     footerTitle="ONE NIGHT SHOULD FEEL LIKE A WHOLE WORLD."
   />;
