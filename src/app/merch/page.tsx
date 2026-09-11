@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Shell, drive } from "@/app/_components/IconicPage";
+import { Shell } from "@/app/_components/IconicPage";
 import { getMerchCatalog } from "@/app/tampa/nightmare-on-channelside/merch/catalog";
 import { COLLECTION_ART, NOC_MEDIA } from "@/app/tampa/nightmare-on-channelside/merch/noc-assets";
 
@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 
 const artistSlugs = ["21-savage","kodak-black","da-baby","meek-mill","belly-gang-kush"] as const;
 const futureDrops = [
-  { title:"SUMMER WALKER", line:"SOUL SYMPHONY TOUR DROP", src:drive("1VLMzdfR0ZPM028H6QPjVyzLHakSRG4oX"), href:"/access?intent=merch&event=summer-walker-soul-symphony" },
-  { title:"DJ SNAKE", line:"PARDON MY FRENCH DROP", src:drive("1FqMDPe63LypEQFK3iQW-dJLNJiRTRi9R"), href:"/access?intent=merch&event=dj-snake-pardon-my-french" },
+  { title:"SUMMER WALKER", line:"SOUL SYMPHONY TOUR DROP", src:"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summer-walker-soul-symphony.jpg?v=1789170574", href:"/access?intent=merch&event=summer-walker-soul-symphony" },
+  { title:"DJ SNAKE", line:"PARDON MY FRENCH DROP", src:"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-dj-snake-pardon-my-french.jpg?v=1789170586", href:"/access?intent=merch&event=dj-snake-pardon-my-french" },
 ];
 
 export default async function MerchPage(){

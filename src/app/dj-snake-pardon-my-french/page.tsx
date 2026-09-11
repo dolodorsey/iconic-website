@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import LivePropertyPage from "@/app/_components/LivePropertyPage";
-import { drive } from "@/app/_components/IconicPage";
+
+const DJ_VISUAL = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-dj-snake-pardon-my-french.jpg?v=1789170586";
 
 export const metadata: Metadata = {
   title: "DJ Snake — Pardon My French",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
     title: "DJ Snake — Pardon My French | ICONIC LIVE",
     description: "Five U.S. stadiums. One-night-only city events. Request presale, VIP, merch and partnership access.",
     type: "website",
-    images: [{url:"/api/media/drive/1FqMDPe63LypEQFK3iQW-dJLNJiRTRi9R"}],
+    images: [{url:DJ_VISUAL}],
   },
 };
 
@@ -18,7 +19,7 @@ export default function DjSnakePage(){
     eyebrow="ICONIC LIVE · DJ SNAKE"
     title="PARDON MY FRENCH."
     sub="A five-city U.S. stadium experience built around DJ Snake, Paris attitude, global nightlife, oversized production and one-night-only destination energy. The current route runs Los Angeles, Las Vegas, Dallas, Tampa and New York."
-    visual={drive("1FqMDPe63LypEQFK3iQW-dJLNJiRTRi9R")}
+    visual={DJ_VISUAL}
     visualPosition="center 18%"
     status="5 CITIES · 5 STADIUMS · ACCESS OPEN"
     accent="rgba(196,21,32,1)"

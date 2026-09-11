@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./mobile-polish.css";
 import "./visual-overhaul.css";
+import "./visual-overhaul-responsive.css";
 import { SITE_URL } from "../lib/site-url";
 
 export const viewport: Viewport = {

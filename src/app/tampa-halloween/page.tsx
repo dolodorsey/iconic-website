@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import LivePropertyPage from "@/app/_components/LivePropertyPage";
-import { drive } from "@/app/_components/IconicPage";
 import { COLLECTION_ART, NOC_MEDIA } from "@/app/tampa/nightmare-on-channelside/merch/noc-assets";
 
 export const metadata: Metadata = {
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
     title: "Nightmare on Channelside — Tampa Halloween | ICONIC LIVE",
     description: "Tampa Halloween. 21 Savage. Presale, VIP, sponsorship and official event merch access.",
     type: "website",
-    images: [{url:"/api/media/drive/1vyBkJOCw1uaIsc6KmO6ikJiwXSwT7K2n"}],
+    images: [{url:NOC_MEDIA.headliners}],
   },
 };
 
@@ -19,7 +18,7 @@ export default function TampaHalloweenPage(){
     eyebrow="ICONIC LIVE · TAMPA HALLOWEEN"
     title="NIGHTMARE ON CHANNELSIDE."
     sub="Tampa gets a full-scale Halloween concert built around music, spectacle, nightlife energy and collectible culture. 21 Savage leads the world with Kodak Black, DaBaby, Meek Mill and Belly Gang Kush across the official event universe."
-    visual={drive("1vyBkJOCw1uaIsc6KmO6ikJiwXSwT7K2n")}
+    visual={NOC_MEDIA.headliners}
     visualPosition="center 22%"
     status="HALLOWEEN 2026 · TAMPA · ACCESS OPEN"
     accent="rgba(197,45,24,1)"
