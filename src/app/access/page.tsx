@@ -42,7 +42,7 @@ export default async function AccessPage({searchParams}:{searchParams?:Promise<{
     </section>
 
     <Section eyebrow="Submit Your Request" title="Now your request actually enters the ICONIC system." dark>
-      <div style={{display:"grid",gridTemplateColumns:"minmax(0,1.15fr) minmax(280px,.85fr)",gap:24,alignItems:"start"}}>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,340px),1fr))",gap:24,alignItems:"start"}}>
         <AccessForm intent={key} event={event}/>
         <div className="glass" style={{padding:28,borderRadius:24}}>
           <div style={{fontSize:8,fontWeight:900,letterSpacing:".18em",textTransform:"uppercase",color:C.gold2}}>What happens next</div>
