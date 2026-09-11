@@ -1,0 +1,10 @@
+@media(max-width:900px){
+  .noc-product-detail-overhaul{grid-template-columns:1fr!important}
+  .noc-product-detail-overhaul>aside{position:static!important;top:auto!important}
+  .noc-related-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:620px){
+  .noc-product-dual-main{grid-template-columns:1fr!important}
+  .noc-product-dual-main figure img{height:auto!important;min-height:360px}
+  .noc-related-grid{grid-template-columns:1fr!important}
+}
