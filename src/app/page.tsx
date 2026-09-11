@@ -3,122 +3,105 @@ import type { Metadata } from "next";
 import { Button, C, Hero, InfoGrid, Section, Shell, drive } from "./_components/IconicPage";
 
 export const metadata: Metadata = {
-  title: "ICONIC — Live Entertainment Platform",
-  description: "ICONIC produces arena events, recurring concert series and culture-driven live entertainment across Atlanta, New York, Las Vegas, Washington DC and Tampa.",
+  title: "ICONIC LIVE — Concerts, Tours & Culture",
+  description: "ICONIC LIVE presents Tampa Halloween, Summer Walker — Soul Symphony, DJ Snake — Pardon My French, limited merch drops and premium live experiences.",
 };
 
 const HOME_HERO=drive("1_EJ4MGIcBT0pFi29cHQoHE_tfrFL-sVe");
 
-const southlakeProperties = [
-  { title: "THE BALL SERIES", meta: "6-event formal + themed season", href: "/ball-series", glow: "rgba(240,186,73,.52)" },
-  { title: "BRAVO", meta: "New Year's Eve · Southlake Arena", href: "/atlanta/bravo", glow: "rgba(255,216,121,.44)" },
-  { title: "GROWN-ISH", meta: "21+ Concert Series · Southlake Arena", href: "/series/21-plus", glow: "rgba(196,137,34,.46)" },
-  { title: "SOUL SESSION", meta: "30+ Concert Series · Southlake Arena", href: "/series/30-plus", glow: "rgba(255,197,83,.48)" },
+const liveSlate=[
+  {
+    eyebrow:"TAMPA · HALLOWEEN",
+    title:"NIGHTMARE ON CHANNELSIDE",
+    meta:"21 Savage · Halloween Weekend · Access Open",
+    href:"/tampa-halloween",
+    src:drive("1vyBkJOCw1uaIsc6KmO6ikJiwXSwT7K2n"),
+    position:"center 22%",
+  },
+  {
+    eyebrow:"10-CITY TOUR",
+    title:"SUMMER WALKER — SOUL SYMPHONY",
+    meta:"R&B × Symphony · Cities Announcing",
+    href:"/summer-walker",
+    src:drive("1VLMzdfR0ZPM028H6QPjVyzLHakSRG4oX"),
+    position:"center 22%",
+  },
+  {
+    eyebrow:"MULTI-CITY TOUR",
+    title:"DJ SNAKE — PARDON MY FRENCH",
+    meta:"5+ Cities · Access Open",
+    href:"/dj-snake-pardon-my-french",
+    src:drive("1FqMDPe63LypEQFK3iQW-dJLNJiRTRi9R"),
+    position:"center 20%",
+  },
+  {
+    eyebrow:"ICONIC LIVE",
+    title:"MERCH VAULT",
+    meta:"Event Capsules · City Drops · Limited Runs",
+    href:"/merch",
+    src:drive("14w6pg3TA_RtOxV7TppU7WbI05MvRyqaN"),
+    position:"center center",
+  },
 ];
 
-const nationalSchedule=[
-  {market:"TAMPA",date:"JAN 30",anchor:"WINTER MARKET OPEN",href:"/tampa",glow:"rgba(226,166,55,.44)"},
-  {market:"LAS VEGAS",date:"FEB 13",anchor:"VALENTINE'S + PRESIDENTS DAY",href:"/las-vegas",glow:"rgba(255,205,100,.44)"},
-  {market:"WASHINGTON DC",date:"MAR 13",anchor:"SPRING MARKET OPEN",href:"/washington-dc",glow:"rgba(203,143,37,.44)"},
-  {market:"TAMPA",date:"APR 17",anchor:"SPRING",href:"/tampa",glow:"rgba(226,166,55,.44)"},
-  {market:"LAS VEGAS",date:"MAY 29",anchor:"MEMORIAL DAY WEEKEND",href:"/las-vegas",glow:"rgba(255,205,100,.44)"},
-  {market:"WASHINGTON DC",date:"JUN 19",anchor:"JUNETEENTH",href:"/washington-dc",glow:"rgba(203,143,37,.44)"},
-  {market:"TAMPA",date:"JUL 03",anchor:"INDEPENDENCE DAY WEEKEND",href:"/tampa",glow:"rgba(226,166,55,.44)"},
-  {market:"WASHINGTON DC",date:"AUG 28",anchor:"LATE SUMMER / FALL RUNWAY",href:"/washington-dc",glow:"rgba(203,143,37,.44)"},
-  {market:"LAS VEGAS",date:"SEP 04",anchor:"LABOR DAY WEEKEND",href:"/las-vegas",glow:"rgba(255,205,100,.44)"},
-  {market:"TAMPA",date:"OCT 16",anchor:"FALL / HALLOWEEN RUNWAY",href:"/tampa",glow:"rgba(226,166,55,.44)"},
-  {market:"WASHINGTON DC",date:"NOV 13",anchor:"VETERANS WEEK / FALL",href:"/washington-dc",glow:"rgba(203,143,37,.44)"},
-  {market:"LAS VEGAS",date:"NOV 27",anchor:"THANKSGIVING WEEKEND",href:"/las-vegas",glow:"rgba(255,205,100,.44)"},
+const ecosystem=[
+  {title:"SOUTHLAKE ARENA",meta:"ICONIC venue platform",href:"/southlake-arena"},
+  {title:"THE BALL SERIES",meta:"Formal + themed event series",href:"/ball-series"},
+  {title:"GROWN-ISH",meta:"21+ concert property",href:"/series/21-plus"},
+  {title:"SOUL SESSION",meta:"30+ concert property",href:"/series/30-plus"},
+  {title:"NEW YORK",meta:"Resorts World platform",href:"/new-york/resorts-world"},
+  {title:"NATIONAL MARKETS",meta:"Las Vegas · DC · Tampa",href:"/#national-circuit"},
 ];
-
-const experienceMedia=[
-  {kicker:"ARTIST REVEAL",title:"The name enters after the world is built.",src:drive("1LhNOBWdWbzVI4HRD6D4wO_pbWPcGylZ9"),href:"/series/21-plus"},
-  {kicker:"LINEUP SYSTEM",title:"Reveal talent without turning the site into a flyer.",src:drive("1mHcSw-4zNUkENmMKDMJL-vMaM-OhfKMn"),href:"/series/21-plus"},
-  {kicker:"VENUE REVEAL",title:"The room becomes part of the story.",src:drive("1GAz8_1S31jfsv6HZ4En76yZg_Itsjuo5"),href:"/southlake-arena"},
-];
-
-const conversionMedia=[
-  {kicker:"PRESALE + TICKETING",title:"Access before the public rush.",src:drive("1aq2ltX2swXKFSnE_wzr51gEPgRf3qCR8"),href:"/access?intent=presale"},
-  {kicker:"VIP + HOSPITALITY",title:"Premium rooms inside the show.",src:drive("1jsL325rOkWzSb2jTCy_1B-oZtmYrQxUp"),href:"/access?intent=vip"},
-  {kicker:"CITY WEEKEND",title:"Flight. Hotel. Arrival. Show. After.",src:drive("1-L8O7HBPmDjKf5CW51zd1Js6LxzZ7GHK"),href:"/access?intent=travel"},
-  {kicker:"MERCH VAULT",title:"The show becomes an object.",src:drive("1o86B30vOmZfHAEVAevSmSBkIvx3ukoDv"),href:"/access?intent=merch"},
-  {kicker:"PARTNERS",title:"Built into the experience—not pasted on.",src:drive("1iE79XNRpZDKZ-ulbpE6Z-m0X6LGIrXdq"),href:"/access?intent=partners"},
-  {kicker:"AFTERMOVIE + ARCHIVE",title:"The stage goes dark. The asset keeps moving.",src:drive("1Q-_y4Z7ySuxKk0mvs29BqAHU9C-m2l1W"),href:"/access?intent=media"},
-];
-
-const brandWorld=[
-  {kicker:"ICONIC WOMAN",title:"Fashion, movement and premium culture live inside the same visual system.",src:drive("16ua2rckhMdQrc_LWzmRQOK1O68aeG5kC")},
-  {kicker:"THE CROWN",title:"A recognizable symbol that can live beyond any single show.",src:drive("1O4g8c8pby__FxJW92zGCZQM9Xsh3ou8c")},
-  {kicker:"THE CITY",title:"ICONIC should feel like its own future-facing entertainment district.",src:drive("1szufhmYBmnITMbatHxKr_mZAa0hCI71d")},
-  {kicker:"THE PORTAL",title:"Transitions become part of the experience—not dead space between sections.",src:drive("16LSerYaPKZYZncPbLeM_RG7EEZA2IHwL")},
-  {kicker:"THE SIGNAL",title:"The heartbeat is the connective tissue across music, culture and cities.",src:drive("1CtxrxlopetUKW65iJA51_1kQdfosCqLn")},
-];
-
-const marketVisuals=[
-  {market:"ATLANTA",meta:"FLAGSHIP MARKET · CONCEPT VISUAL",src:drive("1LS4BTwHoxI7OlTv_5cPocbzkBbRAqA7d"),href:"/southlake-arena"},
-  {market:"LAS VEGAS",meta:"2027 MARKET · VENUE + TALENT TBD",src:drive("1RnHCTmytNkYt2V2Fu938_a4bRwXt1E0q"),href:"/las-vegas"},
-  {market:"WASHINGTON DC",meta:"2027 MARKET · VENUE + TALENT TBD",src:drive("1_Ks8CqO1RVSmLf7m644guTcVSkXcqnyt"),href:"/washington-dc"},
-  {market:"TAMPA",meta:"2027 MARKET · VENUE + TALENT TBD",src:drive("1KqgHvJA4IdolRHTM5AOJ3ARpd2ViIVvN"),href:"/tampa"},
-];
-
-const mediaCard=(item:{kicker:string;title:string;src:string;href?:string},index:number)=>{
-  const body=<><div style={{position:"absolute",inset:0}}><img src={item.src} alt={item.kicker} style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform .7s cubic-bezier(.16,1,.3,1)"}}/></div><div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(0,0,0,.02) 32%,rgba(0,0,0,.92))"}}/><div style={{position:"absolute",left:26,right:26,bottom:26}}><div style={{fontSize:8,fontWeight:900,letterSpacing:".25em",color:C.gold2,marginBottom:10}}>{String(index+1).padStart(2,"0")} / {item.kicker}</div><h3 style={{fontFamily:"Georgia,serif",fontSize:"clamp(28px,3vw,48px)",lineHeight:.95,margin:0,maxWidth:560}}>{item.title}</h3></div></>;
-  return item.href?<Link key={item.kicker} href={item.href} className="iconic-media-card" style={{position:"relative",minHeight:500,overflow:"hidden",border:`1px solid ${C.faint}`,borderRadius:22,color:C.white,textDecoration:"none"}}>{body}</Link>:<article key={item.kicker} className="iconic-media-card" style={{position:"relative",minHeight:430,overflow:"hidden",border:`1px solid ${C.faint}`,borderRadius:22}}>{body}</article>;
-};
 
 export default function Home(){return <Shell>
-  <Hero visual={HOME_HERO} eyebrow="ICONIC · LIVE ENTERTAINMENT" title="A HIGHER CLASS OF LIVE." sub="The graphics are now the environment—not decoration. ICONIC moves through concerts, cities, hospitality, travel, fashion, reveals and archive with one premium black-and-gold visual language.">
-    <Button href="#world">Enter ICONIC</Button><Button href="#national-circuit" ghost>2027 National Circuit</Button>
+  <Hero visual={HOME_HERO} eyebrow="ICONIC LIVE · CURRENT SLATE" title="THE NEXT ICONIC ERA IS LIVE." sub="Four active lanes now lead the platform: Tampa Halloween, Summer Walker — Soul Symphony, DJ Snake — Pardon My French and the ICONIC merch vault. Every property keeps its own creative world, funnel and commercial architecture under one master live-entertainment platform." visualNote="CONCERTS · TOURS · MERCH · PARTNERSHIPS">
+    <Button href="#current-slate">Explore The Slate</Button><Button href="/access?intent=presale" ghost>Get First Access</Button>
   </Hero>
 
   <section style={{position:"relative",zIndex:2,padding:"30px clamp(22px,6vw,90px) 90px"}}><div style={{maxWidth:1450,margin:"0 auto"}}><InfoGrid items={[
-    {label:"Flagship Venue",value:"Southlake Arena",body:"Home venue for four major ICONIC properties."},
-    {label:"Southlake Portfolio",value:"4 Properties",body:"Ball Series, BRAVO, GROWN-ISH and Soul Session."},
-    {label:"2027 Expansion",value:"12 Holds",body:"Four in Las Vegas, four in Washington DC and four in Tampa."},
-    {label:"Experience Layer",value:"Full Journey",body:"Reveal, ticketing, VIP, travel, merch, partners and archive all live inside the product."},
+    {label:"Priority 01",value:"Tampa Halloween",body:"Immediate concert, ticketing, sponsorship and merch conversion lane."},
+    {label:"Priority 02",value:"Summer Walker",body:"10-city premium Soul Symphony tour platform."},
+    {label:"Priority 03",value:"DJ Snake",body:"Pardon My French multi-city tour platform."},
+    {label:"Priority 04",value:"Merch Vault",body:"Event drops, city capsules and evergreen ICONIC product."},
   ]}/></div></section>
 
-  <Section eyebrow="The ICONIC World" title="The heartbeat becomes an entire visual universe." dark>
-    <div id="world" className="brand-world-grid">{brandWorld.map(mediaCard)}</div>
-  </Section>
-
-  <Section eyebrow="The Live System" title="The show starts before the artist walks out.">
-    <div id="experience" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:12}}>{experienceMedia.map(mediaCard)}</div>
-  </Section>
-
-  <Section eyebrow="Flagship Home" title="Southlake Arena is the center of the ICONIC calendar." dark>
-    <div id="southlake" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(290px,1fr))",gap:14}}>
-      {southlakeProperties.map((p)=><Link key={p.title} href={p.href} className="event-card glass" style={{"--cardGlow":p.glow,minHeight:420,padding:30,borderRadius:26,color:C.white,textDecoration:"none",display:"flex",flexDirection:"column",justifyContent:"space-between"} as React.CSSProperties}>
-        <div style={{display:"flex",justifyContent:"space-between",gap:16,alignItems:"center"}}><span style={{color:C.gold2,fontSize:9,fontWeight:900,letterSpacing:".20em",textTransform:"uppercase"}}>SOUTHLAKE ARENA</span><span style={{fontSize:20}}>↗</span></div>
-        <div><h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(42px,5.4vw,76px)",lineHeight:.84,letterSpacing:"-.04em",margin:0}}>{p.title}</h2><div style={{marginTop:24,paddingTop:18,borderTop:`1px solid ${C.faint}`,color:C.muted,fontSize:10,fontWeight:800,letterSpacing:".1em",textTransform:"uppercase"}}>{p.meta}</div></div>
+  <Section eyebrow="Now On ICONIC" title="Four properties. Four distinct worlds." dark>
+    <div id="current-slate" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(310px,1fr))",gap:14}}>
+      {liveSlate.map((item,index)=><Link key={item.title} href={item.href} className="iconic-media-card" style={{position:"relative",minHeight:index<2?620:540,overflow:"hidden",border:`1px solid ${C.faint}`,borderRadius:26,color:C.white,textDecoration:"none"}}>
+        <img src={item.src} alt={item.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:item.position,transition:"transform .7s cubic-bezier(.16,1,.3,1)"}}/>
+        <div style={{position:"absolute",inset:0,background:"linear-gradient(180deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.94) 87%)"}}/>
+        <div style={{position:"absolute",left:28,right:28,bottom:28}}>
+          <div style={{display:"flex",justifyContent:"space-between",gap:16,alignItems:"center",marginBottom:14}}><span style={{fontSize:8,fontWeight:900,letterSpacing:".22em",color:C.gold2}}>{item.eyebrow}</span><span style={{fontSize:19}}>↗</span></div>
+          <h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(38px,4.5vw,66px)",lineHeight:.87,letterSpacing:"-.045em",margin:0}}>{item.title}</h2>
+          <div style={{marginTop:20,paddingTop:16,borderTop:`1px solid ${C.faint}`,fontSize:9,fontWeight:900,letterSpacing:".11em",textTransform:"uppercase",color:C.muted}}>{item.meta}</div>
+        </div>
       </Link>)}
     </div>
-    <div style={{marginTop:30}}><Button href="/southlake-arena">Open Southlake Venue Hub</Button></div>
   </Section>
 
-  <Section eyebrow="Conversion Architecture" title="Tickets are only one part of the business.">
-    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(290px,1fr))",gap:12}}>{conversionMedia.map(mediaCard)}</div>
-    <div style={{marginTop:28}}><Button href="/access?intent=sponsorship">Sponsorship Access</Button><Button href="/access?intent=partners" ghost>Partner With ICONIC</Button></div>
+  <Section eyebrow="Conversion System" title="Every page should move somebody to a next action.">
+    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))",gap:14}}>
+      {[
+        ["TICKETS + PRESALE","Get release alerts before the public rush.","/access?intent=presale"],
+        ["VIP + HOSPITALITY","Premium seating, hosted moments and elevated arrival.","/access?intent=vip"],
+        ["SPONSORSHIPS","Build brand integrations into the actual fan journey.","/access?intent=sponsorship"],
+        ["MERCH DROPS","Get first access to limited event and city capsules.","/access?intent=merch"],
+      ].map(([title,body,href])=><Link key={title} href={href} className="glass market-card" style={{padding:30,borderRadius:24,color:C.white,textDecoration:"none",minHeight:230,display:"flex",flexDirection:"column",justifyContent:"space-between"}}><div style={{fontSize:8,fontWeight:900,letterSpacing:".2em",color:C.gold2}}>{title}</div><div><p style={{fontFamily:"Georgia,serif",fontSize:30,lineHeight:1.02,margin:"0 0 18px"}}>{body}</p><span style={{fontSize:20}}>↗</span></div></Link>)}
+    </div>
   </Section>
 
-  <Section eyebrow="Market Identity" title="Every city gets its own world without breaking the master brand." dark>
-    <div id="national-circuit" className="market-visual-grid">{marketVisuals.map((m)=><Link href={m.href} key={m.market} className="market-visual-card" style={{color:C.white,textDecoration:"none"}}><img src={m.src} alt={`ICONIC ${m.market}`}/><div className="market-visual-shade"/><div className="market-visual-copy"><span>{m.meta}</span><h3>{m.market}</h3></div></Link>)}</div>
+  <Section eyebrow="The Wider ICONIC Platform" title="Current priorities lead. Existing properties stay connected." dark>
+    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(245px,1fr))",gap:12}}>
+      {ecosystem.map((item)=><Link key={item.title} href={item.href} className="glass market-card" style={{padding:26,borderRadius:22,color:C.white,textDecoration:"none",minHeight:180,display:"flex",flexDirection:"column",justifyContent:"space-between"}}><div style={{fontSize:8,fontWeight:900,letterSpacing:".17em",color:C.gold2}}>ICONIC PROPERTY</div><div><h3 style={{fontFamily:"Georgia,serif",fontSize:31,lineHeight:.96,margin:"0 0 10px"}}>{item.title}</h3><div style={{fontSize:10,fontWeight:800,letterSpacing:".08em",textTransform:"uppercase",color:C.muted}}>{item.meta}</div></div></Link>)}
+    </div>
   </Section>
 
-  <Section eyebrow="2027 Planning Framework" title="Twelve holds. Staggered into a national operating rhythm.">
-    <p style={{maxWidth:760,color:C.muted,fontSize:14,lineHeight:1.8,margin:"-12px 0 34px"}}>These are strategic planning holds — not public confirmed events. Venue and talent remain property-specific until contracted.</p>
-    <div className="circuit-calendar-grid">{nationalSchedule.map((e)=><Link key={`${e.market}-${e.date}`} href={e.href} className="circuit-date-card" style={{"--marketGlow":e.glow,color:C.white,textDecoration:"none"} as React.CSSProperties}><div className="circuit-date-market">{e.market}</div><div className="circuit-date-day">{e.date}</div><div className="circuit-date-anchor">{e.anchor}</div><div className="circuit-status">2027 · Planning Hold</div></Link>)}</div>
-  </Section>
-
-  <Section eyebrow="New York" title="Resorts World remains its own ICONIC platform." dark>
-    <InfoGrid items={[
-      {label:"Venue Platform",value:"Resorts World",body:"ICONIC's New York venue relationship and operating platform."},
-      {label:"Concert Property",value:"ENCORE",body:"A distinct recurring concert property for the New York market."},
-      {label:"Comedy Property",value:"Funny Business",body:"A distinct comedy series with its own programming and sales path."},
-      {label:"Operating Rule",value:"Keep Brands Separate",body:"Every property keeps its own identity, audience, creative direction and funnel under ICONIC."},
-    ]}/>
-    <div style={{marginTop:30}}><Button href="/new-york/resorts-world">Explore New York</Button></div>
-  </Section>
-
-  <section className="iconic-closing"><div><div>Talent · Sponsors · Venues · Partners</div><h2>Build the next<br/>ICONIC moment.</h2><Button href="/access?intent=partners">Partner With ICONIC</Button></div></section>
+  <section id="national-circuit" style={{position:"relative",zIndex:2,padding:"120px clamp(22px,6vw,90px)",borderTop:`1px solid ${C.faint}`,overflow:"hidden"}}>
+    <div style={{position:"absolute",left:"20%",right:"20%",bottom:-120,height:300,background:"rgba(224,173,69,.2)",filter:"blur(150px)"}}/>
+    <div style={{position:"relative",maxWidth:1180,margin:"0 auto",textAlign:"center"}}>
+      <div style={{color:C.gold2,fontSize:9,fontWeight:900,letterSpacing:".3em",textTransform:"uppercase",marginBottom:18}}>Talent · Sponsors · Venues · Partners</div>
+      <h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(54px,8vw,124px)",lineHeight:.82,letterSpacing:"-.055em",margin:"0 0 30px"}}>BUILD THE NEXT ICONIC MOMENT.</h2>
+      <Button href="/access?intent=presale">Get Access</Button><Button href="/access?intent=partners" ghost>Partner With ICONIC</Button>
+    </div>
+  </section>
 </Shell>}
