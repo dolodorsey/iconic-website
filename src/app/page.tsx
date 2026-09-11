@@ -105,3 +105,5 @@ export default function Home(){return <Shell>
     </div>
   </section>
 </Shell>}
+
+// Production deployment refresh — 2026-09-11
