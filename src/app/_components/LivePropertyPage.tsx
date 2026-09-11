@@ -2,6 +2,7 @@ import { Button, C, Hero, InfoGrid, Section, Shell } from "./IconicPage";
 
 type Stat = { label: string; value: string; body?: string };
 type Pillar = { label: string; title: string; body: string };
+type Stop = { city: string; venue: string; meta?: string; note?: string };
 
 type LivePropertyPageProps = {
   eyebrow: string;
@@ -13,10 +14,15 @@ type LivePropertyPageProps = {
   accent: string;
   stats: Stat[];
   pillars: Pillar[];
+  stops?: Stop[];
+  stopsEyebrow?: string;
+  stopsTitle?: string;
   primaryLabel?: string;
   primaryHref?: string;
   secondaryLabel?: string;
   secondaryHref?: string;
+  merchLabel?: string;
+  merchHref?: string;
   footerEyebrow?: string;
   footerTitle?: string;
 };
@@ -31,23 +37,21 @@ export default function LivePropertyPage({
   accent,
   stats,
   pillars,
+  stops,
+  stopsEyebrow = "Tour Architecture",
+  stopsTitle = "The route becomes part of the campaign.",
   primaryLabel = "Get First Access",
   primaryHref = "/access?intent=presale",
   secondaryLabel = "Partnership Access",
   secondaryHref = "/access?intent=sponsorship",
+  merchLabel = "Shop Merch",
+  merchHref = "/merch",
   footerEyebrow = "ICONIC LIVE",
   footerTitle = "BE THERE BEFORE EVERYONE ELSE.",
 }: LivePropertyPageProps) {
   return (
     <Shell>
-      <Hero
-        visual={visual}
-        visualPosition={visualPosition}
-        eyebrow={eyebrow}
-        title={title}
-        sub={sub}
-        visualNote={status}
-      >
+      <Hero visual={visual} visualPosition={visualPosition} eyebrow={eyebrow} title={title} sub={sub} visualNote={status}>
         <Button href={primaryHref}>{primaryLabel}</Button>
         <Button href={secondaryHref} ghost>{secondaryLabel}</Button>
       </Hero>
@@ -67,12 +71,22 @@ export default function LivePropertyPage({
         </div>
       </Section>
 
+      {stops && stops.length > 0 && <Section eyebrow={stopsEyebrow} title={stopsTitle}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(245px,1fr))",gap:12}}>
+          {stops.map((stop,index)=><article key={`${stop.city}-${stop.venue}`} className="glass market-card" style={{padding:26,borderRadius:22,minHeight:205,display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
+            <div style={{display:"flex",justifyContent:"space-between",gap:16,alignItems:"center"}}><span style={{fontSize:8,fontWeight:900,letterSpacing:".2em",color:C.gold2}}>{String(index+1).padStart(2,"0")}</span>{stop.meta && <span style={{fontSize:8,fontWeight:900,letterSpacing:".12em",color:C.muted,textTransform:"uppercase"}}>{stop.meta}</span>}</div>
+            <div style={{marginTop:32}}><h3 style={{fontFamily:"Georgia,serif",fontSize:36,lineHeight:.95,margin:"0 0 9px",letterSpacing:"-.03em"}}>{stop.city}</h3><div style={{fontSize:11,fontWeight:900,letterSpacing:".09em",textTransform:"uppercase",color:C.white}}>{stop.venue}</div>{stop.note && <p style={{fontSize:12,lineHeight:1.65,color:C.muted,margin:"12px 0 0"}}>{stop.note}</p>}</div>
+          </article>)}
+        </div>
+        <div style={{marginTop:28,display:"flex",gap:10,flexWrap:"wrap"}}><Button href={primaryHref}>{primaryLabel}</Button><Button href={merchHref} ghost>{merchLabel}</Button></div>
+      </Section>}
+
       <section style={{position:"relative",zIndex:2,padding:"110px clamp(22px,6vw,90px)",borderTop:`1px solid ${C.faint}`,overflow:"hidden"}}>
         <div style={{position:"absolute",inset:"20% -10% auto",height:280,background:accent,filter:"blur(150px)",opacity:.11}}/>
         <div style={{position:"relative",maxWidth:1150,margin:"0 auto",textAlign:"center"}}>
           <div style={{color:C.gold2,fontSize:9,fontWeight:900,letterSpacing:".3em",textTransform:"uppercase",marginBottom:18}}>{footerEyebrow}</div>
           <h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(52px,8vw,118px)",lineHeight:.82,letterSpacing:"-.055em",margin:"0 0 30px"}}>{footerTitle}</h2>
-          <Button href={primaryHref}>{primaryLabel}</Button><Button href="/merch" ghost>Shop Merch</Button>
+          <Button href={primaryHref}>{primaryLabel}</Button><Button href={merchHref} ghost>{merchLabel}</Button>
         </div>
       </section>
     </Shell>
