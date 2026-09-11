@@ -3,7 +3,7 @@ import LivePropertyPage from "@/app/_components/LivePropertyPage";
 import { drive } from "@/app/_components/IconicPage";
 
 export const metadata: Metadata = {
-  title: "Nightmare on Channelside — Tampa Halloween | ICONIC LIVE",
+  title: "Nightmare on Channelside — Tampa Halloween",
   description: "ICONIC LIVE presents Nightmare on Channelside, a premium Tampa Halloween concert experience led by 21 Savage. Request presale, VIP, sponsorship and merch access.",
   openGraph: {
     title: "Nightmare on Channelside — Tampa Halloween | ICONIC LIVE",
