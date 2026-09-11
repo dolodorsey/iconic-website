@@ -37,11 +37,11 @@ export default function DjSnakePage(){
     stopsEyebrow="United States Stadium Route"
     stopsTitle="Five cities. Five stadiums. One-night-only destination events."
     stops={[
-      {city:"Los Angeles",venue:"SoFi Stadium",meta:"California",note:"West Coast stadium chapter of the current PMF route."},
-      {city:"Las Vegas",venue:"Allegiant Stadium",meta:"Nevada",note:"A nightlife-led destination market built for VIP and hospitality extensions."},
-      {city:"Dallas",venue:"Cotton Bowl Stadium",meta:"Texas",note:"Texas stadium chapter with city-specific content, partners and product."},
-      {city:"Tampa",venue:"Raymond James Stadium",meta:"Florida",note:"Florida stadium chapter positioned as a full destination weekend."},
-      {city:"New York",venue:"Citi Field",meta:"New York",note:"East Coast finale market in the current five-city architecture."},
+      {city:"Los Angeles",venue:"SoFi Stadium",meta:"California",note:"West Coast stadium chapter of the current PMF route.",href:"/dj-snake-pardon-my-french/los-angeles"},
+      {city:"Las Vegas",venue:"Allegiant Stadium",meta:"Nevada",note:"A nightlife-led destination market built for VIP and hospitality extensions.",href:"/dj-snake-pardon-my-french/las-vegas"},
+      {city:"Dallas",venue:"Cotton Bowl Stadium",meta:"Texas",note:"Texas stadium chapter with city-specific content, partners and product.",href:"/dj-snake-pardon-my-french/dallas"},
+      {city:"Tampa",venue:"Raymond James Stadium",meta:"Florida",note:"Florida stadium chapter positioned as a full destination weekend.",href:"/dj-snake-pardon-my-french/tampa"},
+      {city:"New York",venue:"Citi Field",meta:"New York",note:"East Coast finale market in the current five-city architecture.",href:"/dj-snake-pardon-my-french/new-york"},
     ]}
     primaryLabel="Get PMF Access"
     primaryHref="/access?intent=presale&event=dj-snake-pardon-my-french"
