@@ -17,16 +17,22 @@ export const ICONIC_LOGO=drive("1EYSPTnhLTDDuVjQAK4PjojbHogWrjDcw");
 const navLink={color:"rgba(255,232,187,.72)",textDecoration:"none",fontFamily:"Arial,sans-serif",fontSize:9,fontWeight:900,letterSpacing:".14em",textTransform:"uppercase" as const};
 
 export function Shell({children}:{children:ReactNode}){return <main className="iconic-shell" style={{minHeight:"100vh",color:C.white}}>
-  <nav className="iconic-nav" style={{position:"sticky",top:0,zIndex:50,minHeight:76,padding:"0 clamp(18px,4vw,56px)",display:"flex",alignItems:"center",justifyContent:"space-between",gap:20,background:"rgba(4,3,1,.88)",borderBottom:`1px solid ${C.faint}`,backdropFilter:"blur(28px) saturate(145%)"}}>
+  <nav className="iconic-nav" style={{position:"sticky",top:0,zIndex:50,minHeight:76,padding:"0 clamp(18px,4vw,56px)",display:"flex",alignItems:"center",justifyContent:"space-between",gap:20,background:"rgba(4,3,1,.91)",borderBottom:`1px solid ${C.faint}`,backdropFilter:"blur(28px) saturate(145%)"}}>
     <Link href="/" style={{color:C.white,textDecoration:"none",display:"flex",alignItems:"center"}}><img src={ICONIC_LOGO} alt="ICONIC" style={{width:"min(210px,28vw)",maxHeight:52,objectFit:"contain",objectPosition:"left center",filter:"drop-shadow(0 8px 24px rgba(226,171,61,.18))"}}/></Link>
     <div className="iconic-nav-links" style={{display:"flex",gap:"clamp(9px,1.7vw,22px)",alignItems:"center",flexWrap:"wrap",justifyContent:"flex-end"}}>
-      <Link href="/southlake-arena" style={navLink}>Southlake</Link><Link href="/ball-series" style={navLink}>Ball Series</Link><Link href="/series/21-plus" style={navLink}>21+</Link><Link href="/series/30-plus" style={navLink}>30+</Link><Link href="/new-york/resorts-world" style={navLink}>New York</Link><Link href="/#national-circuit" style={navLink}>Markets</Link>
+      <Link href="/tampa-halloween" style={navLink}>Tampa Halloween</Link>
+      <Link href="/summer-walker" style={navLink}>Summer Walker</Link>
+      <Link href="/dj-snake-pardon-my-french" style={navLink}>DJ Snake</Link>
+      <Link href="/merch" style={navLink}>Merch</Link>
+      <Link href="/access?intent=presale" style={{...navLink,color:C.gold2}}>Access</Link>
     </div>
   </nav>
   {children}
   <footer className="iconic-footer" style={{position:"relative",zIndex:2,padding:"44px clamp(20px,5vw,72px)",borderTop:`1px solid ${C.faint}`,display:"flex",justifyContent:"space-between",gap:24,flexWrap:"wrap",background:"rgba(0,0,0,.56)"}}>
     <div><img src={ICONIC_LOGO} alt="ICONIC" style={{width:190,maxHeight:58,objectFit:"contain",objectPosition:"left center"}}/><div style={{marginTop:8,color:C.muted,fontSize:9,fontWeight:900,letterSpacing:".18em",textTransform:"uppercase"}}>Concerts · Culture · Experiences</div></div>
-    <div style={{color:C.muted,fontSize:10,fontWeight:800,letterSpacing:".12em",textTransform:"uppercase"}}>Atlanta · New York · Las Vegas · Washington DC · Tampa</div>
+    <div style={{display:"flex",gap:18,alignItems:"center",flexWrap:"wrap"}}>
+      <Link href="/tampa-halloween" style={navLink}>Tampa</Link><Link href="/summer-walker" style={navLink}>Summer Walker</Link><Link href="/dj-snake-pardon-my-french" style={navLink}>DJ Snake</Link><Link href="/merch" style={navLink}>Merch</Link><Link href="/southlake-arena" style={navLink}>Southlake</Link><Link href="/#national-circuit" style={navLink}>Markets</Link>
+    </div>
   </footer>
 </main>}
 
