@@ -29,9 +29,9 @@ export default function DjSnakePage(){
       {label:"Partners",title:"Create integrations people actually photograph.",body:"Automotive, fashion, beverage, tech and nightlife partners should own physical moments, VIP utilities and content mechanics rather than passive placement."},
     ]}
     primaryLabel="Get PMF Access"
-    primaryHref="/access?intent=presale"
+    primaryHref="/access?intent=presale&event=dj-snake-pardon-my-french"
     secondaryLabel="Tour Partnerships"
-    secondaryHref="/access?intent=sponsorship"
+    secondaryHref="/access?intent=sponsorship&event=dj-snake-pardon-my-french"
     footerEyebrow="DJ SNAKE · PARDON MY FRENCH"
     footerTitle="NO BORDER. NO SMALL MOMENTS."
   />;
