@@ -1,4 +1,4 @@
-const VERIFIED_SITE_URL = "https://iconic-atl.com";
+const VERIFIED_SITE_URL = "https://iconic-website-ten.vercel.app";
 
 function normalizeSiteUrl(value: string) {
   const trimmed = value.trim().replace(/\/+$/, "");
@@ -8,7 +8,10 @@ function normalizeSiteUrl(value: string) {
 
 export function getSiteUrl() {
   const configured = process.env.NEXT_PUBLIC_SITE_URL;
-  if (configured?.trim()) return normalizeSiteUrl(configured);
+  if (configured?.trim()) {
+    const normalized = normalizeSiteUrl(configured);
+    if (!/^https?:\/\/(?:www\.)?iconic-atl\.com$/i.test(normalized)) return normalized;
+  }
   return VERIFIED_SITE_URL;
 }
 
