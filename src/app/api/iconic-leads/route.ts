@@ -46,7 +46,6 @@ export async function POST(req:NextRequest){
       method:"POST",
       headers:{
         apikey:SUPABASE_PUBLISHABLE_KEY,
-        Authorization:`Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
         "Content-Type":"application/json",
         Prefer:"return=minimal",
       },
