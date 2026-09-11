@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button, C, Hero, Section, Shell, drive } from "@/app/_components/IconicPage";
 
 export const metadata: Metadata = {
-  title: "Merch Vault | ICONIC LIVE",
+  title: "Merch Vault",
   description: "Shop ICONIC LIVE event merchandise and join Summer Walker and DJ Snake tour drop lists.",
   openGraph: {
     title: "Merch Vault | ICONIC LIVE",
