@@ -14,7 +14,7 @@ export function StoreHeader() {
       <nav className={`${premium.nav} noc-mobile-nav`} aria-label="Nightmare store navigation">
         <Link href={BASE}>HOME</Link>
         <Link href={`${BASE}/shop`}>SHOP</Link>
-        <Link href={`${BASE}/worlds`}>WORLDS</Link>
+        <Link href={`${BASE}/worlds`}>COLLECTIONS</Link>
         <Link href="/tampa/nightmare-on-channelside">EVENT</Link>
       </nav>
       <div className={`${premium.tools} noc-mobile-tools`}><BagIndicator /></div>
@@ -31,7 +31,7 @@ export function StoreFooter() {
       </div>
       <nav aria-label="Nightmare footer navigation">
         <Link href={`${BASE}/shop`}>SHOP</Link>
-        <Link href={`${BASE}/worlds`}>WORLDS</Link>
+        <Link href={`${BASE}/worlds`}>COLLECTIONS</Link>
         <Link href="/tampa/nightmare-on-channelside">EVENT</Link>
         <Link href={`${BASE}/cart`}>CART</Link>
         <Link href={`${BASE}/policies`}>POLICIES</Link>
@@ -85,7 +85,7 @@ export function WorldCard({ collection }: { collection: CatalogCollection }) {
         {art ? <img src={art} alt={`${collection.name} Nightmare on Channelside artwork`} loading="lazy" decoding="async" /> : null}
       </div>
       <div className="noc-world-card-copy-v3">
-        <span>OFFICIAL NOC COLLECTION</span>
+        <span>COLLECTION</span>
         <strong>{collection.name}</strong>
         <em>SHOP COLLECTION →</em>
       </div>
