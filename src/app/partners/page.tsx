@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Button, C, Hero, Section, Shell } from "@/app/_components/IconicPage";
+import { Button, C, Hero, Section } from "@/app/_components/IconicPage";
+import PlatformShell from "@/app/_components/PlatformShell";
 
 const MASTER_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-live-concert-series-master.png?v=1789175341";
 
@@ -19,7 +20,7 @@ const inventory=[
   ["CITY TAKEOVERS","Hotels, nightlife, transportation, dining, retail and destination-weekend integrations around the show."],
 ];
 
-export default function PartnersPage(){return <Shell>
+export default function PartnersPage(){return <PlatformShell>
   <Hero visual={MASTER_VISUAL} visualPosition="center 44%" eyebrow="ICONIC LIVE · PARTNERSHIP PLATFORM" title="DON’T JUST SPONSOR THE SHOW. OWN A REAL PART OF THE EXPERIENCE." sub="ICONIC builds partnership inventory into the fan journey — arrival, access, hospitality, commerce, nightlife, content and city-wide cultural moments." visualNote="SPONSORS · BRANDS · VENUES · TALENT · HOSPITALITY">
     <Button href="/access?intent=sponsorship">Request Sponsorship Inventory</Button><Button href="/access?intent=partners" ghost>Strategic Partnerships</Button>
   </Hero>
@@ -32,4 +33,4 @@ export default function PartnersPage(){return <Shell>
     </div>
   </Section>
   <section style={{padding:"120px clamp(22px,6vw,90px)",borderTop:`1px solid ${C.faint}`,textAlign:"center",background:"radial-gradient(circle at 50% 100%,rgba(224,173,69,.18),transparent 38%)"}}><div style={{maxWidth:1000,margin:"0 auto"}}><div style={{color:C.gold2,fontSize:9,fontWeight:900,letterSpacing:".28em"}}>BUILD WITH ICONIC</div><h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(60px,8vw,120px)",lineHeight:.82,letterSpacing:"-.055em",margin:"22px 0 34px"}}>PUT YOUR BRAND INSIDE THE MEMORY.</h2><Button href="/access?intent=sponsorship">Start Sponsorship Request</Button></div></section>
-</Shell>}
+</PlatformShell>}
