@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Button, C, Hero, Section, Shell } from "@/app/_components/IconicPage";
+import { Button, C, Hero, Section } from "@/app/_components/IconicPage";
+import PlatformShell from "@/app/_components/PlatformShell";
 
 const MASTER_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-live-concert-series-master.png?v=1789175341";
 
@@ -18,7 +19,7 @@ const platform=[
   ["CONTENT + IP","Campaign worlds, media capture, social moments and post-event assets built to keep the experience moving after the doors close."],
 ];
 
-export default function AboutPage(){return <Shell>
+export default function AboutPage(){return <PlatformShell>
   <Hero visual={MASTER_VISUAL} visualPosition="center 44%" eyebrow="ICONIC LIVE · THE PLATFORM" title="MAKE THE MOMENT LAST LONGER THAN THE NIGHT." sub="ICONIC operates at the intersection of culture, live entertainment, experiential design and strategic partnerships. We build events that are meant to be remembered, shared, revisited and scaled." visualNote="MUSIC · CULTURE · EXPERIENCES · FOREVER">
     <Button href="/access?intent=partners">Build With ICONIC</Button><Button href="/" ghost>Current Slate</Button>
   </Hero>
@@ -31,4 +32,4 @@ export default function AboutPage(){return <Shell>
     </div>
   </Section>
   <section style={{padding:"110px clamp(22px,6vw,90px)",borderTop:`1px solid ${C.faint}`,textAlign:"center"}}><div style={{maxWidth:960,margin:"0 auto"}}><div style={{color:C.gold2,fontSize:9,fontWeight:900,letterSpacing:".28em"}}>TALENT · VENUES · SPONSORS · BRANDS</div><h2 style={{fontFamily:"Georgia,serif",fontSize:"clamp(58px,8vw,118px)",lineHeight:.84,letterSpacing:"-.05em",margin:"22px 0 30px"}}>DON’T JUST HOST IT. MAKE IT LAST.</h2><Button href="/partners">Explore Partnerships</Button><Link href="/access?intent=partners" style={{color:C.gold2,textDecoration:"none",fontSize:9,fontWeight:900,letterSpacing:".16em"}}>START A CONVERSATION →</Link></div></section>
-</Shell>}
+</PlatformShell>}
