@@ -35,7 +35,7 @@ export async function POST(req:NextRequest){
       company:clean(body.company,160),
       city:clean(body.city,120),
       message:clean(body.message,3000),
-      source:"iconic-website-ten.vercel.app",
+      source:"iconic-atl.com",
       page_path:clean(body.page_path,500),
       utm_source:clean(body.utm_source,160),
       utm_medium:clean(body.utm_medium,160),
