@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { Button, Shell } from "./IconicPage";
+import { Shell } from "./IconicPage";
 
 type Stat = { label: string; value: string; body?: string };
 type Pillar = { label: string; title: string; body: string };
 type Stop = { city: string; venue: string; meta?: string; note?: string; href?: string };
 type LineupItem = { name: string; src: string; href?: string };
 type GalleryItem = { title: string; src: string };
+type BrandMark = { src: string; alt: string; maxWidth?: number };
 
 type LivePropertyPageProps = {
   eyebrow: string;
@@ -17,6 +18,8 @@ type LivePropertyPageProps = {
   accent: string;
   stats: Stat[];
   pillars: Pillar[];
+  brandMarks?: BrandMark[];
+  brandMarksAsTitle?: boolean;
   lineup?: LineupItem[];
   lineupEyebrow?: string;
   gallery?: GalleryItem[];
@@ -33,6 +36,35 @@ type LivePropertyPageProps = {
   footerTitle?: string;
 };
 
+const visuallyHidden = {
+  position: "absolute" as const,
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: "hidden",
+  clip: "rect(0,0,0,0)",
+  whiteSpace: "nowrap" as const,
+  border: 0,
+};
+
+function BrandLockup({marks,compact=false}:{marks:BrandMark[];compact?:boolean}){
+  return <div style={{display:"flex",alignItems:"center",gap:compact?14:18,flexWrap:"wrap",margin:compact?"10px 0 18px":"14px 0 18px"}}>
+    {marks.map((mark)=><img
+      key={mark.src}
+      src={mark.src}
+      alt={mark.alt}
+      style={{
+        width:`min(${compact?Math.min(mark.maxWidth||320,260):mark.maxWidth||360}px, ${compact?"38vw":"76vw"})`,
+        maxHeight:compact?105:210,
+        height:"auto",
+        objectFit:"contain",
+        filter:"drop-shadow(0 14px 28px rgba(0,0,0,.58))",
+      }}
+    />)}
+  </div>;
+}
+
 export default function LivePropertyPage({
   eyebrow,
   title,
@@ -43,6 +75,8 @@ export default function LivePropertyPage({
   accent,
   stats,
   pillars,
+  brandMarks,
+  brandMarksAsTitle = false,
   lineup,
   lineupEyebrow = "THE LINEUP",
   gallery,
@@ -66,7 +100,8 @@ export default function LivePropertyPage({
           <div className="ov-live-hero-inner">
             <div className="ov-live-hero-copy">
               <div className="ov-kicker">{eyebrow}</div>
-              <h1 className="ov-display">{title}</h1>
+              {brandMarks?.length ? <BrandLockup marks={brandMarks}/> : null}
+              <h1 className="ov-display" style={brandMarksAsTitle?visuallyHidden:undefined}>{title}</h1>
               <p className="ov-copy">{sub}</p>
               <div className="ov-actions">
                 <Link className="ov-btn" href={primaryHref}>{primaryLabel} →</Link>
@@ -142,6 +177,7 @@ export default function LivePropertyPage({
           <img src={visual} alt="" style={{objectPosition:visualPosition}} />
           <div className="ov-feature-band-copy">
             <div className="ov-kicker">{footerEyebrow}</div>
+            {brandMarks?.length ? <BrandLockup marks={brandMarks} compact/> : null}
             <h2 className="ov-display">{footerTitle}</h2>
             <div className="ov-actions"><Link className="ov-btn" href={primaryHref}>{primaryLabel} →</Link><Link className="ov-btn ghost" href={merchHref}>{merchLabel}</Link></div>
           </div>
