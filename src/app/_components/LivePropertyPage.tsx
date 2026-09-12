@@ -52,6 +52,6 @@ export default function LivePropertyPage({
 
     {stops?.length?<section className="ir-property-section ir-stops-section"><div className="ir-property-heading"><span>{stopsEyebrow}</span><h2>{stopsTitle}</h2></div><div className="ir-stop-list">{stops.map((stop,index)=>{const inner=<><span>0{index+1}</span><div><strong>{stop.city}</strong><p>{stop.venue}{stop.meta?` · ${stop.meta}`:""}</p>{stop.note?<small>{stop.note}</small>:null}</div><em>↗</em></>;return stop.href?<Link href={stop.href} key={`${stop.city}-${stop.venue}`}>{inner}</Link>:<div key={`${stop.city}-${stop.venue}`}>{inner}</div>})}</div></section>:null}
 
-    <section className="ir-property-close"><img src={visual} alt="" style={{objectPosition:visualPosition}}/><div/><div className="ir-property-close-copy"><span>{footerEyebrow}</span><h2>{footerTitle}</h2><div><Link href={primaryHref}>{primaryLabel} →</Link><Link href={merchHref}>{merchLabel}</Link></div></div></section>
+    <section className="ir-property-close"><div className="ir-property-close-copy"><span>{footerEyebrow}</span><h2>{footerTitle}</h2><div><Link href={primaryHref}>{primaryLabel} →</Link><Link href={merchHref}>{merchLabel}</Link></div></div></section>
   </article></PlatformShell>;
 }
