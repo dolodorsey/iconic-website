@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Shell } from "@/app/_components/IconicPage";
+import PlatformShell from "@/app/_components/PlatformShell";
 import { getMerchCatalog } from "@/app/tampa/nightmare-on-channelside/merch/catalog";
 import { COLLECTION_ART, NOC_MEDIA } from "@/app/tampa/nightmare-on-channelside/merch/noc-assets";
 
@@ -26,7 +26,7 @@ export default async function MerchPage(){
   const bySlug = new Map(catalog.collections.map((collection) => [collection.slug, collection]));
   const productFor = (slug:string) => catalog.products.find((product) => product.collection_slug === slug);
 
-  return <Shell>
+  return <PlatformShell>
     <div className="ov-page">
       <section className="ov-merch-hero">
         <img src={NOC_MEDIA.market} alt="ICONIC live merchandise collections" fetchPriority="high"/>
@@ -92,5 +92,5 @@ export default async function MerchPage(){
         <div><b>SECURE CHECKOUT</b><span>Cart and checkout remain isolated to the NOC catalog.</span></div>
       </div>
     </div>
-  </Shell>;
+  </PlatformShell>;
 }
