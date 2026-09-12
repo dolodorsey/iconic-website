@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { DJ_SNAKE_AND_FRIENDS_LOGO, PARDON_MY_FRENCH_TOUR_LOGO, SUMMER_WALKER_SOUL_SYMPHONY_LOGO } from "./tour-brand-assets";
 
-const SUMMER="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summer-walker-soul-symphony.jpg?v=1789170574";
-const DJ="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-dj-snake-pardon-my-french.jpg?v=1789170586";
 const PLATFORM="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-concert-series.png?v=1789179952";
 
 const divisions=[
@@ -16,13 +14,7 @@ const divisions=[
   ["MERCH","Collectible culture connected to the event.","/merch"],
 ] as const;
 
-export default function HomeExperience({tampa,archive,merchTiles}:{tampa:string;archive:string;merchTiles:{label:string;href:string;src:string}[]}){
-  const slate=[
-    {label:"Tampa Halloween",meta:"Nightmare on Channelside",href:"/tampa-halloween",src:tampa,theme:"red"},
-    {label:"Summer Walker",meta:"Soul Symphony · 10-city platform",href:"/summer-walker",src:SUMMER,theme:"plum",logo:SUMMER_WALKER_SOUL_SYMPHONY_LOGO},
-    {label:"DJ Snake",meta:"Pardon My French · 5-city stadium run",href:"/dj-snake-pardon-my-french",src:DJ,theme:"red",logos:[DJ_SNAKE_AND_FRIENDS_LOGO,PARDON_MY_FRENCH_TOUR_LOGO]},
-  ];
-
+export default function HomeExperience(_: {tampa:string;archive:string;merchTiles:{label:string;href:string;src:string}[]}){
   return <div className="ir-home">
     <section className="ir-home-hero ir-home-hero-corporate">
       <img src={PLATFORM} alt="ICONIC live entertainment platform"/>
@@ -38,50 +30,39 @@ export default function HomeExperience({tampa,archive,merchTiles}:{tampa:string;
     <section className="ir-home-section ir-slate">
       <div className="ir-section-heading"><span>Current Slate</span><h2>Three flagship worlds. Three different identities.</h2></div>
       <div className="ir-slate-grid">
-        {slate.map(item=><Link href={item.href} className={`ir-slate-card ${item.theme}`} key={item.label}>
-          <img className="ir-slate-image" src={item.src} alt=""/>
-          <div className="ir-slate-shade"/>
-          <div className="ir-slate-copy">
-            {item.logo?<img className="ir-slate-logo solo" src={item.logo} alt=""/>:null}
-            {item.logos?<div className="ir-slate-logos">{item.logos.map(src=><img src={src} alt="" key={src}/>)}</div>:null}
-            {!item.logo&&!item.logos?<strong>{item.label}</strong>:null}
-            <span>{item.meta}</span>
-          </div>
-        </Link>)}
+        <Link href="/tampa-halloween" className="ir-slate-card ir-slate-graphic tampa"><div className="ir-slate-copy"><small>ICONIC LIVE · TAMPA</small><strong>NIGHTMARE<br/>ON CHANNELSIDE</strong><span>Halloween arena world →</span></div></Link>
+        <Link href="/summer-walker" className="ir-slate-card ir-slate-graphic summer"><div className="ir-slate-copy"><small>ICONIC LIVE · SOUL</small><img className="ir-slate-logo solo" src={SUMMER_WALKER_SOUL_SYMPHONY_LOGO} alt="Summer Walker Soul Symphony Tour"/><span>10-city experience platform →</span></div></Link>
+        <Link href="/dj-snake-pardon-my-french" className="ir-slate-card ir-slate-graphic pmf"><div className="ir-slate-copy"><small>ICONIC LIVE · STADIUM</small><div className="ir-slate-logos"><img src={DJ_SNAKE_AND_FRIENDS_LOGO} alt="DJ Snake and Friends"/><img src={PARDON_MY_FRENCH_TOUR_LOGO} alt="Pardon My French Tour"/></div><span>5-city stadium platform →</span></div></Link>
       </div>
     </section>
 
-    <section className="ir-division-strip">
-      {divisions.map(([title,,href])=><Link href={href} key={title}>{title}<span>↗</span></Link>)}
-    </section>
+    <section className="ir-division-strip">{divisions.map(([title,,href])=><Link href={href} key={title}>{title}<span>↗</span></Link>)}</section>
 
-    <section className="ir-feature">
-      <img src={SUMMER} alt="Summer Walker Soul Symphony"/>
-      <div className="ir-feature-shade"/>
+    <section className="ir-feature ir-feature-editorial">
       <div className="ir-feature-copy">
         <span>Featured World</span>
         <img src={SUMMER_WALKER_SOUL_SYMPHONY_LOGO} alt="Summer Walker Soul Symphony Tour"/>
-        <p>Modern R&B meets orchestral scale. Built as a premium city-by-city experience, not a generic tour page.</p>
+        <p>Modern R&B meets orchestral scale. Soul Symphony has its own visual language, hospitality system and market architecture.</p>
         <Link href="/summer-walker">Enter Soul Symphony →</Link>
       </div>
+      <div className="ir-feature-number">10</div>
+      <div className="ir-feature-caption">CITIES · ONE SOULFUL EXPERIENCE</div>
     </section>
 
     <section className="ir-home-section ir-ecosystem">
       <div className="ir-section-heading"><span>The Platform</span><h2>ICONIC is bigger than the stage.</h2></div>
-      <div className="ir-ecosystem-list">
-        {divisions.map(([title,body,href],index)=><Link href={href} key={title}><span>0{index+1}</span><strong>{title}</strong><p>{body}</p><em>↗</em></Link>)}
-      </div>
+      <div className="ir-ecosystem-list">{divisions.map(([title,body,href],index)=><Link href={href} key={title}><span>0{index+1}</span><strong>{title}</strong><p>{body}</p><em>↗</em></Link>)}</div>
     </section>
 
-    <section className="ir-partner-band">
-      <div><span>Partnerships</span><h2>PUT YOUR BRAND INSIDE CULTURE.</h2><p>Activation, hospitality, content, merchandise, city takeovers and fan access should feel native to the experience — not pasted onto it.</p><Link href="/partners">Explore Partnerships →</Link></div>
-    </section>
+    <section className="ir-partner-band"><div><span>Partnerships</span><h2>PUT YOUR BRAND INSIDE CULTURE.</h2><p>Activation, hospitality, content, merchandise, city takeovers and fan access should feel native to the experience — not pasted onto it.</p><Link href="/partners">Explore Partnerships →</Link></div></section>
 
     <section className="ir-home-section ir-archive">
-      <div className="ir-section-heading"><span>Latest / Archive</span><h2>The campaign should look alive before the doors open.</h2></div>
-      <div className="ir-archive-grid">
-        <figure className="wide"><img src={archive} alt="ICONIC archive"/><figcaption>ICONIC LIVE</figcaption></figure>
-        {merchTiles.map(tile=><Link href={tile.href} key={tile.label}><img src={tile.src} alt={tile.label}/><span>{tile.label}</span></Link>)}
+      <div className="ir-section-heading"><span>Explore ICONIC</span><h2>Move through the platform without visual clutter.</h2></div>
+      <div className="ir-archive-text-grid">
+        <Link href="/media" className="ir-archive-text-card"><span>01</span><strong>MEDIA + ARCHIVE</strong><p>Campaigns, aftermovies, photography and cultural proof.</p><em>↗</em></Link>
+        <Link href="/creators" className="ir-archive-text-card"><span>02</span><strong>CREATORS</strong><p>Talent development, booking, packaging and opportunity.</p><em>↗</em></Link>
+        <Link href="/merch" className="ir-archive-text-card"><span>03</span><strong>MERCH</strong><p>Live event commerce and official product worlds.</p><em>↗</em></Link>
+        <Link href="/book" className="ir-archive-text-card"><span>04</span><strong>BOOK ICONIC</strong><p>Private, corporate, brand and venue programming.</p><em>↗</em></Link>
       </div>
     </section>
   </div>;
