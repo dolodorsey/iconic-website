@@ -3,7 +3,7 @@ import Link from "next/link";
 import { C, Hero, Section } from "@/app/_components/IconicPage";
 import PlatformShell from "@/app/_components/PlatformShell";
 
-const MASTER="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-live-concert-series-master.png?v=1789175341";
+const EXPERIENCE_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-vip-hospitality.png?v=1789179973";
 export const metadata:Metadata={title:"Experiences",description:"ICONIC NIGHTS, ICONIC EXPERIENCES and ICONIC SOCIAL — premium nightlife, immersive cultural environments and invite-level networking."};
 
 const worlds=[
@@ -13,7 +13,7 @@ const worlds=[
 ];
 
 export default function ExperiencesPage(){return <PlatformShell>
-  <Hero visual={MASTER} visualPosition="center 47%" eyebrow="ICONIC EXPERIENCES™" title="NOT ATTENDED. REMEMBERED." sub="ICONIC turns nightlife, culture and social connection into designed experiences with distinct identity, strict curation and premium execution." visualNote="NIGHTS · EXPERIENCES · SOCIAL" />
+  <Hero visual={EXPERIENCE_VISUAL} visualPosition="center 48%" eyebrow="ICONIC EXPERIENCES™" title="NOT ATTENDED. REMEMBERED." sub="ICONIC turns nightlife, culture and social connection into designed experiences with distinct identity, strict curation and premium execution." visualNote="NIGHTS · EXPERIENCES · SOCIAL" />
   <Section eyebrow="Experience System" title="Three formats. One standard." dark>
     <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:14}}>{worlds.map(([title,label,body,href],i)=><Link key={title} href={href} className="glass market-card" style={{minHeight:360,padding:30,borderRadius:24,color:C.white,textDecoration:"none",display:"flex",flexDirection:"column",justifyContent:"space-between"}}><div><div style={{color:C.gold2,fontSize:8,fontWeight:900,letterSpacing:".2em"}}>{String(i+1).padStart(2,"0")} · {label}</div><h2 style={{fontFamily:"Georgia,serif",fontSize:46,lineHeight:.9,margin:"24px 0 18px"}}>{title}</h2><p style={{color:C.muted,fontSize:14,lineHeight:1.75,margin:0}}>{body}</p></div><span style={{color:C.gold2,fontSize:9,fontWeight:900,letterSpacing:".14em"}}>ENTER WORLD →</span></Link>)}</div>
   </Section>
