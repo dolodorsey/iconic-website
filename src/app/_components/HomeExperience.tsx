@@ -7,12 +7,6 @@ const SUMMER="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summ
 const DJ="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-dj-snake-pardon-my-french.jpg?v=1789170586";
 const PLATFORM="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-concert-series.png?v=1789179952";
 
-const slate=[
-  {label:"Tampa Halloween",meta:"Nightmare on Channelside",href:"/tampa-halloween",src:PLATFORM,theme:"red"},
-  {label:"Summer Walker",meta:"Soul Symphony · 10-city platform",href:"/summer-walker",src:SUMMER,theme:"plum",logo:SUMMER_WALKER_SOUL_SYMPHONY_LOGO},
-  {label:"DJ Snake",meta:"Pardon My French · 5-city stadium run",href:"/dj-snake-pardon-my-french",src:DJ,theme:"red",logos:[DJ_SNAKE_AND_FRIENDS_LOGO,PARDON_MY_FRENCH_TOUR_LOGO]},
-];
-
 const divisions=[
   ["LIVE","Concerts, tours and arena-scale moments.","/events"],
   ["EXPERIENCES","Nightlife, hospitality and cultural worlds.","/experiences"],
@@ -23,9 +17,15 @@ const divisions=[
 ] as const;
 
 export default function HomeExperience({tampa,archive,merchTiles}:{tampa:string;archive:string;merchTiles:{label:string;href:string;src:string}[]}){
+  const slate=[
+    {label:"Tampa Halloween",meta:"Nightmare on Channelside",href:"/tampa-halloween",src:tampa,theme:"red"},
+    {label:"Summer Walker",meta:"Soul Symphony · 10-city platform",href:"/summer-walker",src:SUMMER,theme:"plum",logo:SUMMER_WALKER_SOUL_SYMPHONY_LOGO},
+    {label:"DJ Snake",meta:"Pardon My French · 5-city stadium run",href:"/dj-snake-pardon-my-french",src:DJ,theme:"red",logos:[DJ_SNAKE_AND_FRIENDS_LOGO,PARDON_MY_FRENCH_TOUR_LOGO]},
+  ];
+
   return <div className="ir-home">
-    <section className="ir-home-hero">
-      <img src={tampa} alt="ICONIC live experience"/>
+    <section className="ir-home-hero ir-home-hero-corporate">
+      <img src={PLATFORM} alt="ICONIC live entertainment platform"/>
       <div className="ir-home-hero-shade"/>
       <div className="ir-home-hero-copy">
         <span>ICONIC</span>
@@ -36,7 +36,7 @@ export default function HomeExperience({tampa,archive,merchTiles}:{tampa:string;
     </section>
 
     <section className="ir-home-section ir-slate">
-      <div className="ir-section-heading"><span>Current Slate</span><h2>Three flagship worlds. Three completely different identities.</h2></div>
+      <div className="ir-section-heading"><span>Current Slate</span><h2>Three flagship worlds. Three different identities.</h2></div>
       <div className="ir-slate-grid">
         {slate.map(item=><Link href={item.href} className={`ir-slate-card ${item.theme}`} key={item.label}>
           <img className="ir-slate-image" src={item.src} alt=""/>
@@ -61,7 +61,7 @@ export default function HomeExperience({tampa,archive,merchTiles}:{tampa:string;
       <div className="ir-feature-copy">
         <span>Featured World</span>
         <img src={SUMMER_WALKER_SOUL_SYMPHONY_LOGO} alt="Summer Walker Soul Symphony Tour"/>
-        <p>Modern R&B meets orchestral scale. Built as a premium city-by-city experience — not another generic tour landing page.</p>
+        <p>Modern R&B meets orchestral scale. Built as a premium city-by-city experience, not a generic tour page.</p>
         <Link href="/summer-walker">Enter Soul Symphony →</Link>
       </div>
     </section>
