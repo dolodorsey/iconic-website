@@ -1,0 +1,31 @@
+/* Final cross-device QA layer — loaded last so it can correct legacy/event styles without rewriting each property. */
+html,body{max-width:100%;overflow-x:hidden}.platform-shell *{box-sizing:border-box}.platform-shell a:focus-visible,.platform-shell button:focus-visible,.platform-shell input:focus-visible,.platform-shell textarea:focus-visible{outline:2px solid #ffd978;outline-offset:3px}.platform-nav{scrollbar-width:none}.platform-nav::-webkit-scrollbar{display:none}.platform-footer a{min-height:18px}.hero-visual,.ov-live-hero>img,.ih-hero-bg,.ih-tour-photo,.ih-world>img{background:#070502}
+
+@media(max-width:1080px){
+  .platform-header{row-gap:8px}.platform-nav{width:100%;padding-top:2px}.platform-footer{gap:30px}
+  .ov-live-hero-inner{gap:20px}.ov-live-media-card{max-width:520px}
+}
+
+@media(max-width:760px){
+  .platform-header{position:sticky;top:0;grid-template-columns:minmax(0,1fr) auto;min-height:66px;padding:8px 14px 0;background:rgba(4,3,1,.97)}
+  .platform-logo img{width:132px;max-height:42px}.platform-access{min-height:34px;padding:0 12px;white-space:nowrap}
+  .platform-nav{grid-column:1/-1;margin:0 -14px;padding:9px 14px 11px;gap:18px;border-top:1px solid rgba(226,176,74,.12);overscroll-behavior-x:contain}
+  .platform-nav a{font-size:7px;letter-spacing:.12em}
+  .platform-footer{grid-template-columns:1fr;padding:44px 20px;gap:30px}.platform-footer-brand,.platform-footer>div:last-child{grid-column:auto}.platform-footer-brand img{width:180px}.platform-footer a{font-size:8px}
+
+  .iconic-hero{min-height:72svh!important}.hero-copy-visual{padding:0 20px!important;margin:0 auto 34px!important}.visual-hero-title{font-size:clamp(42px,13vw,66px)!important;line-height:.88!important;max-width:94vw!important}.hero-eyebrow{font-size:8px!important;letter-spacing:.22em!important}.hero-concept-note{display:none!important}
+
+  .ih-hero{min-height:760px!important}.ih-hero-inner{min-height:760px!important;padding:108px 20px 24px!important}.ih-hero-copy{max-width:100%}.ih-hero-copy h1{font-size:clamp(48px,14vw,72px)!important;line-height:.82!important}.ih-hero-copy h2{font-size:22px!important;max-width:90vw}.ih-hero-copy p{font-size:13px!important;line-height:1.6!important}.ih-hero-index{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}.ih-hero-index button{min-height:62px!important;padding:10px!important;grid-template-columns:22px 1fr!important}.ih-slate-strip{grid-template-columns:1fr 1fr!important}.ih-slate-strip>a,.ih-slate-strip>div{padding:16px!important}.ih-slate-strip b{font-size:15px!important}.ih-intro{padding-top:74px!important;padding-bottom:74px!important}.ih-intro h2{font-size:clamp(44px,13vw,68px)!important}.ih-world{min-height:760px!important}.ih-world-overlay{background:linear-gradient(180deg,rgba(3,2,1,.12) 0%,rgba(3,2,1,.48) 36%,rgba(3,2,1,.97) 70%,#050403 100%)!important}.ih-world-copy{left:20px!important;right:20px!important;top:auto!important;bottom:34px!important;transform:none!important;width:auto!important}.ih-world-copy h2{font-size:clamp(48px,14vw,72px)!important}.ih-metric-row{grid-template-columns:1fr!important}.ih-tour-world{grid-template-columns:1fr!important;min-height:0!important}.ih-tour-art{min-height:520px!important}.ih-tour-copy{padding:56px 20px 68px!important}.ih-tour-copy h2{font-size:clamp(46px,13vw,70px)!important}.ih-tour-pillars{grid-template-columns:1fr!important}.ih-inline-marks{flex-wrap:wrap}.ih-inline-marks img{width:min(72%,260px)!important}.ih-section-head{grid-template-columns:1fr!important;gap:18px!important}.ih-section-head h2{font-size:clamp(44px,13vw,68px)!important}.ih-economy{padding-top:72px!important;padding-bottom:80px!important}.ih-economy-grid{grid-template-columns:1fr 1fr!important}.ih-economy-grid a{min-height:160px!important}.ih-merch-grid{grid-template-columns:1fr!important}.ih-merch-gallery{grid-template-columns:1fr 1fr!important}.ih-merch-gallery a{min-height:280px!important}.ih-merch-scene{grid-column:auto!important;min-height:310px!important}.ih-partners{min-height:500px!important;padding:70px 20px!important}.ih-partners h2{font-size:clamp(48px,14vw,76px)!important}
+
+  .ov-live-hero{min-height:760px!important}.ov-live-hero-inner{padding:120px 20px 34px!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important}.ov-live-hero-copy{max-width:100%!important}.ov-live-media-card{width:100%!important;margin-top:18px!important}.ov-display{overflow-wrap:anywhere}.ov-actions{gap:8px!important}.ov-btn{min-height:46px!important;padding:0 18px!important}.ov-stat-row,.ov-pillar-grid,.ov-gallery-grid{grid-template-columns:1fr!important}.ov-gallery-card img{max-height:none!important}.ov-feature-band{min-height:500px!important}.ov-feature-band-copy{padding:40px 20px!important}.ov-feature-band .ov-display{font-size:clamp(42px,12vw,64px)!important}
+
+  .iconic-section{padding:66px 20px!important}.iconic-section h2{overflow-wrap:anywhere}.glass.market-card{min-width:0}
+  form{max-width:100%}input,textarea,select{font-size:16px!important}
+}
+
+@media(max-width:480px){
+  .platform-logo img{width:116px}.platform-access{font-size:6.5px;padding:0 10px}.platform-nav{gap:15px}
+  .ih-slate-strip{grid-template-columns:1fr!important}.ih-hero-index button b{font-size:6.5px!important}.ih-economy-grid{grid-template-columns:1fr!important}.ih-merch-gallery{grid-template-columns:1fr!important}.ih-merch-gallery a{min-height:340px!important}.ih-actions,.ov-actions{flex-direction:column!important;align-items:stretch!important}.ih-btn,.ov-btn{width:100%!important}.ov-live-hero{min-height:820px!important}
+}
+
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
