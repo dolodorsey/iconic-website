@@ -1,21 +1,26 @@
 import type { Metadata } from "next";
-import { C, Hero, Section } from "@/app/_components/IconicPage";
 import PlatformShell from "@/app/_components/PlatformShell";
 import AccessForm from "@/app/access/AccessForm";
 
-const ARCHIVE_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-aftermovie-archive.png?v=1789179965";
-const PLATFORM_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-concert-series.png?v=1789179952";
-const SUMMER="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-soul-symphony-live-orchestral-experience.png?v=1789175231";
-const PMF="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-pmf-stadium-event.png?v=1789175259";
-export const metadata:Metadata={title:"Media & Archive",description:"ICONIC archives live events through photography, recap reels, editorial documentation and campaign media."};
+const HERO="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-aftermovie-archive.png?v=1789179965";
+export const metadata:Metadata={title:"Media & Archive",description:"ICONIC archives live events through photography, recap films, editorial documentation and campaign media."};
 
-export default function MediaPage(){return <PlatformShell>
-  <Hero visual={ARCHIVE_VISUAL} visualPosition="center 48%" eyebrow="ICONIC MEDIA + ARCHIVE" title="EVERY MOMENT BECOMES PROOF." sub="ICONIC events are archived through high-end photography, recap reels, editorial documentation and campaign media so the cultural life of the event continues after the room clears." visualNote="PHOTOGRAPHY · VIDEO · EDITORIAL · ARCHIVE" />
-  <Section eyebrow="The Archive" title="Cultural currency needs documentation." dark>
-    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(270px,1fr))",gap:14}}>{[['PHOTOGRAPHY','High-end event and lifestyle photography that preserves people, atmosphere, production and detail.'],['RECAP FILMS','Aftermovies and short-form edits that translate the room into something people can feel after the fact.'],['EDITORIAL DOCUMENTATION','Structured visual storytelling around cities, artists, partners, production and cultural impact.'],['CAMPAIGN ASSETS','Media built to support announcements, recaps, sponsor proof, future sales and the next city.']].map(([title,body],i)=><article key={title} className="glass market-card" style={{padding:28,borderRadius:22,minHeight:225}}><div style={{color:C.gold2,fontSize:8,fontWeight:900,letterSpacing:".18em"}}>{String(i+1).padStart(2,"0")}</div><h2 style={{fontFamily:"Georgia,serif",fontSize:34,lineHeight:.96,margin:"22px 0 12px"}}>{title}</h2><p style={{color:C.muted,fontSize:13,lineHeight:1.7,margin:0}}>{body}</p></article>)}</div>
-  </Section>
-  <Section eyebrow="Current Visual Worlds" title="The archive starts while the campaign is still alive.">
-    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:14}}>{[['ICONIC LIVE','Master live-entertainment platform',PLATFORM_VISUAL],['SOUL SYMPHONY','Live orchestral experience',SUMMER],['PARDON MY FRENCH','Stadium-event world',PMF]].map(([title,body,src])=><figure key={title} style={{margin:0,border:`1px solid ${C.faint}`,borderRadius:22,overflow:"hidden",background:"#080603"}}><img src={src} alt={title} style={{width:"100%",aspectRatio:"1/1",objectFit:"cover",display:"block"}}/><figcaption style={{padding:20}}><div style={{color:C.gold2,fontSize:8,fontWeight:900,letterSpacing:".16em"}}>{title}</div><div style={{fontFamily:"Georgia,serif",fontSize:26,marginTop:9}}>{body}</div></figcaption></figure>)}</div>
-  </Section>
-  <Section eyebrow="Media Request" title="Press, licensing, archive and content requests enter here." dark><div style={{maxWidth:900}}><AccessForm intent="media" event="iconic-media-archive"/></div></Section>
-</PlatformShell>}
+const archive=[
+  ["PHOTOGRAPHY","High-end event and lifestyle photography that preserves people, atmosphere, production and detail."],
+  ["RECAP FILMS","Aftermovies and short-form edits that translate the room into something people can feel later."],
+  ["EDITORIAL DOCUMENTATION","Structured storytelling around cities, artists, partners, production and cultural impact."],
+  ["CAMPAIGN ASSETS","Media built to support announcements, sponsor proof, future sales and the next city."],
+] as const;
+const uses=[
+  ["PRESS + EDITORIAL","Approved imagery, event context and media-request routing."],
+  ["PARTNER PROOF","Recaps and documentation that show how brands lived inside an experience."],
+  ["LICENSING","Archive and content requests routed separately from general access."],
+  ["FUTURE CAMPAIGNS","Past proof becomes creative fuel for the next city, property or partnership."],
+] as const;
+
+export default function MediaPage(){return <PlatformShell><main className="cp-page">
+  <section className="cp-hero"><div className="cp-hero-copy"><div className="cp-kicker">ICONIC MEDIA + ARCHIVE</div><h1>EVERY MOMENT BECOMES PROOF.</h1><p>Photography, recap films, editorial documentation and campaign media extend the cultural life of an ICONIC event after the room clears.</p></div><div className="cp-hero-media"><img src={HERO} alt="ICONIC media archive and aftermovie"/></div></section>
+  <section className="cp-section"><div className="cp-section-head"><div className="cp-kicker">The Archive</div><div><h2>Cultural currency needs documentation.</h2></div></div><div className="cp-list">{archive.map(([title,body],i)=><div className="cp-row" key={title}><span>{String(i+1).padStart(2,"0")}</span><strong>{title}</strong><p>{body}</p><em>•</em></div>)}</div></section>
+  <section className="cp-section alt"><div className="cp-section-head"><div className="cp-kicker">What The Archive Does</div><div><h2>One capture. Multiple jobs.</h2></div></div><div className="cp-grid">{uses.map(([title,body],i)=><article className="cp-tile" key={title}><span>{String(i+1).padStart(2,"0")}</span><strong>{title}</strong><p>{body}</p></article>)}</div></section>
+  <section className="cp-section"><div className="cp-section-head"><div className="cp-kicker">Media Request</div><div><h2>Press, licensing, archive and content requests enter here.</h2></div></div><div className="cp-form-wrap"><AccessForm intent="media" event="iconic-media-archive"/></div></section>
+</main></PlatformShell>}
