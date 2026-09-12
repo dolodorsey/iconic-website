@@ -11,20 +11,20 @@ import "./iconic-rebuild.css";
 import "./iconic-refinement.css";
 import "./flagship-refinement.css";
 import "./company-pages.css";
+import "./final-audit.css";
 import { SITE_URL } from "../lib/site-url";
 import Analytics from "./_components/Analytics";
 
 export const viewport: Viewport = { themeColor: "#0A0A0A", colorScheme: "dark" };
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "ICONIC — Live Entertainment, Experiences, Creators & Music", template: "%s | ICONIC" },
   description: "ICONIC is a multi-vertical entertainment group spanning headline concerts, multi-city tours, premium nightlife, immersive experiences, creators, ICONIC MUSIC, media, merchandise, hospitality, bookings and strategic partnerships.",
-  applicationName: "ICONIC",
-  keywords: ["ICONIC","ICONIC LIVE","ICONIC MUSIC","ICONIC Social","ICONIC Creators","live entertainment","concerts","concert tours","stadium concerts","arena events","premium nightlife","immersive experiences","creator development","music development","event production","Tampa concerts","Summer Walker","Soul Symphony","DJ Snake","Pardon My French","21 Savage","Nightmare on Channelside","concert merch","VIP hospitality","event sponsorships"],
-  robots: { index:true, follow:true },
-  openGraph: { type:"website", siteName:"ICONIC", title:"ICONIC — Live Entertainment, Experiences, Creators & Music", description:"Events. Experiences. Creators. ICONIC MUSIC. Media. Merchandise. Partnerships. A full entertainment ecosystem built around culture and memorable live moments.", url:"/" },
-  twitter: { card:"summary_large_image", title:"ICONIC — Live Entertainment, Experiences, Creators & Music", description:"Headline concerts, tours, premium experiences, creators, music, media, merchandise and strategic partnerships." },
+  applicationName:"ICONIC",
+  keywords:["ICONIC","ICONIC LIVE","ICONIC MUSIC","ICONIC Social","ICONIC Creators","live entertainment","concerts","concert tours","stadium concerts","arena events","premium nightlife","immersive experiences","creator development","music development","event production","Tampa concerts","Summer Walker","Soul Symphony","DJ Snake","Pardon My French","21 Savage","Nightmare on Channelside","concert merch","VIP hospitality","event sponsorships"],
+  robots:{index:true,follow:true},
+  openGraph:{type:"website",siteName:"ICONIC",title:"ICONIC — Live Entertainment, Experiences, Creators & Music",description:"Events. Experiences. Creators. ICONIC MUSIC. Media. Merchandise. Partnerships. A full entertainment ecosystem built around culture and memorable live moments.",url:"/"},
+  twitter:{card:"summary_large_image",title:"ICONIC — Live Entertainment, Experiences, Creators & Music",description:"Headline concerts, tours, premium experiences, creators, music, media, merchandise and strategic partnerships."},
   manifest:"/manifest.webmanifest",
 };
 
