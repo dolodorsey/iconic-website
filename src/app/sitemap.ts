@@ -10,7 +10,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const coreRoutes = [
     "",
     "/about",
+    "/events",
+    "/experiences",
+    "/social",
+    "/creators",
+    "/music",
+    "/media",
     "/partners",
+    "/book",
+    "/contact",
     "/tampa-halloween",
     "/summer-walker",
     "/dj-snake-pardon-my-french",
@@ -53,7 +61,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const isPolicy = route === `${MERCH_BASE}/policies` || route === "/privacy" || route === "/terms";
     const isPmfCity=route.startsWith("/dj-snake-pardon-my-french/");
     const isSoulCity=route.startsWith("/summer-walker/");
-    const isPlatform=route==="/about"||route==="/partners";
+    const isPlatform=["/about","/events","/experiences","/social","/creators","/music","/media","/partners","/book","/contact"].includes(route);
     const isCurrentSlate=["/tampa-halloween","/summer-walker","/dj-snake-pardon-my-french","/merch"].includes(route);
     return {
       url: `${SITE_URL}${route}`,
