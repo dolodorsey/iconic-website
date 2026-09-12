@@ -3,12 +3,12 @@ import { C, Hero, Section } from "@/app/_components/IconicPage";
 import PlatformShell from "@/app/_components/PlatformShell";
 import AccessForm from "@/app/access/AccessForm";
 
-const MASTER="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-live-concert-series-master.png?v=1789175341";
+const CREATOR_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-artist-reveal.png?v=1789179959";
 export const metadata:Metadata={title:"Creators",description:"ICONIC Creators is a home for artists, DJs, performers, photographers, videographers, hosts, producers, designers and cultural tastemakers."};
 
 const disciplines=["MUSIC ARTISTS","DJS","PAINTERS + VISUAL ARTISTS","PERFORMERS","PHOTOGRAPHERS","VIDEOGRAPHERS","HOSTS","PRODUCERS","DESIGNERS","CULTURAL TASTEMAKERS"];
 export default function CreatorsPage(){return <PlatformShell>
-  <Hero visual={MASTER} visualPosition="center 45%" eyebrow="ICONIC CREATORS™" title="TALENT SHOULD HAVE A HOME BIG ENOUGH FOR THE VISION." sub="ICONIC houses creators across music, art and performance and builds pathways into booking, brand packaging, media capture, sponsor access and live experiences." visualNote="CREATE · DEVELOP · PACKAGE · BOOK · SCALE" />
+  <Hero visual={CREATOR_VISUAL} visualPosition="center 48%" eyebrow="ICONIC CREATORS™" title="TALENT SHOULD HAVE A HOME BIG ENOUGH FOR THE VISION." sub="ICONIC houses creators across music, art and performance and builds pathways into booking, brand packaging, media capture, sponsor access and live experiences." visualNote="CREATE · DEVELOP · PACKAGE · BOOK · SCALE" />
   <Section eyebrow="Creator Ecosystem" title="More than a roster. A development and opportunity system." dark>
     <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(210px,1fr))",gap:10}}>{disciplines.map((item,i)=><div className="glass market-card" key={item} style={{padding:24,borderRadius:18,minHeight:145,display:"flex",flexDirection:"column",justifyContent:"space-between"}}><div style={{color:C.gold2,fontSize:8,fontWeight:900,letterSpacing:".16em"}}>{String(i+1).padStart(2,"0")}</div><h2 style={{fontFamily:"Georgia,serif",fontSize:25,lineHeight:.98,margin:0}}>{item}</h2></div>)}</div>
   </Section>
