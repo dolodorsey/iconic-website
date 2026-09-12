@@ -10,7 +10,6 @@ import premium from "../../../noc-premium.module.css";
 import { formatPrice, getMerchCatalog } from "../../../catalog";
 import { AddToBag } from "../../../shop-client";
 import { ProductCard, StoreFooter, StoreHeader } from "../../../noc-ui";
-import { NOC_MEDIA } from "../../../noc-assets";
 
 type RouteParams = { slug: string; product: string };
 type Props = { params: Promise<RouteParams> };
@@ -98,8 +97,8 @@ export default async function ProductPage({ params }: Props) {
         <aside style={{position:"sticky",top:96,padding:"8px 4px 0"}}>
           <Link className={styles.back} href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}>← BACK TO {collection.name}</Link>
           <span style={{display:"block",marginTop:22,color:"#ffd978",fontSize:9,fontWeight:900,letterSpacing:".2em",textTransform:"uppercase"}}>TAMPA HALLOWEEN CAPSULE · {collection.name}</span>
-          <h1 style={{fontFamily:'Didot,"Bodoni MT","Times New Roman",serif',fontSize:"clamp(46px,5vw,76px)",lineHeight:.9,letterSpacing:"-.045em",margin:"14px 0 12px",color:"#fff7e7"}}>{product.title}</h1>
-          <div style={{fontFamily:'Didot,"Bodoni MT","Times New Roman",serif',fontSize:36,color:"#ffd978",fontWeight:800}}>{formatPrice(product.price_cents)}</div>
+          <h1 style={{fontFamily:'Didot,"Bodoni MT","Times New Roman",serif',fontSize:"clamp(42px,4.5vw,62px)",lineHeight:.92,letterSpacing:"-.04em",margin:"14px 0 12px",color:"#fff7e7"}}>{product.title}</h1>
+          <div style={{fontFamily:'Didot,"Bodoni MT","Times New Roman",serif',fontSize:32,color:"#ffd978",fontWeight:800}}>{formatPrice(product.price_cents)}</div>
           <p style={{color:"rgba(255,255,255,.66)",fontSize:13,lineHeight:1.7,margin:"18px 0 22px"}}>{product.description || `Official ${collection.name} merchandise from the Nightmare on Channelside Halloween 2026 world.`}</p>
 
           {canSell ? <AddToBag variants={product.variants} options={product.options} productTitle={product.title} /> : <div className={styles.dropLocked}><strong>GONE DARK</strong><span>This piece is currently unavailable.</span></div>}
@@ -115,13 +114,12 @@ export default async function ProductPage({ params }: Props) {
         </aside>
       </section>
 
-      <section style={{position:"relative",minHeight:260,overflow:"hidden",borderBottom:"1px solid rgba(255,255,255,.08)"}}>
-        <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside" style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 42%"}}/>
-        <div style={{position:"absolute",inset:0,background:"linear-gradient(90deg,rgba(0,0,0,.8),rgba(0,0,0,.18),rgba(0,0,0,.75))"}}/>
-        <div style={{position:"absolute",left:"clamp(22px,5vw,70px)",bottom:30,maxWidth:600}}><span style={{fontSize:9,fontWeight:900,letterSpacing:".2em",color:"#ffd978"}}>FROM THE NIGHT</span><h2 style={{fontFamily:'Didot,"Bodoni MT","Times New Roman",serif',fontSize:"clamp(40px,5vw,68px)",lineHeight:.9,margin:"8px 0 0"}}>SAME CITY. A DARKER PLAYGROUND.</h2></div>
+      <section style={{position:"relative",minHeight:220,overflow:"hidden",borderBottom:"1px solid rgba(255,255,255,.08)",background:"linear-gradient(125deg,#080503 0%,#24100d 62%,#5c170f 100%)"}}>
+        <div style={{position:"absolute",right:"2%",top:"50%",transform:"translateY(-55%)",fontSize:"clamp(120px,20vw,260px)",fontWeight:900,lineHeight:.7,letterSpacing:"-.09em",color:"rgba(255,70,45,.09)"}}>31</div>
+        <div style={{position:"absolute",left:"clamp(22px,5vw,70px)",bottom:30,maxWidth:600}}><span style={{fontSize:9,fontWeight:900,letterSpacing:".2em",color:"#ffd978"}}>FROM THE NIGHT</span><h2 style={{fontFamily:'Didot,"Bodoni MT","Times New Roman",serif',fontSize:"clamp(34px,4.2vw,52px)",lineHeight:.94,margin:"8px 0 0"}}>SAME CITY. A DARKER PLAYGROUND.</h2></div>
       </section>
 
-      {related.length ? <section style={{padding:"34px clamp(18px,3vw,42px)"}}><div style={{display:"flex",alignItems:"end",justifyContent:"space-between",gap:20,marginBottom:20}}><div><span style={{fontSize:9,fontWeight:900,letterSpacing:".2em",color:"#ffd978"}}>MORE FROM {collection.name}</span><h2 style={{fontFamily:'Didot,"Bodoni MT","Times New Roman",serif',fontSize:"clamp(38px,4vw,58px)",lineHeight:.95,margin:"9px 0 0"}}>KEEP SHOPPING THE COLLECTION.</h2></div><Link href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`} style={{color:"#ffd978",fontSize:9,fontWeight:900,letterSpacing:".14em",textDecoration:"none"}}>VIEW ALL →</Link></div><div style={{display:"grid",gridTemplateColumns:"repeat(4,minmax(0,1fr))",gap:10}} className="noc-related-grid">{related.map((item)=><ProductCard product={item} key={item.sku}/>)}</div></section> : null}
+      {related.length ? <section style={{padding:"34px clamp(18px,3vw,42px)"}}><div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",gap:20,marginBottom:20}}><div><span style={{fontSize:9,fontWeight:900,letterSpacing:".2em",color:"#ffd978"}}>MORE FROM {collection.name}</span><h2 style={{fontFamily:'Didot,"Bodoni MT","Times New Roman",serif',fontSize:"clamp(34px,3.6vw,50px)",lineHeight:.96,margin:"9px 0 0"}}>KEEP SHOPPING THE COLLECTION.</h2></div><Link href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`} style={{color:"#ffd978",fontSize:9,fontWeight:900,letterSpacing:".14em",textDecoration:"none"}}>VIEW ALL →</Link></div><div style={{display:"grid",gridTemplateColumns:"repeat(4,minmax(0,1fr))",gap:10}} className="noc-related-grid">{related.map((item)=><ProductCard product={item} key={item.sku}/>)}</div></section> : null}
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema).replace(/</g, "\\u003c") }} />
       <StoreFooter />
