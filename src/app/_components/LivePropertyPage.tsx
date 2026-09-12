@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Shell } from "./IconicPage";
+import PlatformShell from "./PlatformShell";
 
 type Stat = { label: string; value: string; body?: string };
 type Pillar = { label: string; title: string; body: string };
@@ -93,7 +93,7 @@ export default function LivePropertyPage({
   footerTitle = "BE THERE BEFORE EVERYONE ELSE.",
 }: LivePropertyPageProps) {
   return (
-    <Shell>
+    <PlatformShell>
       <div className="ov-page">
         <section className="ov-live-hero">
           <img src={visual} alt={title} style={{objectPosition: visualPosition}} fetchPriority="high" />
@@ -183,6 +183,6 @@ export default function LivePropertyPage({
           </div>
         </section>
       </div>
-    </Shell>
+    </PlatformShell>
   );
 }
