@@ -3,12 +3,12 @@ import type { ReactNode } from "react";
 import { ICONIC_LOGO } from "./IconicPage";
 
 const nav=[
-  ["Home","/"],
-  ["Tampa","/tampa-halloween"],
-  ["Summer Walker","/summer-walker"],
-  ["DJ Snake","/dj-snake-pardon-my-french"],
+  ["Events","/events"],
+  ["Experiences","/experiences"],
+  ["Creators","/creators"],
+  ["ICONIC Music","/music"],
+  ["Media","/media"],
   ["Merch","/merch"],
-  ["About","/about"],
   ["Partners","/partners"],
 ] as const;
 
@@ -20,9 +20,9 @@ export default function PlatformShell({children}:{children:ReactNode}){return <m
   </header>
   {children}
   <footer className="platform-footer">
-    <div className="platform-footer-brand"><img src={ICONIC_LOGO} alt="ICONIC LIVE"/><p>Music · Culture · Experiences · Forever</p><small>Headline concerts, multi-city tours, premium hospitality, official merchandise and strategic partnerships.</small></div>
-    <div><span>CURRENT SLATE</span><Link href="/tampa-halloween">Tampa Halloween</Link><Link href="/summer-walker">Summer Walker — Soul Symphony</Link><Link href="/dj-snake-pardon-my-french">DJ Snake — Pardon My French</Link><Link href="/merch">Official Merch</Link></div>
-    <div><span>ICONIC PLATFORM</span><Link href="/about">About ICONIC</Link><Link href="/partners">Partnerships</Link><Link href="/access?intent=sponsorship">Sponsorships</Link><Link href="/access?intent=vip">VIP + Hospitality</Link><Link href="/access?intent=media">Media + Content</Link></div>
-    <div><span>ACCESS</span><Link href="/access?intent=presale">Tickets + Presale</Link><Link href="/access?intent=partners">Strategic Partners</Link><Link href="/access?intent=travel">Travel + City Weekend</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div>
+    <div className="platform-footer-brand"><img src={ICONIC_LOGO} alt="ICONIC LIVE"/><p>Music · Culture · Experiences · Forever</p><small>Premium nightlife, immersive cultural experiences, creators, music, headline concerts, multi-city tours, hospitality, official merchandise and strategic partnerships.</small></div>
+    <div><span>CURRENT SLATE</span><Link href="/tampa-halloween">Tampa Halloween</Link><Link href="/summer-walker">Summer Walker — Soul Symphony</Link><Link href="/dj-snake-pardon-my-french">DJ Snake — Pardon My French</Link><Link href="/events">All Events</Link><Link href="/merch">Official Merch</Link></div>
+    <div><span>ICONIC ECOSYSTEM</span><Link href="/about">About ICONIC</Link><Link href="/experiences">Experiences</Link><Link href="/social">ICONIC Social</Link><Link href="/creators">Creators</Link><Link href="/music">ICONIC MUSIC</Link><Link href="/media">Media + Archive</Link></div>
+    <div><span>WORK WITH ICONIC</span><Link href="/partners">Partnerships + Sponsorships</Link><Link href="/book">Book ICONIC</Link><Link href="/contact">Contact</Link><Link href="/access?intent=vip">VIP + Hospitality</Link><Link href="/access?intent=travel">Travel + City Weekend</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div>
   </footer>
 </main>}
