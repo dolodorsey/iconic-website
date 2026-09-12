@@ -3,6 +3,9 @@ import LivePropertyPage from "@/app/_components/LivePropertyPage";
 import { DJ_SNAKE_AND_FRIENDS_LOGO, PARDON_MY_FRENCH_TOUR_LOGO } from "@/app/_components/tour-brand-assets";
 
 const DJ_VISUAL = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-dj-snake-pardon-my-french.jpg?v=1789170586";
+const PMF_ROUTE = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-pmf-five-cities-five-stadiums.png?v=1789175250";
+const PMF_STADIUM = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-pmf-stadium-event.png?v=1789175259";
+const PMF_ECONOMY = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-pmf-multiple-economies.png?v=1789175269";
 
 export const metadata: Metadata = {
   title: "DJ Snake — Pardon My French",
@@ -40,6 +43,11 @@ export default function DjSnakePage(){
       {label:"Production",title:"Not a DJ set. A stadium event.",body:"Pyro, laser grids, 360° visuals, friends-stage moments, VIP sightlines and a signature finale make the production unmistakably stadium scale."},
       {label:"Weekend",title:"The concert is one night. The experience owns the weekend.",body:"Welcome, city takeover, stadium night and encore programming create a destination system around every market rather than a single show-and-go date."},
       {label:"Demand",title:"Don’t announce everything. Make them chase it.",body:"Tease, reveal, presale, sell, feed demand and unlock additional nights only when the market earns them. Scarcity is part of the campaign architecture."},
+    ]}
+    gallery={[
+      {title:"5 CITIES · 5 STADIUMS",src:PMF_ROUTE},
+      {title:"NOT A DJ SET · A STADIUM EVENT",src:PMF_STADIUM},
+      {title:"ONE TICKET · MULTIPLE ECONOMIES",src:PMF_ECONOMY},
     ]}
     stopsEyebrow="United States Stadium Route"
     stopsTitle="5 cities. 5 stadiums. One global event."
