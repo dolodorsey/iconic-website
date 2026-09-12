@@ -6,10 +6,10 @@ import AccessForm from "./AccessForm";
 
 export const metadata: Metadata = {
   title: "Access",
-  description: "Tickets, presale, VIP, sponsorship, merch, media and partnership access for ICONIC LIVE concerts and tours.",
+  description: "Tickets, presale, VIP, sponsorship, creator, music, booking, merch, media and partnership access for ICONIC LIVE.",
   openGraph: {
     title: "Access | ICONIC LIVE",
-    description: "Request tickets, VIP, sponsorship, merch, media or partnership access for ICONIC LIVE.",
+    description: "Request tickets, VIP, sponsorship, creator, music, booking, merch, media or partnership access for ICONIC LIVE.",
     type: "website",
   },
 };
@@ -22,6 +22,10 @@ const intents = {
   partners: { eyebrow:"Partners", title:"BUILD THE NEXT ICONIC MOMENT.", body:"For sponsors, venues, brand partners, talent partners and strategic collaborations." },
   sponsorship: { eyebrow:"Sponsorship", title:"OWN A REAL PART OF THE EXPERIENCE.", body:"Request sponsorship inventory, integrations, hospitality and custom activation opportunities." },
   media: { eyebrow:"Media + Archive", title:"KEEP THE MOMENT MOVING.", body:"For media, aftermovie, archive, content licensing and post-event asset requests." },
+  creator: { eyebrow:"Creators", title:"ENTER THE ICONIC CREATOR ECOSYSTEM.", body:"Artists, DJs, painters, performers, photographers, videographers, hosts, producers, designers and cultural tastemakers can submit for onboarding, booking and development opportunities." },
+  music: { eyebrow:"ICONIC MUSIC", title:"MOVE THE SOUND FORWARD.", body:"Submit for artist development, release strategy, DJ curation, live bookings and event sound opportunities." },
+  booking: { eyebrow:"Book ICONIC", title:"BUILD THE ROOM. BUILD THE MEMORY.", body:"Request ICONIC production or programming for corporate events, private celebrations, album releases, exhibitions, brand activations and venue programming." },
+  contact: { eyebrow:"Contact", title:"TELL ICONIC WHAT YOU’RE BUILDING.", body:"General inquiries that do not fit another lane can enter here and be routed to the appropriate team." },
 } as const;
 
 type IntentKey = keyof typeof intents;
@@ -37,7 +41,7 @@ export default async function AccessPage({searchParams}:{searchParams?:Promise<{
       <div style={{maxWidth:1200}}>
         <div style={{fontSize:9,fontWeight:900,letterSpacing:".28em",textTransform:"uppercase",color:C.gold2,marginBottom:18}}>{current.eyebrow}</div>
         <h1 style={{fontFamily:"Georgia,serif",fontSize:"clamp(54px,9vw,128px)",lineHeight:.84,letterSpacing:"-.05em",margin:0,maxWidth:1100}}>{current.title}</h1>
-        <p style={{maxWidth:720,fontSize:"clamp(14px,1.4vw,18px)",lineHeight:1.75,color:C.muted,margin:"28px 0 0"}}>{current.body}</p>
+        <p style={{maxWidth:760,fontSize:"clamp(14px,1.4vw,18px)",lineHeight:1.75,color:C.muted,margin:"28px 0 0"}}>{current.body}</p>
         {event&&<div style={{marginTop:18,fontSize:9,fontWeight:900,letterSpacing:".16em",textTransform:"uppercase",color:C.gold2}}>Routing to: {event.replaceAll("-"," ")}</div>}
       </div>
     </section>
@@ -50,9 +54,9 @@ export default async function AccessPage({searchParams}:{searchParams?:Promise<{
           <h2 style={{fontFamily:"Georgia,serif",fontSize:38,lineHeight:1,margin:"14px 0 18px"}}>Your request enters the right operating lane.</h2>
           <div style={{display:"grid",gap:14,color:C.muted,fontSize:13,lineHeight:1.65}}>
             <div>01 — Your information is captured securely in the ICONIC LIVE backend.</div>
-            <div>02 — It is tagged by access type and event so presale, VIP, sponsor, partner and merch requests stay separate.</div>
+            <div>02 — It is tagged by access type and property so fan, partner, creator, music, booking and media requests stay separate.</div>
             <div>03 — Campaign source and UTM data are preserved so ICONIC can identify which promotion produced the lead.</div>
-            <div>04 — The event and access type remain attached to the request for operational follow-up.</div>
+            <div>04 — The request remains attached to its operating lane for follow-up and future CRM automation.</div>
           </div>
         </div>
       </div>
