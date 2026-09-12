@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import "./mobile-polish.css";
 import "./visual-overhaul.css";
 import "./visual-overhaul-responsive.css";
 import { SITE_URL } from "../lib/site-url";
+import Analytics from "./_components/Analytics";
 
 export const viewport: Viewport = {
   themeColor: "#050507",
@@ -48,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        <Suspense fallback={null}><Analytics/></Suspense>
         {children}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
       </body>
