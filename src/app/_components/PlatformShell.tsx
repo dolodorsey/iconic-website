@@ -5,24 +5,39 @@ import { ICONIC_LOGO } from "./IconicPage";
 const nav=[
   ["Events","/events"],
   ["Experiences","/experiences"],
+  ["Music","/music"],
   ["Creators","/creators"],
-  ["ICONIC Music","/music"],
-  ["Media","/media"],
   ["Merch","/merch"],
   ["Partners","/partners"],
 ] as const;
 
-export default function PlatformShell({children}:{children:ReactNode}){return <main className="platform-shell">
-  <header className="platform-header">
-    <Link href="/" className="platform-logo"><img src={ICONIC_LOGO} alt="ICONIC LIVE"/></Link>
-    <nav className="platform-nav" aria-label="ICONIC LIVE primary navigation">{nav.map(([label,href])=><Link href={href} key={href}>{label}</Link>)}</nav>
-    <Link href="/access?intent=presale" className="platform-access">Access →</Link>
-  </header>
-  {children}
-  <footer className="platform-footer">
-    <div className="platform-footer-brand"><img src={ICONIC_LOGO} alt="ICONIC LIVE"/><p>Music · Culture · Experiences · Forever</p><small>Premium nightlife, immersive cultural experiences, creators, music, headline concerts, multi-city tours, hospitality, official merchandise and strategic partnerships.</small></div>
-    <div><span>CURRENT SLATE</span><Link href="/tampa-halloween">Tampa Halloween</Link><Link href="/summer-walker">Summer Walker — Soul Symphony</Link><Link href="/dj-snake-pardon-my-french">DJ Snake — Pardon My French</Link><Link href="/events">All Events</Link><Link href="/merch">Official Merch</Link></div>
-    <div><span>ICONIC ECOSYSTEM</span><Link href="/about">About ICONIC</Link><Link href="/experiences">Experiences</Link><Link href="/social">ICONIC Social</Link><Link href="/creators">Creators</Link><Link href="/music">ICONIC MUSIC</Link><Link href="/media">Media + Archive</Link></div>
-    <div><span>WORK WITH ICONIC</span><Link href="/partners">Partnerships + Sponsorships</Link><Link href="/book">Book ICONIC</Link><Link href="/contact">Contact</Link><Link href="/access?intent=vip">VIP + Hospitality</Link><Link href="/access?intent=travel">Travel + City Weekend</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div>
-  </footer>
-</main>}
+export default function PlatformShell({children}:{children:ReactNode}){
+  return <main className="ir-shell">
+    <header className="ir-header">
+      <Link href="/" className="ir-logo" aria-label="ICONIC home"><img src={ICONIC_LOGO} alt="ICONIC"/></Link>
+      <nav className="ir-nav" aria-label="ICONIC primary navigation">{nav.map(([label,href])=><Link href={href} key={href}>{label}</Link>)}</nav>
+      <div className="ir-header-actions">
+        <Link href="/access?intent=presale" className="ir-access">Access</Link>
+        <details className="ir-mobile-menu">
+          <summary>Menu</summary>
+          <div className="ir-mobile-panel">
+            {nav.map(([label,href])=><Link href={href} key={href}>{label}</Link>)}
+            <Link href="/about">About</Link>
+            <Link href="/book">Book ICONIC</Link>
+            <Link href="/contact">Contact</Link>
+          </div>
+        </details>
+      </div>
+    </header>
+    {children}
+    <footer className="ir-footer">
+      <div className="ir-footer-brand"><img src={ICONIC_LOGO} alt="ICONIC"/><p>Live entertainment, culture and experiences built to be remembered.</p></div>
+      <div className="ir-footer-grid">
+        <div><span>Current</span><Link href="/tampa-halloween">Tampa Halloween</Link><Link href="/summer-walker">Soul Symphony</Link><Link href="/dj-snake-pardon-my-french">Pardon My French</Link><Link href="/merch">Merch</Link></div>
+        <div><span>Platform</span><Link href="/events">Events</Link><Link href="/experiences">Experiences</Link><Link href="/music">Music</Link><Link href="/creators">Creators</Link><Link href="/media">Media</Link></div>
+        <div><span>Work With Us</span><Link href="/partners">Partners</Link><Link href="/book">Book ICONIC</Link><Link href="/contact">Contact</Link><Link href="/access?intent=vip">VIP</Link></div>
+      </div>
+      <div className="ir-footer-bottom"><span>ICONIC</span><div><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div></div>
+    </footer>
+  </main>;
+}
