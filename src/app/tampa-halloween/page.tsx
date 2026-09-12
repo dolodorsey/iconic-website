@@ -45,7 +45,6 @@ export default function TampaHalloweenPage(){
     gallery={[
       {title:"THE GRAND HALL",src:NOC_MEDIA.homeHero},
       {title:"THE NIGHTMARE MARKET",src:NOC_MEDIA.market},
-      {title:"THE HALL OF HEADLINERS",src:NOC_MEDIA.headliners},
     ]}
     primaryLabel="Get Tampa Access"
     primaryHref="/access?intent=presale&event=tampa-halloween"
