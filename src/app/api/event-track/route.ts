@@ -10,7 +10,7 @@ export async function POST(req:NextRequest){
     const host=req.headers.get("host");
     if(origin&&host){
       const originHost=new URL(origin).host;
-      if(originHost!==host&&!originHost.endsWith(".vercel.app")) return NextResponse.json({ok:false},{status:403});
+      if(originHost!==host) return NextResponse.json({ok:false},{status:403});
     }
 
     const body=await req.json();
