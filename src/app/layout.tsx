@@ -7,11 +7,12 @@ import "./visual-overhaul-responsive.css";
 import "./iconic-home.css";
 import "./platform-shell.css";
 import "./qa-polish.css";
+import "./iconic-rebuild.css";
 import { SITE_URL } from "../lib/site-url";
 import Analytics from "./_components/Analytics";
 
 export const viewport: Viewport = {
-  themeColor: "#050507",
+  themeColor: "#0A0A0A",
   colorScheme: "dark",
 };
 
