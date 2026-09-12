@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import LivePropertyPage from "@/app/_components/LivePropertyPage";
+import { SOUL_SYMPHONY_CITIES } from "./cities";
 
 const SUMMER_VISUAL = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summer-walker-soul-symphony.jpg?v=1789170574";
 
@@ -35,6 +36,15 @@ export default function SummerWalkerPage(){
       {label:"Hospitality",title:"Premium without losing intimacy.",body:"VIP should feel closer to the artist world through arrival, lounges, gifting, photo moments and elevated seating — not merely a higher ticket price."},
       {label:"Partners",title:"Brands enter through emotion and ritual.",body:"The sponsorship structure supports category exclusivity, on-site activation, digital and social visibility, hospitality and ticket allocations without interrupting the performance."},
     ]}
+    stopsEyebrow="The 10 City Experience"
+    stopsTitle="Different cities. The same feeling."
+    stops={SOUL_SYMPHONY_CITIES.map((market)=>({
+      city:market.city,
+      venue:market.venue,
+      meta:`${market.state} · ${market.date}`,
+      note:market.positioning,
+      href:`/summer-walker/${market.slug}`,
+    }))}
     primaryLabel="Get Tour Access"
     primaryHref="/access?intent=presale&event=summer-walker-soul-symphony"
     secondaryLabel="Tour Partnerships"
