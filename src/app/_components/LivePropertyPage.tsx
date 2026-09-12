@@ -8,181 +8,50 @@ type LineupItem = { name: string; src: string; href?: string };
 type GalleryItem = { title: string; src: string };
 type BrandMark = { src: string; alt: string; maxWidth?: number };
 
-type LivePropertyPageProps = {
-  eyebrow: string;
-  title: string;
-  sub: string;
-  visual: string;
-  visualPosition?: string;
-  status: string;
-  accent: string;
-  stats: Stat[];
-  pillars: Pillar[];
-  brandMarks?: BrandMark[];
-  brandMarksAsTitle?: boolean;
-  lineup?: LineupItem[];
-  lineupEyebrow?: string;
-  gallery?: GalleryItem[];
-  stops?: Stop[];
-  stopsEyebrow?: string;
-  stopsTitle?: string;
-  primaryLabel?: string;
-  primaryHref?: string;
-  secondaryLabel?: string;
-  secondaryHref?: string;
-  merchLabel?: string;
-  merchHref?: string;
-  footerEyebrow?: string;
-  footerTitle?: string;
+type Props = {
+  eyebrow:string; title:string; sub:string; visual:string; visualPosition?:string; status:string; accent:string;
+  stats:Stat[]; pillars:Pillar[]; brandMarks?:BrandMark[]; brandMarksAsTitle?:boolean; lineup?:LineupItem[];
+  lineupEyebrow?:string; gallery?:GalleryItem[]; stops?:Stop[]; stopsEyebrow?:string; stopsTitle?:string;
+  primaryLabel?:string; primaryHref?:string; secondaryLabel?:string; secondaryHref?:string; merchLabel?:string; merchHref?:string;
+  footerEyebrow?:string; footerTitle?:string;
 };
 
-const visuallyHidden = {
-  position: "absolute" as const,
-  width: 1,
-  height: 1,
-  padding: 0,
-  margin: -1,
-  overflow: "hidden",
-  clip: "rect(0,0,0,0)",
-  whiteSpace: "nowrap" as const,
-  border: 0,
-};
-
-function BrandLockup({marks,compact=false}:{marks:BrandMark[];compact?:boolean}){
-  return <div style={{display:"flex",alignItems:"center",gap:compact?14:18,flexWrap:"wrap",margin:compact?"10px 0 18px":"14px 0 18px"}}>
-    {marks.map((mark)=><img
-      key={mark.src}
-      src={mark.src}
-      alt={mark.alt}
-      style={{
-        width:`min(${compact?Math.min(mark.maxWidth||320,260):mark.maxWidth||360}px, ${compact?"38vw":"76vw"})`,
-        maxHeight:compact?105:210,
-        height:"auto",
-        objectFit:"contain",
-        filter:"drop-shadow(0 14px 28px rgba(0,0,0,.58))",
-      }}
-    />)}
-  </div>;
+function themeFor(title:string){
+  const t=title.toLowerCase();
+  if(t.includes("summer walker")) return "summer";
+  if(t.includes("dj snake")||t.includes("pardon my french")) return "pmf";
+  if(t.includes("nightmare")||t.includes("tampa")) return "tampa";
+  return "iconic";
 }
 
 export default function LivePropertyPage({
-  eyebrow,
-  title,
-  sub,
-  visual,
-  visualPosition = "center center",
-  status,
-  accent,
-  stats,
-  pillars,
-  brandMarks,
-  brandMarksAsTitle = false,
-  lineup,
-  lineupEyebrow = "THE LINEUP",
-  gallery,
-  stops,
-  stopsEyebrow = "Tour Architecture",
-  stopsTitle = "The route becomes part of the campaign.",
-  primaryLabel = "Get First Access",
-  primaryHref = "/access?intent=presale",
-  secondaryLabel = "Partnership Access",
-  secondaryHref = "/access?intent=sponsorship",
-  merchLabel = "Shop Merch",
-  merchHref = "/merch",
-  footerEyebrow = "ICONIC LIVE",
-  footerTitle = "BE THERE BEFORE EVERYONE ELSE.",
-}: LivePropertyPageProps) {
-  return (
-    <PlatformShell>
-      <div className="ov-page">
-        <section className="ov-live-hero">
-          <img src={visual} alt={title} style={{objectPosition: visualPosition}} fetchPriority="high" />
-          <div className="ov-live-hero-inner">
-            <div className="ov-live-hero-copy">
-              <div className="ov-kicker">{eyebrow}</div>
-              {brandMarks?.length ? <BrandLockup marks={brandMarks}/> : null}
-              <h1 className="ov-display" style={brandMarksAsTitle?visuallyHidden:undefined}>{title}</h1>
-              <p className="ov-copy">{sub}</p>
-              <div className="ov-actions">
-                <Link className="ov-btn" href={primaryHref}>{primaryLabel} →</Link>
-                <Link className="ov-btn ghost" href={secondaryHref}>{secondaryLabel}</Link>
-                <Link className="ov-btn ghost" href={merchHref}>{merchLabel}</Link>
-              </div>
-            </div>
-            <aside className="ov-live-media-card" style={{boxShadow:`inset 0 0 80px ${accent}18`}}>
-              <div className="ov-kicker">CURRENT STATUS</div>
-              <strong>{status}</strong>
-              <p className="ov-copy">Tickets, premium access, merch and partner opportunities live on separate conversion paths so the event can grow without flattening into one generic page.</p>
-              <Link className="ov-btn ghost" href={primaryHref}>Open Access →</Link>
-            </aside>
-          </div>
-        </section>
-
-        {lineup && lineup.length > 0 ? (
-          <section className="ov-lineup">
-            <div className="ov-shell">
-              <div className="ov-section-label"><span>{lineupEyebrow}</span><small>ARTIST-SPECIFIC WORLDS</small></div>
-              <div className="ov-lineup-grid">
-                {lineup.map((artist) => {
-                  const card = <><img src={artist.src} alt={artist.name}/><strong>{artist.name}</strong></>;
-                  return artist.href ? <Link className="ov-lineup-card" href={artist.href} key={artist.name}>{card}</Link> : <div className="ov-lineup-card" key={artist.name}>{card}</div>;
-                })}
-              </div>
-            </div>
-          </section>
-        ) : null}
-
-        <div className="ov-shell">
-          <div className="ov-stat-row">
-            {stats.map((stat) => <div className="ov-stat-card" key={stat.label}><span>{stat.label}</span><strong>{stat.value}</strong>{stat.body ? <p>{stat.body}</p> : null}</div>)}
-          </div>
-        </div>
-
-        <section style={{borderTop:"1px solid rgba(226,176,74,.26)",borderBottom:"1px solid rgba(226,176,74,.26)",background:"rgba(226,176,74,.015)"}}>
-          <div className="ov-shell">
-            <div style={{paddingTop:30}}><div className="ov-kicker">THE EXPERIENCE</div><h2 className="ov-display" style={{fontSize:"clamp(44px,5vw,76px)",maxWidth:880,marginTop:14}}>BUILT AS A WORLD — NOT JUST A DATE ON A FLYER.</h2></div>
-            <div className="ov-pillar-grid">
-              {pillars.map((pillar,index) => <article className="ov-pillar-card" key={pillar.title} style={{boxShadow:`inset 0 0 65px ${accent}10`}}><span>{String(index+1).padStart(2,"0")} / {pillar.label}</span><h3>{pillar.title}</h3><p>{pillar.body}</p></article>)}
-            </div>
-          </div>
-        </section>
-
-        {gallery && gallery.length > 0 ? (
-          <section style={{paddingTop:30}}>
-            <div className="ov-shell">
-              <div className="ov-section-label"><span>THE VISUAL WORLD</span><small>CAMPAIGN · CITY · MERCH · CULTURE</small></div>
-              <div className="ov-gallery-grid">
-                {gallery.map((item) => <article className="ov-gallery-card" key={item.title}><img src={item.src} alt={item.title}/><strong>{item.title}</strong></article>)}
-              </div>
-            </div>
-          </section>
-        ) : null}
-
-        {stops && stops.length > 0 ? (
-          <section style={{padding:"34px 0",borderTop:"1px solid rgba(226,176,74,.26)"}}>
-            <div className="ov-shell">
-              <div className="ov-kicker">{stopsEyebrow}</div>
-              <h2 className="ov-display" style={{fontSize:"clamp(42px,5vw,72px)",maxWidth:900,margin:"14px 0 24px"}}>{stopsTitle}</h2>
-              <div className="ov-pillar-grid">
-                {stops.map((stop,index) => {
-                  const content = <><span>{String(index+1).padStart(2,"0")}{stop.meta ? ` / ${stop.meta}` : ""}</span><h3>{stop.city}</h3><p><b style={{color:"#fff7e7"}}>{stop.venue}</b>{stop.note ? ` — ${stop.note}` : ""}</p></>;
-                  return stop.href ? <Link href={stop.href} className="ov-pillar-card" style={{color:"inherit",textDecoration:"none"}} key={`${stop.city}-${stop.venue}`}>{content}</Link> : <article className="ov-pillar-card" key={`${stop.city}-${stop.venue}`}>{content}</article>;
-                })}
-              </div>
-            </div>
-          </section>
-        ) : null}
-
-        <section className="ov-feature-band" style={{minHeight:380,borderTop:"1px solid rgba(226,176,74,.26)"}}>
-          <img src={visual} alt="" style={{objectPosition:visualPosition}} />
-          <div className="ov-feature-band-copy">
-            <div className="ov-kicker">{footerEyebrow}</div>
-            {brandMarks?.length ? <BrandLockup marks={brandMarks} compact/> : null}
-            <h2 className="ov-display">{footerTitle}</h2>
-            <div className="ov-actions"><Link className="ov-btn" href={primaryHref}>{primaryLabel} →</Link><Link className="ov-btn ghost" href={merchHref}>{merchLabel}</Link></div>
-          </div>
-        </section>
+  eyebrow,title,sub,visual,visualPosition="center center",status,stats,pillars,brandMarks,lineup,lineupEyebrow="Lineup",gallery,stops,stopsEyebrow="Tour Architecture",stopsTitle="The route becomes part of the campaign.",
+  primaryLabel="Get Access",primaryHref="/access?intent=presale",secondaryLabel="Partnerships",secondaryHref="/access?intent=sponsorship",merchLabel="Merch",merchHref="/merch",footerEyebrow="ICONIC LIVE",footerTitle="BE THERE BEFORE EVERYONE ELSE.",
+}:Props){
+  const theme=themeFor(title);
+  return <PlatformShell><article className={`ir-property ir-theme-${theme}`}>
+    <section className="ir-property-hero">
+      <img src={visual} alt={title} style={{objectPosition:visualPosition}}/>
+      <div className="ir-property-hero-shade"/>
+      <div className="ir-property-hero-copy">
+        <span>{eyebrow}</span>
+        {brandMarks?.length?<div className="ir-property-marks">{brandMarks.map(mark=><img key={mark.src} src={mark.src} alt={mark.alt}/>)}</div>:<h1>{title}</h1>}
+        <p>{sub}</p>
+        <div className="ir-property-actions"><Link href={primaryHref}>{primaryLabel}</Link><Link href={secondaryHref}>{secondaryLabel}</Link><Link href={merchHref}>{merchLabel}</Link></div>
       </div>
-    </PlatformShell>
-  );
+      <div className="ir-property-status">{status}</div>
+    </section>
+
+    <section className="ir-property-stats">{stats.map(stat=><div key={stat.label}><span>{stat.label}</span><strong>{stat.value}</strong>{stat.body?<p>{stat.body}</p>:null}</div>)}</section>
+
+    {lineup?.length?<section className="ir-property-section ir-lineup-section"><div className="ir-property-heading"><span>{lineupEyebrow}</span><h2>The people carrying the night.</h2></div><div className="ir-lineup-grid">{lineup.map(artist=>artist.href?<Link href={artist.href} key={artist.name}><img src={artist.src} alt={artist.name}/><span>{artist.name}</span></Link>:<div key={artist.name}><img src={artist.src} alt={artist.name}/><span>{artist.name}</span></div>)}</div></section>:null}
+
+    <section className="ir-property-section ir-experience-section"><div className="ir-property-heading"><span>The Experience</span><h2>One clear world. No filler.</h2></div><div className="ir-experience-list">{pillars.map((pillar,index)=><article key={pillar.title}><span>0{index+1}</span><div><small>{pillar.label}</small><h3>{pillar.title}</h3><p>{pillar.body}</p></div></article>)}</div></section>
+
+    {gallery?.length?<section className="ir-property-section ir-gallery-section"><div className="ir-property-heading"><span>Visual World</span><h2>The campaign has to feel alive.</h2></div><div className="ir-gallery-grid">{gallery.map((item,index)=><figure className={index===0?"wide":""} key={item.title}><img src={item.src} alt={item.title}/><figcaption>{item.title}</figcaption></figure>)}</div></section>:null}
+
+    {stops?.length?<section className="ir-property-section ir-stops-section"><div className="ir-property-heading"><span>{stopsEyebrow}</span><h2>{stopsTitle}</h2></div><div className="ir-stop-list">{stops.map((stop,index)=>{const inner=<><span>0{index+1}</span><div><strong>{stop.city}</strong><p>{stop.venue}{stop.meta?` · ${stop.meta}`:""}</p>{stop.note?<small>{stop.note}</small>:null}</div><em>↗</em></>;return stop.href?<Link href={stop.href} key={`${stop.city}-${stop.venue}`}>{inner}</Link>:<div key={`${stop.city}-${stop.venue}`}>{inner}</div>})}</div></section>:null}
+
+    <section className="ir-property-close"><img src={visual} alt="" style={{objectPosition:visualPosition}}/><div/><div className="ir-property-close-copy"><span>{footerEyebrow}</span><h2>{footerTitle}</h2><div><Link href={primaryHref}>{primaryLabel} →</Link><Link href={merchHref}>{merchLabel}</Link></div></div></section>
+  </article></PlatformShell>;
 }
