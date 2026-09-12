@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HomeExperience from "./_components/HomeExperience";
+import { Shell } from "./_components/IconicPage";
 import { COLLECTION_ART, NOC_MEDIA } from "./tampa/nightmare-on-channelside/merch/noc-assets";
 
 export const metadata: Metadata = {
@@ -15,5 +16,5 @@ const merchTiles = [
 ];
 
 export default function Home(){
-  return <HomeExperience tampa={NOC_MEDIA.headliners} merch={NOC_MEDIA.market} merchTiles={merchTiles}/>;
+  return <Shell><HomeExperience tampa={NOC_MEDIA.headliners} merch={NOC_MEDIA.market} merchTiles={merchTiles}/></Shell>;
 }
