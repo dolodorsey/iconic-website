@@ -4,6 +4,9 @@ import { SUMMER_WALKER_SOUL_SYMPHONY_LOGO } from "@/app/_components/tour-brand-a
 import { SOUL_SYMPHONY_CITIES } from "./cities";
 
 const SUMMER_VISUAL = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summer-walker-soul-symphony.jpg?v=1789170574";
+const SUMMER_ROUTE = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-soul-symphony-10-city-journey.png?v=1789175223";
+const SUMMER_LIVE = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-soul-symphony-live-orchestral-experience.png?v=1789175231";
+const SUMMER_ECONOMY = "https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-soul-symphony-multiple-economies.png?v=1789175240";
 
 export const metadata: Metadata = {
   title: "Summer Walker — Soul Symphony",
@@ -38,6 +41,11 @@ export default function SummerWalkerPage(){
       {label:"Music",title:"A live orchestral experience.",body:"Strings, arrangements, intros, transitions and signature moments should reshape the catalog without losing the intimacy and emotion that make the songs work."},
       {label:"Weekend",title:"The show is one night. The experience owns the weekend.",body:"Arrival, city takeover, Soul Symphony night and curated hospitality turn the tour into a multi-day destination economy around the performance."},
       {label:"Partners",title:"One ticket. Multiple economies.",body:"Ticketing, VIP, suites, merchandise, sponsors, hospitality, food and beverage, afterparties and content all live inside the same tour platform."},
+    ]}
+    gallery={[
+      {title:"10 CITIES · ONE EMOTIONAL JOURNEY",src:SUMMER_ROUTE},
+      {title:"A LIVE ORCHESTRAL EXPERIENCE",src:SUMMER_LIVE},
+      {title:"ONE TICKET · MULTIPLE ECONOMIES",src:SUMMER_ECONOMY},
     ]}
     stopsEyebrow="The 10 City Experience"
     stopsTitle="10 cities. One emotional journey."
