@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { C, Section, Shell } from "@/app/_components/IconicPage";
+import { C, Section } from "@/app/_components/IconicPage";
+import PlatformShell from "@/app/_components/PlatformShell";
 import AccessForm from "./AccessForm";
 
 export const metadata: Metadata = {
@@ -31,7 +32,7 @@ export default async function AccessPage({searchParams}:{searchParams?:Promise<{
   const key:IntentKey = raw in intents ? raw as IntentKey : "presale";
   const current = intents[key];
   const event=params.event||undefined;
-  return <Shell>
+  return <PlatformShell>
     <section style={{position:"relative",zIndex:2,minHeight:"64vh",padding:"clamp(90px,12vw,160px) clamp(22px,6vw,90px) 64px",display:"flex",alignItems:"end",background:"radial-gradient(circle at 80% 20%,rgba(224,173,69,.18),transparent 28%),#050403"}}>
       <div style={{maxWidth:1200}}>
         <div style={{fontSize:9,fontWeight:900,letterSpacing:".28em",textTransform:"uppercase",color:C.gold2,marginBottom:18}}>{current.eyebrow}</div>
@@ -41,23 +42,24 @@ export default async function AccessPage({searchParams}:{searchParams?:Promise<{
       </div>
     </section>
 
-    <Section eyebrow="Submit Your Request" title="Now your request actually enters the ICONIC system." dark>
+    <Section eyebrow="Submit Your Request" title="One request. Correct ICONIC lane." dark>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,340px),1fr))",gap:24,alignItems:"start"}}>
         <AccessForm intent={key} event={event}/>
         <div className="glass" style={{padding:28,borderRadius:24}}>
           <div style={{fontSize:8,fontWeight:900,letterSpacing:".18em",textTransform:"uppercase",color:C.gold2}}>What happens next</div>
-          <h2 style={{fontFamily:"Georgia,serif",fontSize:38,lineHeight:1,margin:"14px 0 18px"}}>One request. Correct lane.</h2>
+          <h2 style={{fontFamily:"Georgia,serif",fontSize:38,lineHeight:1,margin:"14px 0 18px"}}>Your request enters the right operating lane.</h2>
           <div style={{display:"grid",gap:14,color:C.muted,fontSize:13,lineHeight:1.65}}>
             <div>01 — Your information is captured securely in the ICONIC LIVE backend.</div>
-            <div>02 — It is tagged by access type and event so presale, VIP, sponsor and merch requests stay separate.</div>
-            <div>03 — Campaign source and UTM data are preserved so we know which promotion generated the lead.</div>
+            <div>02 — It is tagged by access type and event so presale, VIP, sponsor, partner and merch requests stay separate.</div>
+            <div>03 — Campaign source and UTM data are preserved so ICONIC can identify which promotion produced the lead.</div>
+            <div>04 — The event and access type remain attached to the request for operational follow-up.</div>
           </div>
         </div>
       </div>
     </Section>
 
-    <Section eyebrow="Choose Your Path" title="One brand. Separate conversion lanes.">
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(230px,1fr))",gap:12}}>{Object.entries(intents).map(([slug,item])=><Link key={slug} href={`/access?intent=${slug}${event?`&event=${encodeURIComponent(event)}`:""}`} className="glass market-card" style={{padding:24,borderRadius:20,color:C.white,textDecoration:"none"}}><div style={{fontSize:8,fontWeight:900,letterSpacing:".18em",textTransform:"uppercase",color:C.gold2}}>{item.eyebrow}</div><div style={{fontFamily:"Georgia,serif",fontSize:28,lineHeight:1.02,marginTop:12}}>{item.eyebrow}</div><p style={{fontSize:12,lineHeight:1.65,color:C.muted,margin:"12px 0 0"}}>{item.body}</p></Link>)}</div>
+    <Section eyebrow="Choose Your Path" title="Tickets are only one way into the ICONIC ecosystem.">
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(230px,1fr))",gap:12}}>{Object.entries(intents).map(([slug,item])=><Link key={slug} href={`/access?intent=${slug}${event?`&event=${encodeURIComponent(event)}`:""}`} className="glass market-card" style={{padding:24,borderRadius:20,color:C.white,textDecoration:"none",minHeight:190}}><div style={{fontSize:8,fontWeight:900,letterSpacing:".18em",textTransform:"uppercase",color:C.gold2}}>{item.eyebrow}</div><div style={{fontFamily:"Georgia,serif",fontSize:28,lineHeight:1.02,marginTop:12}}>{item.eyebrow}</div><p style={{fontSize:12,lineHeight:1.65,color:C.muted,margin:"12px 0 0"}}>{item.body}</p></Link>)}</div>
     </Section>
-  </Shell>
+  </PlatformShell>
 }
