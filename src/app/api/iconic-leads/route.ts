@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const SUPABASE_URL="https://woqlhjodiedyqfvzweoe.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_7nX1-2PnfT2LHuPcBBmNHA_88Pujrx6";
-const intents=new Set(["presale","vip","travel","merch","partners","sponsorship","media"]);
+const intents=new Set(["presale","vip","travel","merch","partners","sponsorship","media","creator","music","booking","contact"]);
 
 function clean(value:unknown,max:number){
   if(typeof value!=="string") return null;
@@ -35,7 +35,7 @@ export async function POST(req:NextRequest){
       company:clean(body.company,160),
       city:clean(body.city,120),
       message:clean(body.message,3000),
-      source:"iconic-atl.com",
+      source:"iconic-website-ten.vercel.app",
       page_path:clean(body.page_path,500),
       utm_source:clean(body.utm_source,160),
       utm_medium:clean(body.utm_medium,160),
