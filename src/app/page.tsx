@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Shell } from "./_components/IconicPage";
+import { DJ_SNAKE_AND_FRIENDS_LOGO, PARDON_MY_FRENCH_TOUR_LOGO, SUMMER_WALKER_SOUL_SYMPHONY_LOGO } from "./_components/tour-brand-assets";
 import { COLLECTION_ART, NOC_MEDIA } from "./tampa/nightmare-on-channelside/merch/noc-assets";
 
 export const metadata: Metadata = {
@@ -15,8 +16,8 @@ const MERCH = NOC_MEDIA.market;
 
 const properties = [
   { title: "TAMPA HALLOWEEN", meta: "Nightmare on Channelside", href: "/tampa-halloween", src: TAMPA },
-  { title: "SUMMER WALKER", meta: "Soul Symphony", href: "/summer-walker", src: SUMMER },
-  { title: "DJ SNAKE", meta: "Pardon My French", href: "/dj-snake-pardon-my-french", src: DJ },
+  { title: "SUMMER WALKER", meta: "10 Cities · One Soulful Experience", href: "/summer-walker", src: SUMMER, marks:[{src:SUMMER_WALKER_SOUL_SYMPHONY_LOGO,alt:"Summer Walker's Soul Symphony Tour"}] },
+  { title: "DJ SNAKE", meta: "5 Cities · 5 Stadiums", href: "/dj-snake-pardon-my-french", src: DJ, marks:[{src:DJ_SNAKE_AND_FRIENDS_LOGO,alt:"DJ Snake & Friends"},{src:PARDON_MY_FRENCH_TOUR_LOGO,alt:"Pardon My French Tour"}] },
   { title: "MERCH", meta: "ICONIC Live Collections", href: "/merch", src: MERCH },
 ];
 
@@ -54,6 +55,7 @@ export default function Home() {
               {properties.map((property) => (
                 <Link className="ov-property-card" href={property.href} key={property.title}>
                   <img src={property.src} alt={property.title} />
+                  {property.marks?.length ? <div style={{position:"absolute",left:18,right:18,top:18,zIndex:2,display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>{property.marks.map((mark)=><img key={mark.src} src={mark.src} alt={mark.alt} style={{position:"static",width:property.marks.length>1?"min(42%,170px)":"min(76%,260px)",height:"auto",maxHeight:112,objectFit:"contain",filter:"drop-shadow(0 10px 22px rgba(0,0,0,.72))"}}/>)}</div> : null}
                   <div className="ov-property-card-copy"><strong>{property.title}</strong><span>{property.meta} →</span></div>
                 </Link>
               ))}
