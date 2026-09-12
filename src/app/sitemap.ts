@@ -9,6 +9,8 @@ const MERCH_BASE = "/tampa/nightmare-on-channelside/merch";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const coreRoutes = [
     "",
+    "/about",
+    "/partners",
     "/tampa-halloween",
     "/summer-walker",
     "/dj-snake-pardon-my-french",
@@ -51,12 +53,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const isPolicy = route === `${MERCH_BASE}/policies` || route === "/privacy" || route === "/terms";
     const isPmfCity=route.startsWith("/dj-snake-pardon-my-french/");
     const isSoulCity=route.startsWith("/summer-walker/");
+    const isPlatform=route==="/about"||route==="/partners";
     const isCurrentSlate=["/tampa-halloween","/summer-walker","/dj-snake-pardon-my-french","/merch"].includes(route);
     return {
       url: `${SITE_URL}${route}`,
       lastModified: new Date(),
-      changeFrequency: (isPolicy ? "monthly" : isMerch || isCurrentSlate || isPmfCity || isSoulCity ? "daily" : index === 0 ? "daily" : "weekly") as MetadataRoute.Sitemap[number]["changeFrequency"],
-      priority: index === 0 ? 1 : isCurrentSlate ? 0.98 : isPmfCity || isSoulCity ? 0.96 : isPolicy ? 0.5 : isProduct ? 0.8 : isCollection ? 0.9 : route.includes("nightmare-on-channelside") || route === "/atlanta/bravo" ? 0.95 : 0.8,
+      changeFrequency: (isPolicy ? "monthly" : isMerch || isCurrentSlate || isPmfCity || isSoulCity || isPlatform ? "daily" : index === 0 ? "daily" : "weekly") as MetadataRoute.Sitemap[number]["changeFrequency"],
+      priority: index === 0 ? 1 : isCurrentSlate ? 0.98 : isPmfCity || isSoulCity ? 0.96 : isPlatform ? 0.94 : isPolicy ? 0.5 : isProduct ? 0.8 : isCollection ? 0.9 : route.includes("nightmare-on-channelside") || route === "/atlanta/bravo" ? 0.95 : 0.8,
     };
   });
 }
