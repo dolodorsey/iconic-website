@@ -16,5 +16,5 @@ const merchTiles = [
 ];
 
 export default function Home(){
-  return <Shell><HomeExperience tampa={NOC_MEDIA.headliners} merch={NOC_MEDIA.market} merchTiles={merchTiles}/></Shell>;
+  return <Shell><HomeExperience tampa={NOC_MEDIA.headliners} merch={NOC_MEDIA.market} merchTiles={merchTiles}/><div id="national-circuit" aria-hidden="true" /></Shell>;
 }
