@@ -30,8 +30,11 @@ export function Shell({children}:{children:ReactNode}){return <main className="i
   {children}
   <footer className="iconic-footer" style={{position:"relative",zIndex:2,padding:"44px clamp(20px,5vw,72px)",borderTop:`1px solid ${C.faint}`,display:"flex",justifyContent:"space-between",gap:24,flexWrap:"wrap",background:"rgba(0,0,0,.56)"}}>
     <div><img src={ICONIC_LOGO} alt="ICONIC" style={{width:190,maxHeight:58,objectFit:"contain",objectPosition:"left center"}}/><div style={{marginTop:8,color:C.muted,fontSize:9,fontWeight:900,letterSpacing:".18em",textTransform:"uppercase"}}>Concerts · Culture · Experiences</div></div>
-    <div style={{display:"flex",gap:18,alignItems:"center",flexWrap:"wrap"}}>
-      <Link href="/tampa-halloween" style={navLink}>Tampa</Link><Link href="/summer-walker" style={navLink}>Summer Walker</Link><Link href="/dj-snake-pardon-my-french" style={navLink}>DJ Snake</Link><Link href="/merch" style={navLink}>Merch</Link><Link href="/southlake-arena" style={navLink}>Southlake</Link><Link href="/#national-circuit" style={navLink}>Markets</Link>
+    <div style={{display:"grid",gap:14,justifyItems:"end"}}>
+      <div style={{display:"flex",gap:18,alignItems:"center",flexWrap:"wrap",justifyContent:"flex-end"}}>
+        <Link href="/tampa-halloween" style={navLink}>Tampa</Link><Link href="/summer-walker" style={navLink}>Summer Walker</Link><Link href="/dj-snake-pardon-my-french" style={navLink}>DJ Snake</Link><Link href="/merch" style={navLink}>Merch</Link><Link href="/southlake-arena" style={navLink}>Southlake</Link><Link href="/#national-circuit" style={navLink}>Markets</Link>
+      </div>
+      <div style={{display:"flex",gap:18,alignItems:"center",flexWrap:"wrap",justifyContent:"flex-end"}}><Link href="/privacy" style={{...navLink,fontSize:8,color:C.muted}}>Privacy</Link><Link href="/terms" style={{...navLink,fontSize:8,color:C.muted}}>Terms</Link></div>
     </div>
   </footer>
 </main>}
