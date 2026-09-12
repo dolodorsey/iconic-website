@@ -6,6 +6,7 @@ import "./visual-overhaul.css";
 import "./visual-overhaul-responsive.css";
 import "./iconic-home.css";
 import "./platform-shell.css";
+import "./qa-polish.css";
 import { SITE_URL } from "../lib/site-url";
 import Analytics from "./_components/Analytics";
 
