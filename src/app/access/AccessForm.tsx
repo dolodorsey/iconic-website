@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useMemo, useState } from "react";
 
 const labels: Record<string,string> = {
@@ -40,6 +41,7 @@ export default function AccessForm({intent,event}:{intent:string;event?:string})
     try{
       const res=await fetch("/api/iconic-leads",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
       if(!res.ok){ const body=await res.json().catch(()=>({})); throw new Error(body.error||"Request failed"); }
+      fetch("/api/event-track",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({eventKey:event||"iconic-access",action:"lead_submit",label:intent,path:window.location.pathname+window.location.search}),keepalive:true}).catch(()=>{});
       setStatus("success");
       e.currentTarget.reset();
     }catch(err){
@@ -65,6 +67,6 @@ export default function AccessForm({intent,event}:{intent:string;event?:string})
     <label><span style={labelStyle}>Tell Us What You Need</span><textarea style={{...inputStyle,minHeight:130,resize:"vertical"}} name="message" maxLength={3000} placeholder={event?`Interest in ${event.replaceAll("-"," ")}`:"Add any details that help us route your request."}/></label>
     <button disabled={status==="sending"} type="submit" style={{border:0,borderRadius:999,padding:"16px 22px",fontWeight:900,letterSpacing:".12em",textTransform:"uppercase",cursor:status==="sending"?"wait":"pointer",background:"#d8b464",color:"#050403"}}>{status==="sending"?"Submitting…":`Submit ${title}`}</button>
     {status==="error"&&<div role="alert" style={{fontSize:12,color:"#ff9c9c"}}>{error}</div>}
-    <div style={{fontSize:10,lineHeight:1.6,color:"rgba(255,255,255,.45)"}}>By submitting, you agree that ICONIC LIVE / The Kollective may contact you about this request and related event access.</div>
+    <div style={{fontSize:10,lineHeight:1.6,color:"rgba(255,255,255,.45)"}}>By submitting, you agree that ICONIC LIVE / The Kollective may contact you about this request and related event access. See our <Link href="/privacy" style={{color:"#d8b464"}}>Privacy Policy</Link> and <Link href="/terms" style={{color:"#d8b464"}}>Terms of Use</Link>.</div>
   </form>;
 }
