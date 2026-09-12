@@ -15,8 +15,8 @@ export async function generateMetadata({params}:{params:Promise<{city:string}>})
   const market=getSoulSymphonyCity(city);
   if(!market) return {title:"Summer Walker — Soul Symphony"};
   const title=`Summer Walker — Soul Symphony — ${market.city}`;
-  const description=`Summer Walker — Soul Symphony at ${market.venue} in ${market.city} on ${market.date}. Request city presale, VIP, merch and partnership access through ICONIC LIVE.`;
-  return {title,description,openGraph:{title:`${title} | ICONIC LIVE`,description,type:"website",images:[{url:SUMMER_VISUAL}]}};
+  const description=`Summer Walker — Soul Symphony venue concept for ${market.venue} in ${market.city}. Request city access, VIP, merch and partnership updates through ICONIC.`;
+  return {title,description,openGraph:{title:`${title} | ICONIC`,description,type:"website",images:[{url:SUMMER_VISUAL}]}};
 }
 
 export default async function SoulSymphonyCityPage({params}:{params:Promise<{city:string}>}){
@@ -28,24 +28,24 @@ export default async function SoulSymphonyCityPage({params}:{params:Promise<{cit
     eyebrow={`ICONIC LIVE · ${market.city.toUpperCase()}`}
     title={`${market.city.toUpperCase()}.`}
     brandMarks={[{src:SUMMER_WALKER_SOUL_SYMPHONY_LOGO,alt:"Summer Walker's Soul Symphony Tour",maxWidth:460}]}
-    sub={`Summer Walker brings Soul Symphony to ${market.venue} on ${market.date}. This city chapter pairs raw live vocals with orchestral scale, intimate staging, premium hospitality and a localized cultural moment. ${market.positioning}`}
+    sub={`The current Soul Symphony tour deck presents ${market.venue} in ${market.city} as a venue concept inside the larger 10-city experience. This city chapter pairs raw live vocals with orchestral scale, intimate staging, premium hospitality and a localized cultural moment. ${market.positioning}`}
     visual={SUMMER_VISUAL}
     visualPosition="center 24%"
-    status={`${market.date.toUpperCase()} · ${market.venue.toUpperCase()} · ACCESS OPEN`}
+    status={`${market.venue.toUpperCase()} · VENUE CONCEPT · ACCESS OPEN`}
     accent="rgba(151,83,118,1)"
     stats={[
-      {label:"City",value:market.city,body:`The ${market.state} stop in the 10-city Soul Symphony route.`},
-      {label:"Date",value:market.date,body:"Current date in the Soul Symphony tour architecture."},
-      {label:"Venue",value:market.venue,body:"Arena chapter designed for premium production and hospitality."},
-      {label:"Access",value:"Presale + VIP + Partners",body:"Every request is captured and tagged directly to this city."},
+      {label:"City",value:market.city,body:`A ${market.state} market represented in the current Soul Symphony venue-concept deck.`},
+      {label:"Schedule",value:"To Be Announced",body:"No confirmed performance date is provided for this city in the supplied tour deck."},
+      {label:"Venue Concept",value:market.venue,body:"Venue-specific concept shown in the current Soul Symphony tour materials."},
+      {label:"Access",value:"Updates + VIP + Partners",body:"Every request is captured and tagged directly to this city concept for future routing updates."},
     ]}
     pillars={[
       {label:"Music",title:"A live orchestral experience.",body:"Strings, intros, transitions and live arrangement moments reshape the catalog without losing the intimacy and emotion that make the songs work."},
-      {label:"City",title:`Give ${market.city} its own chapter.`,body:"Localized creative, content, hospitality and city-coded product make each stop feel collectible instead of copied."},
+      {label:"City",title:`Give ${market.city} its own chapter.`,body:"Localized creative, content, hospitality and city-coded product make each market feel collectible instead of copied."},
       {label:"Hospitality",title:"Premium access should feel personal.",body:"Arrival, lounges, gifting, elevated seating and hosted moments deepen the artist world rather than simply raising the ticket price."},
       {label:"Partners",title:"One ticket. Multiple economies.",body:"Sponsorship belongs inside hospitality, gifting, content, fan capture, food and beverage, afterparties and useful on-site moments rather than passive logo placement."},
     ]}
-    primaryLabel={`${market.city} Access`}
+    primaryLabel={`${market.city} Updates`}
     primaryHref={`/access?intent=presale&event=${eventSlug}`}
     secondaryLabel="City Partnerships"
     secondaryHref={`/access?intent=sponsorship&event=${eventSlug}`}
