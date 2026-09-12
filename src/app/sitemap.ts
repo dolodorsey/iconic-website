@@ -14,6 +14,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/dj-snake-pardon-my-french",
     "/merch",
     "/access",
+    "/privacy",
+    "/terms",
     "/atlanta",
     "/southlake-arena",
     "/ball-series",
@@ -46,7 +48,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const isProduct = route.split("/").length >= 8;
     const isCollection = route.includes(`${MERCH_BASE}/collection/`) && !isProduct;
     const isMerch = route.startsWith(MERCH_BASE) || route === "/merch";
-    const isPolicy = route === `${MERCH_BASE}/policies`;
+    const isPolicy = route === `${MERCH_BASE}/policies` || route === "/privacy" || route === "/terms";
     const isPmfCity=route.startsWith("/dj-snake-pardon-my-french/");
     const isSoulCity=route.startsWith("/summer-walker/");
     const isCurrentSlate=["/tampa-halloween","/summer-walker","/dj-snake-pardon-my-french","/merch"].includes(route);
