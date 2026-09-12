@@ -1,69 +1,29 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { C, Section } from "@/app/_components/IconicPage";
 import PlatformShell from "@/app/_components/PlatformShell";
 import AccessForm from "./AccessForm";
 
-export const metadata: Metadata = {
-  title: "Access",
-  description: "Tickets, presale, VIP, sponsorship, creator, music, booking, merch, media and partnership access for ICONIC LIVE.",
-  openGraph: {
-    title: "Access | ICONIC LIVE",
-    description: "Request tickets, VIP, sponsorship, creator, music, booking, merch, media or partnership access for ICONIC LIVE.",
-    type: "website",
-  },
-};
-
-const intents = {
-  presale: { eyebrow:"Tickets + Presale", title:"GET IN BEFORE THE RUSH.", body:"Join the access path for ticket releases, presale windows and on-sale alerts." },
-  vip: { eyebrow:"VIP + Hospitality", title:"UPGRADE THE ENTIRE NIGHT.", body:"Request premium seating, hosted tables, suites, hospitality and elevated arrival options." },
-  travel: { eyebrow:"City Weekend", title:"BUILD THE WHOLE WEEKEND.", body:"Request travel, hotel, arrival and city-weekend coordination around an ICONIC event." },
-  merch: { eyebrow:"Merch Vault", title:"TAKE THE SHOW WITH YOU.", body:"Request merch release information, event drops and limited product access." },
-  partners: { eyebrow:"Partners", title:"BUILD THE NEXT ICONIC MOMENT.", body:"For sponsors, venues, brand partners, talent partners and strategic collaborations." },
-  sponsorship: { eyebrow:"Sponsorship", title:"OWN A REAL PART OF THE EXPERIENCE.", body:"Request sponsorship inventory, integrations, hospitality and custom activation opportunities." },
-  media: { eyebrow:"Media + Archive", title:"KEEP THE MOMENT MOVING.", body:"For media, aftermovie, archive, content licensing and post-event asset requests." },
-  creator: { eyebrow:"Creators", title:"ENTER THE ICONIC CREATOR ECOSYSTEM.", body:"Artists, DJs, painters, performers, photographers, videographers, hosts, producers, designers and cultural tastemakers can submit for onboarding, booking and development opportunities." },
-  music: { eyebrow:"ICONIC MUSIC", title:"MOVE THE SOUND FORWARD.", body:"Submit for artist development, release strategy, DJ curation, live bookings and event sound opportunities." },
-  booking: { eyebrow:"Book ICONIC", title:"BUILD THE ROOM. BUILD THE MEMORY.", body:"Request ICONIC production or programming for corporate events, private celebrations, album releases, exhibitions, brand activations and venue programming." },
-  contact: { eyebrow:"Contact", title:"TELL ICONIC WHAT YOU’RE BUILDING.", body:"General inquiries that do not fit another lane can enter here and be routed to the appropriate team." },
+export const metadata:Metadata={title:"Access",description:"Tickets, presale, VIP, sponsorship, creator, music, booking, merch, media and partnership access for ICONIC."};
+const intents={
+  presale:{eyebrow:"Tickets + Presale",title:"GET IN BEFORE THE RUSH.",body:"Ticket releases, presale windows and on-sale alerts."},
+  vip:{eyebrow:"VIP + Hospitality",title:"UPGRADE THE ENTIRE NIGHT.",body:"Premium seating, suites, hosted hospitality and elevated arrival."},
+  travel:{eyebrow:"City Weekend",title:"BUILD THE WHOLE WEEKEND.",body:"Travel, hotel, arrival and destination coordination around an ICONIC event."},
+  merch:{eyebrow:"Merch Vault",title:"TAKE THE SHOW WITH YOU.",body:"Event drops, limited product and release access."},
+  partners:{eyebrow:"Partners",title:"BUILD THE NEXT ICONIC MOMENT.",body:"Sponsors, venues, talent partners and strategic collaborations."},
+  sponsorship:{eyebrow:"Sponsorship",title:"OWN A REAL PART OF THE EXPERIENCE.",body:"Inventory, integration, hospitality and activation opportunities."},
+  media:{eyebrow:"Media + Archive",title:"KEEP THE MOMENT MOVING.",body:"Press, archive, licensing and post-event asset requests."},
+  creator:{eyebrow:"Creators",title:"ENTER THE CREATOR ECOSYSTEM.",body:"Creator onboarding, booking and development opportunities."},
+  music:{eyebrow:"ICONIC MUSIC",title:"MOVE THE SOUND FORWARD.",body:"Artist development, DJ curation, bookings and music opportunities."},
+  booking:{eyebrow:"Book ICONIC",title:"BUILD THE ROOM. BUILD THE MEMORY.",body:"Corporate, private, release, exhibition and venue programming requests."},
+  contact:{eyebrow:"Contact",title:"TELL ICONIC WHAT YOU’RE BUILDING.",body:"General inquiries routed to the correct operating lane."},
 } as const;
-
-type IntentKey = keyof typeof intents;
+type IntentKey=keyof typeof intents;
 
 export default async function AccessPage({searchParams}:{searchParams?:Promise<{intent?:string;event?:string}>|{intent?:string;event?:string}}){
-  const params=await Promise.resolve(searchParams||{});
-  const raw=params.intent||"presale";
-  const key:IntentKey = raw in intents ? raw as IntentKey : "presale";
-  const current = intents[key];
-  const event=params.event||undefined;
-  return <PlatformShell>
-    <section style={{position:"relative",zIndex:2,minHeight:"64vh",padding:"clamp(90px,12vw,160px) clamp(22px,6vw,90px) 64px",display:"flex",alignItems:"end",background:"radial-gradient(circle at 80% 20%,rgba(224,173,69,.18),transparent 28%),#050403"}}>
-      <div style={{maxWidth:1200}}>
-        <div style={{fontSize:9,fontWeight:900,letterSpacing:".28em",textTransform:"uppercase",color:C.gold2,marginBottom:18}}>{current.eyebrow}</div>
-        <h1 style={{fontFamily:"Georgia,serif",fontSize:"clamp(54px,9vw,128px)",lineHeight:.84,letterSpacing:"-.05em",margin:0,maxWidth:1100}}>{current.title}</h1>
-        <p style={{maxWidth:760,fontSize:"clamp(14px,1.4vw,18px)",lineHeight:1.75,color:C.muted,margin:"28px 0 0"}}>{current.body}</p>
-        {event&&<div style={{marginTop:18,fontSize:9,fontWeight:900,letterSpacing:".16em",textTransform:"uppercase",color:C.gold2}}>Routing to: {event.replaceAll("-"," ")}</div>}
-      </div>
-    </section>
-
-    <Section eyebrow="Submit Your Request" title="One request. Correct ICONIC lane." dark>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,340px),1fr))",gap:24,alignItems:"start"}}>
-        <AccessForm intent={key} event={event}/>
-        <div className="glass" style={{padding:28,borderRadius:24}}>
-          <div style={{fontSize:8,fontWeight:900,letterSpacing:".18em",textTransform:"uppercase",color:C.gold2}}>What happens next</div>
-          <h2 style={{fontFamily:"Georgia,serif",fontSize:38,lineHeight:1,margin:"14px 0 18px"}}>Your request enters the right operating lane.</h2>
-          <div style={{display:"grid",gap:14,color:C.muted,fontSize:13,lineHeight:1.65}}>
-            <div>01 — Your information is captured securely in the ICONIC LIVE backend.</div>
-            <div>02 — It is tagged by access type and property so fan, partner, creator, music, booking and media requests stay separate.</div>
-            <div>03 — Campaign source and UTM data are preserved so ICONIC can identify which promotion produced the lead.</div>
-            <div>04 — The request remains attached to its operating lane for follow-up and future CRM automation.</div>
-          </div>
-        </div>
-      </div>
-    </Section>
-
-    <Section eyebrow="Choose Your Path" title="Tickets are only one way into the ICONIC ecosystem.">
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(230px,1fr))",gap:12}}>{Object.entries(intents).map(([slug,item])=><Link key={slug} href={`/access?intent=${slug}${event?`&event=${encodeURIComponent(event)}`:""}`} className="glass market-card" style={{padding:24,borderRadius:20,color:C.white,textDecoration:"none",minHeight:190}}><div style={{fontSize:8,fontWeight:900,letterSpacing:".18em",textTransform:"uppercase",color:C.gold2}}>{item.eyebrow}</div><div style={{fontFamily:"Georgia,serif",fontSize:28,lineHeight:1.02,marginTop:12}}>{item.eyebrow}</div><p style={{fontSize:12,lineHeight:1.65,color:C.muted,margin:"12px 0 0"}}>{item.body}</p></Link>)}</div>
-    </Section>
-  </PlatformShell>
+  const params=await Promise.resolve(searchParams||{});const raw=params.intent||"presale";const key:IntentKey=raw in intents?raw as IntentKey:"presale";const current=intents[key];const event=params.event||undefined;
+  return <PlatformShell><main className="cp-page">
+    <section className="cp-graphic-hero" style={{background:"linear-gradient(145deg,#0a0a0a,#111 56%,#11190b)"}}><div><div className="cp-kicker">{current.eyebrow}</div><h1>{current.title}</h1><p>{current.body}</p>{event?<div className="cp-note" style={{marginTop:20,maxWidth:520}}>Routing property: {event.replaceAll("-"," ")}</div>:null}</div></section>
+    <section className="cp-section"><div className="cp-section-head"><div className="cp-kicker">Submit Request</div><div><h2>One request. Correct operating lane.</h2><p>The form preserves access type, event property and campaign attribution without forcing every inquiry through the same funnel.</p></div></div><div style={{display:"grid",gridTemplateColumns:"minmax(0,1.35fr) minmax(260px,.65fr)",gap:22,alignItems:"start"}}><AccessForm intent={key} event={event}/><aside className="cp-note"><b style={{color:"#f5f5f3"}}>WHAT HAPPENS NEXT</b><br/><br/>01 — Request is captured securely.<br/><br/>02 — It is tagged by access type and property.<br/><br/>03 — Campaign source and UTM attribution are preserved.<br/><br/>04 — The request stays attached to its operating lane for follow-up.</aside></div></section>
+    <section className="cp-section alt"><div className="cp-section-head"><div className="cp-kicker">Choose Your Path</div><div><h2>Tickets are only one way into ICONIC.</h2></div></div><div className="cp-route-grid">{Object.entries(intents).map(([slug,item],i)=><Link className="cp-route" key={slug} href={`/access?intent=${slug}${event?`&event=${encodeURIComponent(event)}`:""}`}><span>{String(i+1).padStart(2,"0")} · {item.eyebrow}</span><strong>{item.eyebrow}</strong><em>↗</em></Link>)}</div></section>
+  </main></PlatformShell>;
 }
