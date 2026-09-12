@@ -17,24 +17,24 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ICONIC LIVE — Concerts, Tours & Culture",
-    template: "%s | ICONIC LIVE",
+    default: "ICONIC — Live Entertainment, Experiences, Creators & Music",
+    template: "%s | ICONIC",
   },
-  description: "ICONIC LIVE produces headline concerts, multi-city tours, arena and stadium experiences, premium hospitality and event merchandise. Current slate: Tampa Halloween, Summer Walker — Soul Symphony and DJ Snake — Pardon My French.",
-  applicationName: "ICONIC LIVE",
-  keywords: ["ICONIC LIVE", "concerts", "concert tours", "stadium concerts", "arena events", "Tampa concerts", "Summer Walker", "Soul Symphony", "DJ Snake", "Pardon My French", "21 Savage", "Nightmare on Channelside", "concert merch", "VIP hospitality", "concert sponsorships"],
+  description: "ICONIC is a multi-vertical entertainment group spanning headline concerts, multi-city tours, premium nightlife, immersive experiences, creators, ICONIC MUSIC, media, merchandise, hospitality, bookings and strategic partnerships.",
+  applicationName: "ICONIC",
+  keywords: ["ICONIC", "ICONIC LIVE", "ICONIC MUSIC", "ICONIC Social", "ICONIC Creators", "live entertainment", "concerts", "concert tours", "stadium concerts", "arena events", "premium nightlife", "immersive experiences", "creator development", "music development", "event production", "Tampa concerts", "Summer Walker", "Soul Symphony", "DJ Snake", "Pardon My French", "21 Savage", "Nightmare on Channelside", "concert merch", "VIP hospitality", "event sponsorships"],
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
-    siteName: "ICONIC LIVE",
-    title: "ICONIC LIVE — Concerts, Tours & Culture",
-    description: "Tampa Halloween. Summer Walker — Soul Symphony. DJ Snake — Pardon My French. Tickets, VIP, sponsorships and merch under one live-entertainment platform.",
+    siteName: "ICONIC",
+    title: "ICONIC — Live Entertainment, Experiences, Creators & Music",
+    description: "Events. Experiences. Creators. ICONIC MUSIC. Media. Merchandise. Partnerships. A full entertainment ecosystem built around culture and memorable live moments.",
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ICONIC LIVE — Concerts, Tours & Culture",
-    description: "Headline concerts, multi-city tours, VIP, sponsorships and event merchandise.",
+    title: "ICONIC — Live Entertainment, Experiences, Creators & Music",
+    description: "Headline concerts, tours, premium experiences, creators, music, media, merchandise and strategic partnerships.",
   },
   manifest: "/manifest.webmanifest",
 };
@@ -43,10 +43,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "ICONIC LIVE",
+    name: "ICONIC",
     url: SITE_URL,
-    description: "Live entertainment platform producing headline concerts, multi-city tours, arena and stadium experiences, premium hospitality and event merchandise.",
-    areaServed: ["Atlanta", "Tampa", "Los Angeles", "Las Vegas", "Dallas", "New York City", "Washington DC"],
+    description: "Multi-vertical entertainment group producing premium nightlife, immersive cultural experiences, headline concerts, multi-city tours, creator development, music programming, media, merchandise and strategic partnerships.",
+    areaServed: ["Atlanta", "Houston", "Los Angeles", "Tampa", "Las Vegas", "Dallas", "New York City", "Washington DC"],
+    knowsAbout: ["Live Entertainment","Concert Production","Experiential Events","Nightlife","Creator Development","Music Development","Artist Bookings","Sponsorships","VIP Hospitality","Event Merchandise","Media and Archive"],
   };
 
   return (
