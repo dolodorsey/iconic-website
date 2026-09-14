@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { NIGHTMARE_EVENT } from "../../../event-config";
 import { getCollection as getFallbackCollection } from "../../merch-data";
 import { getMerchCatalog } from "../../catalog";
 import { COLLECTION_ART, NOC_MEDIA } from "../../noc-assets";
@@ -69,7 +70,7 @@ export default async function CollectionPage({ params }: Props) {
       <div className={premium.container}>
         <section className={premium.section} id="collection-products">
           <div className={premium.sectionHead}>
-            <span className={premium.eyebrow}>{collection.name} · TAMPA · HALLOWEEN 2026</span>
+            <span className={premium.eyebrow}>{collection.name} · TAMPA · HALLOWEEN {NIGHTMARE_EVENT.year}</span>
             <h2 className="noc-editorial-heading">THE COLLECTION</h2>
             <p>Front and back at a glance. Open any piece for live sizes, variants and checkout.</p>
           </div>
