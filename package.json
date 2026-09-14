@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "validate:ui": "node scripts/validate-ui-governance.mjs",
     "audit:production": "node scripts/audit-production.mjs"
   },
   "dependencies": {
