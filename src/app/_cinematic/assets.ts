@@ -2,9 +2,13 @@ import { COLLECTION_ART, NOC_MEDIA } from '../tampa/nightmare-on-channelside/mer
 
 // ICONIC platform campaign art only. Never substitute these for a named tour,
 // product photograph, confirmed sponsor activation or documentary event proof.
+// ANIMATION ASSIGNMENT v2.1: ART.hero is exclusively derived from
+// ICONIC HOMESCREEN ANI(1).mp4. ART.crowd is exclusively derived from
+// ICONIC CONCERT ANI(1).mp4 and is used away from the homepage hero.
 export const ART = {
-  hero: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-v2-hero-stage.webp?v=1789368622',
-  crowd: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-v2-crowd-halo.webp?v=1789368729',
+  hero: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-homescreen-animation-v2.webp?v=1789373241',
+  homePoster: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-homescreen-poster-v2.webp?v=1789373331',
+  crowd: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-concert-animation-v2.webp?v=1789373250',
   world: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-v2-world-stage.webp?v=1789368753',
   backstage: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-v2-backstage.webp?v=1789368706',
   runway: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-v2-runway.webp?v=1789368776',
@@ -15,7 +19,7 @@ export const ART = {
   reveal: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-v2-reveal-stage.webp?v=1789368898',
   hospitality: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-vip-hospitality.png?v=1789179973',
   media: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-aftermovie-archive.png?v=1789179965',
-  greekBall: '/api/media/drive/12l451pQV2i-ou9RgE1nS21JlFAylyGeY',
+  greekBall: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-greek-ball-original-web.webp?v=1789370777',
 } as const;
 export const SUMMER_VISUAL = 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summer-walker-soul-symphony.jpg?v=1789170574';
 export const PMF_VISUAL = 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-dj-snake-pardon-my-french.jpg?v=1789170586';

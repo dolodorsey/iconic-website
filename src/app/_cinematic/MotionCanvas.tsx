@@ -9,17 +9,20 @@ export default function MotionCanvas() {
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');
     const sync = () => setReduced(query.matches);
-    sync(); query.addEventListener('change', sync);
+    sync();
+    query.addEventListener('change', sync);
     return () => query.removeEventListener('change', sync);
   }, []);
+  const stopped = paused || reduced;
   return <>
     {/* LOCKED: homepage animation/hero is visual-only. All copy and controls are siblings BELOW this canvas. */}
-    <div className={s.homeCanvas} data-testid="home-canvas" data-motion={paused || reduced ? 'paused' : 'playing'}>
-      <img src={ART.hero} width={1648} height={928} alt="ICONIC campaign artwork: a microphone and runway facing a monumental concert stage" loading="eager" fetchPriority="high" decoding="async" />
+    {/* SOURCE LOCK: animation derives from ICONIC HOMESCREEN ANI(1).mp4; never substitute the concert animation here. */}
+    <div className={s.homeCanvas} data-testid="home-canvas" data-motion={stopped ? 'paused' : 'playing'} data-animation-source="ICONIC HOMESCREEN ANI(1).mp4">
+      <img src={stopped ? ART.homePoster : ART.hero} width={960} height={540} alt="ICONIC homescreen animation" loading="eager" fetchPriority="high" decoding="async" />
     </div>
     <div className={s.motionBar}>
       <span>Music. People. Culture.</span>
-      <button type="button" data-testid="motion-toggle" aria-pressed={paused || reduced} disabled={reduced} onClick={() => setPaused(!paused)}>{reduced ? 'Reduced motion enabled' : paused ? 'Play motion' : 'Pause motion'}</button>
+      <button type="button" data-testid="motion-toggle" aria-pressed={stopped} disabled={reduced} onClick={() => setPaused(!paused)}>{reduced ? 'Reduced motion enabled' : paused ? 'Play motion' : 'Pause motion'}</button>
     </div>
   </>;
 }
