@@ -1,22 +1,4 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import PlatformShell from "@/app/_components/PlatformShell";
-import { getMerchCatalog } from "@/app/tampa/nightmare-on-channelside/merch/catalog";
-import { COLLECTION_ART } from "@/app/tampa/nightmare-on-channelside/merch/noc-assets";
-import { DJ_SNAKE_AND_FRIENDS_LOGO, PARDON_MY_FRENCH_TOUR_LOGO, SUMMER_WALKER_SOUL_SYMPHONY_LOGO } from "@/app/_components/tour-brand-assets";
-
-export const metadata:Metadata={title:"Merch Vault",description:"Shop live ICONIC event merchandise and join upcoming tour drop lists."};
-const artistSlugs=["21-savage","kodak-black","da-baby","meek-mill","belly-gang-kush"] as const;
-
-export default async function MerchPage(){
-  const catalog=await getMerchCatalog();
-  const bySlug=new Map(catalog.collections.map(c=>[c.slug,c]));
-  const productFor=(slug:string)=>catalog.products.find(p=>p.collection_slug===slug);
-  return <PlatformShell><main className="cp-page">
-    <section className="cp-merch-hero"><img src="/nightmare-merch/noc-merch-hero.webp" alt="Nightmare on Channelside official merchandise"/><div><div className="cp-kicker">ICONIC MERCH VAULT · LIVE NOW</div><h1>SHOP THE LINEUP.</h1><p style={{color:"#aaa",fontSize:14,lineHeight:1.6,maxWidth:600}}>The Tampa Halloween catalog is connected to live Shopify inventory. Artist collections are separated so customers can move directly from lineup to product.</p><div className="cp-actions"><Link href="/tampa/nightmare-on-channelside/merch/shop" className="cp-btn primary">Shop All Live Products</Link><Link href="/tampa/nightmare-on-channelside/merch/cart" className="cp-btn">View Cart</Link></div></div></section>
-    <section className="cp-section"><div className="cp-section-head"><div className="cp-kicker">Tampa Halloween · Live Collections</div><div><h2>Five artists. Five separate product worlds.</h2><p>Each card uses its own collection artwork and surfaces a real live product beneath it.</p></div></div><div className="cp-merch-collections">{artistSlugs.map(slug=>{const c=bySlug.get(slug);const p=productFor(slug);if(!c)return null;return <Link className="cp-merch-card" href={`/tampa/nightmare-on-channelside/merch/collection/${slug}`} key={slug}><div><img src={COLLECTION_ART[slug]} alt={c.name}/></div><div><strong>{c.name}</strong><span>{p?`Live product · ${p.title}`:"Shop collection"} →</span></div></Link>})}</div></section>
-    <section className="cp-section alt"><div className="cp-section-head"><div className="cp-kicker">Event Collections</div><div><h2>Beyond individual artists.</h2></div></div><div className="cp-feature-grid"><Link className="cp-feature" href="/tampa/nightmare-on-channelside/merch/collection/all-artists"><img src={COLLECTION_ART["all-artists"]} alt="All Artists collection"/><div><strong>ALL ARTISTS</strong><span>Full lineup collection →</span></div></Link><Link className="cp-feature" href="/tampa/nightmare-on-channelside/merch/collection/tampa"><img src={COLLECTION_ART.tampa} alt="Tampa collection"/><div><strong>TAMPA</strong><span>City collection →</span></div></Link><Link className="cp-feature" href="/tampa/nightmare-on-channelside/merch/collection/nightmare-on-channelside"><img src={COLLECTION_ART["nightmare-on-channelside"]} alt="Nightmare on Channelside collection"/><div><strong>NIGHTMARE ON CHANNELSIDE</strong><span>Official event collection →</span></div></Link></div></section>
-    <section className="cp-section"><div className="cp-section-head"><div className="cp-kicker">Next Drops</div><div><h2>Upcoming tours stay separate until product is actually live.</h2><p>No fake product grids. These are access lists until inventory exists.</p></div></div><div className="cp-drop-grid"><Link className="cp-drop summer" href="/access?intent=merch&event=summer-walker-soul-symphony"><img src={SUMMER_WALKER_SOUL_SYMPHONY_LOGO} alt="Summer Walker Soul Symphony Tour"/><div><strong>SOUL SYMPHONY DROP</strong><span>Join merch access →</span></div></Link><Link className="cp-drop pmf" href="/access?intent=merch&event=dj-snake-pardon-my-french"><div style={{display:"flex",gap:12,alignItems:"center"}}><img src={DJ_SNAKE_AND_FRIENDS_LOGO} alt="DJ Snake and Friends"/><img src={PARDON_MY_FRENCH_TOUR_LOGO} alt="Pardon My French Tour"/></div><div><strong>PARDON MY FRENCH DROP</strong><span>Join merch access →</span></div></Link></div></section>
-    <div className="cp-trust"><div><b>LIVE SHOPIFY INVENTORY</b><span>Real variants from the connected NOC catalog.</span></div><div><b>REAL PRODUCT PAGES</b><span>Collection, product and cart routes stay connected.</span></div><div><b>ISOLATED CATALOG</b><span>NOC products remain separated from unrelated inventory.</span></div><div><b>SECURE CHECKOUT</b><span>Checkout continues through the live Shopify flow.</span></div></div>
-  </main></PlatformShell>;
-}
+import type { Metadata } from 'next';
+import { CinematicMerch } from '../_cinematic';
+export const metadata:Metadata={title:'Merch Vault',description:'Shop Nightmare on Channelside artist and event collections, and register for upcoming tour drop notifications.'};
+export default CinematicMerch;

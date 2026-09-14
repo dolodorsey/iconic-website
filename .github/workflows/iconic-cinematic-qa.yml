@@ -1,0 +1,45 @@
+name: ICONIC Cinematic Browser QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  push:
+    branches: [upgrade/iconic-cinematic-v2]
+permissions:
+  contents: read
+concurrency:
+  group: iconic-cinematic-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --no-fund
+      - name: Source governance
+        run: node scripts/validate-cinematic.mjs
+      - name: Type check and production build
+        run: npx tsc --noEmit && npm run build
+      - name: Install pinned isolated browser tooling
+        run: npm install --prefix .qa --no-save --package-lock=false playwright@1.63.0 && .qa/node_modules/.bin/playwright install --with-deps chromium
+      - name: Launch production server
+        run: npm run start -- --port 3100 > /tmp/iconic-server.log 2>&1 &
+      - name: Browser screenshots and contract tests
+        env:
+          QA_BASE_URL: http://127.0.0.1:3100
+          QA_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node scripts/cinematic-browser-qa.mjs
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iconic-cinematic-browser-evidence
+          path: |
+            qa-evidence/
+            /tmp/iconic-server.log
+          retention-days: 14
+          if-no-files-found: error

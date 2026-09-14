@@ -1,9 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { DJ_SNAKE_AND_FRIENDS_LOGO, PARDON_MY_FRENCH_TOUR_LOGO, SUMMER_WALKER_SOUL_SYMPHONY_LOGO } from "./tour-brand-assets";
+import { SUMMER_WALKER_SOUL_SYMPHONY_LOGO } from "./tour-brand-assets";
 
 const PLATFORM="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-concert-series.png?v=1789179952";
+
+// APPROVED PROPERTY VISUALS — use the same official imagery as each property's destination page.
+// Do not substitute stock, generic, recycled, or cross-property imagery on ICONIC cards.
+const TAMPA_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-01.png?v=1788994167";
+const SUMMER_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summer-walker-soul-symphony.jpg?v=1789170574";
+const PMF_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-dj-snake-pardon-my-french.jpg?v=1789170586";
 
 const divisions=[
   ["LIVE","Concerts, tours and arena-scale moments.","/events"],
@@ -16,23 +22,28 @@ const divisions=[
 
 export default function HomeExperience(_: {tampa:string;archive:string;merchTiles:{label:string;href:string;src:string}[]}){
   return <div className="ir-home">
-    <section className="ir-home-hero ir-home-hero-corporate">
+    {/* NON-NEGOTIABLE: homepage animation/hero is visual-only. No HTML/CSS copy, CTA, badge or label may overlay it. */}
+    <section className="ir-home-hero ir-home-hero-corporate" aria-label="ICONIC live entertainment platform">
       <img src={PLATFORM} alt="ICONIC live entertainment platform"/>
       <div className="ir-home-hero-shade"/>
-      <div className="ir-home-hero-copy">
+    </section>
+
+    {/* All homepage headline/copy/CTAs live BELOW the animation canvas, never on top of it. */}
+    <section className="ir-home-section" style={{paddingTop:"56px",paddingBottom:"64px"}}>
+      <div className="ir-section-heading" style={{maxWidth:"980px"}}>
         <span>ICONIC</span>
-        <h1>WE BUILD MOMENTS PEOPLE REMEMBER.</h1>
-        <p>Live entertainment, culture, creators, music, media and commerce — built around experiences worth showing up for.</p>
-        <div><Link href="/events" className="ir-primary">Explore Events</Link><Link href="/partners" className="ir-secondary">Partner With ICONIC</Link></div>
+        <h1 style={{fontSize:"clamp(54px,7vw,108px)",lineHeight:.88,letterSpacing:"-.045em",margin:"14px 0 24px"}}>WE BUILD MOMENTS PEOPLE REMEMBER.</h1>
+        <p style={{maxWidth:"760px",fontSize:"clamp(16px,1.5vw,21px)",lineHeight:1.55,opacity:.76,margin:"0 0 28px"}}>Live entertainment, culture, creators, music, media and commerce — built around experiences worth showing up for.</p>
+        <div style={{display:"flex",gap:"12px",flexWrap:"wrap"}}><Link href="/events" className="ir-primary">Explore Events</Link><Link href="/partners" className="ir-secondary">Partner With ICONIC</Link></div>
       </div>
     </section>
 
     <section className="ir-home-section ir-slate">
       <div className="ir-section-heading"><span>Current Slate</span><h2>Three flagship worlds. Three different identities.</h2></div>
       <div className="ir-slate-grid">
-        <Link href="/tampa-halloween" className="ir-slate-card ir-slate-graphic tampa"><div className="ir-slate-copy"><small>ICONIC LIVE · TAMPA</small><strong>NIGHTMARE<br/>ON CHANNELSIDE</strong><span>Halloween arena world →</span></div></Link>
-        <Link href="/summer-walker" className="ir-slate-card ir-slate-graphic summer"><div className="ir-slate-copy"><small>ICONIC LIVE · SOUL</small><img className="ir-slate-logo solo" src={SUMMER_WALKER_SOUL_SYMPHONY_LOGO} alt="Summer Walker Soul Symphony Tour"/><span>10-city experience platform →</span></div></Link>
-        <Link href="/dj-snake-pardon-my-french" className="ir-slate-card ir-slate-graphic pmf"><div className="ir-slate-copy"><small>ICONIC LIVE · STADIUM</small><div className="ir-slate-logos"><img src={DJ_SNAKE_AND_FRIENDS_LOGO} alt="DJ Snake and Friends"/><img src={PARDON_MY_FRENCH_TOUR_LOGO} alt="Pardon My French Tour"/></div><span>5-city stadium platform →</span></div></Link>
+        <Link href="/tampa-halloween" aria-label="Enter Nightmare on Channelside" className="ir-slate-card ir-slate-graphic tampa" style={{backgroundImage:`linear-gradient(180deg,rgba(0,0,0,.02) 38%,rgba(0,0,0,.84) 100%),url("${TAMPA_VISUAL}")`,backgroundSize:"cover",backgroundPosition:"center 22%"}}><div className="ir-slate-copy"><small>ICONIC LIVE · TAMPA</small><span>Nightmare on Channelside →</span></div></Link>
+        <Link href="/summer-walker" aria-label="Enter Summer Walker Soul Symphony" className="ir-slate-card ir-slate-graphic summer" style={{backgroundImage:`linear-gradient(180deg,rgba(0,0,0,.02) 38%,rgba(0,0,0,.72) 100%),url("${SUMMER_VISUAL}")`,backgroundSize:"cover",backgroundPosition:"center 24%"}}><div className="ir-slate-copy"><small>ICONIC LIVE · SOUL</small><span>Soul Symphony · 10-city platform →</span></div></Link>
+        <Link href="/dj-snake-pardon-my-french" aria-label="Enter DJ Snake Pardon My French" className="ir-slate-card ir-slate-graphic pmf" style={{backgroundImage:`linear-gradient(180deg,rgba(0,0,0,.02) 38%,rgba(0,0,0,.78) 100%),url("${PMF_VISUAL}")`,backgroundSize:"cover",backgroundPosition:"center 18%"}}><div className="ir-slate-copy"><small>ICONIC LIVE · STADIUM</small><span>Pardon My French · 5-city platform →</span></div></Link>
       </div>
     </section>
 

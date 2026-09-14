@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { NIGHTMARE_EVENT } from "../event-config";
 import { getMerchCatalog } from "./catalog";
 import { NOC_MEDIA } from "./noc-assets";
 import { ProductCard, StoreFooter, StoreHeader } from "./noc-ui";
@@ -31,7 +32,7 @@ export default async function NightmareMerchPage() {
       </section>
 
       <div className={premium.ticker}>
-        <b>NIGHTMARE ON CHANNELSIDE</b><span>HALLOWEEN 2026</span><span>TAMPA, FL</span><span>OFFICIAL EVENT MERCH</span>
+        <b>NIGHTMARE ON CHANNELSIDE</b><span>HALLOWEEN {NIGHTMARE_EVENT.year}</span><span>TAMPA, FL</span><span>OFFICIAL EVENT MERCH</span>
       </div>
 
       <div className={premium.container}>
@@ -52,7 +53,7 @@ export default async function NightmareMerchPage() {
           </Link>
           <Link href="/tampa/nightmare-on-channelside" className={premium.portal}>
             <img src={NOC_MEDIA.hall} alt="Nightmare on Channelside Tampa event" loading="lazy" decoding="async" />
-            <div className={premium.portalCopy}><span>HALLOWEEN 2026</span><strong>THE EVENT</strong><em>CONCERT DETAILS + TICKETS →</em></div>
+            <div className={premium.portalCopy}><span>HALLOWEEN {NIGHTMARE_EVENT.year}</span><strong>THE EVENT</strong><em>CONCERT DETAILS + TICKETS →</em></div>
           </Link>
         </section>
 

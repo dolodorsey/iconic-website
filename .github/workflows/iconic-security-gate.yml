@@ -1,4 +1,4 @@
-name: ICONIC Security Gate
+name: ICONIC Security + UI Quality Gate
 
 on:
   pull_request:
@@ -44,6 +44,9 @@ jobs:
 
       - name: Deterministic install
         run: npm ci --no-fund
+
+      - name: ICONIC UI anti-regression gate
+        run: npm run validate:ui
 
       - name: Capture production dependency audit
         shell: bash
