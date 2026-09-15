@@ -112,8 +112,10 @@ await mapLimit(linkTargets, CONCURRENCY, async (url) => {
   }
 });
 
+// Released cinematic-v2 page copy. All marker, metadata, link and endpoint
+// assertions remain enforced; retired v1 slogans are not production contracts.
 const markers = [
-  ["/", "THE FULL ICONIC ECOSYSTEM"],
+  ["/", "BE THERE."],
   ["/events", "CURRENT FLAGSHIPS"],
   ["/experiences", "ICONIC EXPERIENCES"],
   ["/social", "ICONIC SOCIAL"],
@@ -126,7 +128,7 @@ const markers = [
   ["/tampa-halloween", "TAMPA"],
   ["/summer-walker", "SOUL SYMPHONY"],
   ["/dj-snake-pardon-my-french", "PARDON MY FRENCH"],
-  ["/merch", "SHOP THE LINEUP"],
+  ["/merch", "WEAR THE NIGHT."],
 ];
 for (const [path, marker] of markers) {
   try {
