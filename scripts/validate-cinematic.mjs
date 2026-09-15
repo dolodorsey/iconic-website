@@ -11,8 +11,8 @@ assert.match(summerPage,/import\s*\{\s*SUMMER_VISUAL\s*\}\s*from\s*["']@\/app\/_
 assert.match(summerPage,/visual=\{SUMMER_VISUAL\}/,'Soul Symphony page must render canonical property artwork');
 assert.match(pmfPage,/import\s*\{\s*PMF_VISUAL\s*\}\s*from\s*["']@\/app\/_cinematic\/assets["']/,'PMF page must import canonical property artwork');
 assert.match(pmfPage,/visual=\{PMF_VISUAL\}/,'PMF page must render canonical property artwork');
-assert.match(assets,/export const SUMMER_VISUAL\s*=\s*['\"]\/api\/media\/drive\/1bH_rd6ispK2tuiDbyJhEqMgBCxrMys5r['\"]/,'Soul Symphony canonical artwork must remain the verified Drive asset');
-assert.match(assets,/export const PMF_VISUAL\s*=\s*['\"]\/api\/media\/drive\/1rUT8LECF1MtVOwKAtJzZEvqFMfcmWEN9['\"]/,'PMF canonical artwork must remain the verified Drive asset');
+assert.match(assets,/export const SUMMER_VISUAL\s*=\s*['\"][^'\"]*iconic-soul-symphony-verified-2026-09-15\.webp[^'\"]*['\"]/,'Soul Symphony canonical artwork must remain the verified stable mirror');
+assert.match(assets,/export const PMF_VISUAL\s*=\s*['\"][^'\"]*iconic-pardon-my-french-verified-2026-09-15\.webp[^'\"]*['\"]/,'PMF canonical artwork must remain the verified stable mirror');
 assert.match(assets,/src: NOC_MEDIA\.headliners/,'NOC must use its own approved artwork');
 assert.match(assets,/hero:\s*['\"][^'\"]*iconic-homescreen-animation-v2\.webp/,'Homepage must use the owner-supplied HOMESCREEN ANI derivative');
 assert.match(assets,/homePoster:\s*['\"][^'\"]*iconic-homescreen-poster-v2\.webp/,'Homepage reduced-motion/pause poster missing');
