@@ -9,24 +9,24 @@ const read = (path) => fs.readFileSync(path, "utf8");
 const homePath = "src/app/_components/HomeExperience.tsx";
 const summerPath = "src/app/summer-walker/page.tsx";
 const pmfPath = "src/app/dj-snake-pardon-my-french/page.tsx";
+const cinematicAssetsPath = "src/app/_cinematic/assets.ts";
 const nocAssetsPath = "src/app/tampa/nightmare-on-channelside/merch/noc-assets.ts";
 
-for (const path of [homePath, summerPath, pmfPath, nocAssetsPath]) {
+for (const path of [homePath, summerPath, pmfPath, cinematicAssetsPath, nocAssetsPath]) {
   if (!fs.existsSync(path)) fail(`required source file missing: ${path}`);
 }
-
 if (process.exitCode) process.exit(process.exitCode);
 
 const home = read(homePath);
 const summer = read(summerPath);
 const pmf = read(pmfPath);
+const assets = read(cinematicAssetsPath);
 const noc = read(nocAssetsPath);
 
 function constValue(source, name) {
-  const match = source.match(new RegExp(`const\\s+${name}\\s*=\\s*[\"']([^\"']+)[\"']`));
+  const match = source.match(new RegExp(`(?:const|export const)\\s+${name}\\s*=\\s*[\"']([^\"']+)[\"']`));
   return match?.[1] || null;
 }
-
 function objectValue(source, name) {
   const match = source.match(new RegExp(`${name}\\s*:\\s*[\"']([^\"']+)[\"']`));
   return match?.[1] || null;
@@ -50,20 +50,24 @@ if (!heroMatch) {
   }
 }
 
-// RULE 2 — Homepage flagship cards must use each property's actual approved destination-page visual.
-const homeSummer = constValue(home, "SUMMER_VISUAL");
-const pageSummer = constValue(summer, "SUMMER_VISUAL");
-if (!homeSummer || homeSummer !== pageSummer) fail("Soul Symphony homepage card visual does not match the official Soul Symphony page visual");
-
-const homePmf = constValue(home, "PMF_VISUAL");
-const pagePmf = constValue(pmf, "DJ_VISUAL");
-if (!homePmf || homePmf !== pagePmf) fail("Pardon My French homepage card visual does not match the official PMF page visual");
+// RULE 2 — One canonical registry owns the two tour visuals. The governed
+// cinematic homepage consumes WORLDS from this registry, and destination pages
+// import the exact same constants. Legacy HomeExperience may remain in source
+// but is not allowed to redefine the destination art.
+const registrySummer = constValue(assets, "SUMMER_VISUAL");
+const registryPmf = constValue(assets, "PMF_VISUAL");
+if (registrySummer !== "/api/media/drive/1bH_rd6ispK2tuiDbyJhEqMgBCxrMys5r") fail("Soul Symphony canonical artwork drift");
+if (registryPmf !== "/api/media/drive/1rUT8LECF1MtVOwKAtJzZEvqFMfcmWEN9") fail("Pardon My French canonical artwork drift");
+if (!/import\s*\{\s*SUMMER_VISUAL\s*\}\s*from\s*[\"']@\/app\/_cinematic\/assets[\"']/.test(summer) || !/visual=\{SUMMER_VISUAL\}/.test(summer)) fail("Soul Symphony destination must consume canonical registry art");
+if (!/import\s*\{\s*PMF_VISUAL\s*\}\s*from\s*[\"']@\/app\/_cinematic\/assets[\"']/.test(pmf) || !/visual=\{PMF_VISUAL\}/.test(pmf)) fail("Pardon My French destination must consume canonical registry art");
+if (!/title:\s*'Soul Symphony'[\s\S]*?src:\s*SUMMER_VISUAL/.test(assets)) fail("Soul Symphony homepage/world card must consume canonical registry art");
+if (!/title:\s*'Pardon My French'[\s\S]*?src:\s*PMF_VISUAL/.test(assets)) fail("Pardon My French homepage/world card must consume canonical registry art");
 
 const homeTampa = constValue(home, "TAMPA_VISUAL");
 const pageTampa = objectValue(noc, "headliners");
-if (!homeTampa || homeTampa !== pageTampa) fail("Nightmare on Channelside homepage card visual does not match the official NOC headliners visual");
+if (!homeTampa || homeTampa !== pageTampa) fail("Nightmare on Channelside legacy homepage card visual does not match the official NOC headliners visual");
 
-// RULE 3 — No generic stock-image sources in flagship slate cards.
+// RULE 3 — No generic stock-image sources in legacy flagship slate cards.
 const slateMatch = home.match(/<div className="ir-slate-grid">([\s\S]*?)<\/div>\s*<\/section>/);
 if (!slateMatch) {
   fail("homepage flagship slate grid was not found");
@@ -83,4 +87,4 @@ if (!home.includes("homepage animation/hero is visual-only")) fail("homepage vis
 if (!home.includes("Do not substitute stock, generic, recycled, or cross-property imagery")) fail("approved-card-asset governance comment was removed");
 
 if (process.exitCode) process.exit(process.exitCode);
-console.log("✓ ICONIC UI governance checks passed.");
+console.log("✓ ICONIC UI governance checks passed with canonical tour-art registry.");
