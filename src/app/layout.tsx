@@ -14,6 +14,7 @@ import "./company-pages.css";
 import "./final-audit.css";
 import "./ui-first-polish.css";
 import "./iconic-completion.css";
+import "./iconic-release-polish.css";
 import { SITE_URL } from "../lib/site-url";
 import Analytics from "./_components/Analytics";
 
