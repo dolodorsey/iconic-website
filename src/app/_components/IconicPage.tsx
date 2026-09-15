@@ -12,7 +12,14 @@ export const C={
   gold2:"#ffd97a",
   red:"#b98428"
 };
-export const drive=(id:string)=>`/api/media/drive/${id}`;
+const stableDriveMirrors:Record<string,string>={
+  "1EYSPTnhLTDDuVjQAK4PjojbHogWrjDcw":"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-corporate-logo-stable.png?v=1789461654",
+  "1Ub439rjM3-SwK67udFKh6f2q5SwDF_U1":"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-nightmare-channelside-official-flyer.png?v=1789461672",
+  "1GK8TTIz-1b6QYZ1_RNrIfgfw2PcIffH5":"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-nightmare-channelside-merch.png?v=1789461683",
+  "12l451pQV2i-ou9RgE1nS21JlFAylyGeY":"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-greek-ball-stable.webp?v=1789461693",
+  "1C9nszVwleMjAAe8mfavdvT2fb4HyoLd2":"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-champagne-ball-stable.webp?v=1789461705",
+};
+export const drive=(id:string)=>stableDriveMirrors[id]||`/api/media/drive/${id}`;
 export const ICONIC_LOGO=drive("1EYSPTnhLTDDuVjQAK4PjojbHogWrjDcw");
 const navLink={color:"rgba(255,232,187,.72)",textDecoration:"none",fontFamily:"Arial,sans-serif",fontSize:9,fontWeight:900,letterSpacing:".14em",textTransform:"uppercase" as const};
 
