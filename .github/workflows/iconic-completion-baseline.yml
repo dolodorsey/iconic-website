@@ -8,7 +8,7 @@ permissions:
 jobs:
   baseline:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -16,36 +16,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - name: Record source and inspect real public pages
+      - name: Record source and inspect all public pages
         run: |
-          mkdir -p iconic-baseline/screenshots iconic-baseline/media
+          mkdir -p iconic-baseline
           git archive HEAD > iconic-baseline/source.tar
-          git rev-parse HEAD > iconic-baseline/source-sha.txt
           npm install --prefix /tmp/iconic-browser --no-audit --no-fund playwright@1.55.1 @axe-core/playwright@4.10.2
-          cat > /tmp/iconic-browser/audit.cjs <<'NODE'
-          const {chromium}=require('playwright'),{default:AxeBuilder}=require('@axe-core/playwright'),fs=require('node:fs/promises'),path=require('node:path');
-          const base='https://iconic-website-ten.vercel.app',out=path.resolve('iconic-baseline'),report={base,at:new Date().toISOString(),source:process.env.GITHUB_SHA,pages:[],images:[],failures:[]};
-          (async()=>{const browser=await chromium.launch({channel:'chrome',headless:true});try{
-           const ctx=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
-           const routes=new Set(['/','/events','/experiences','/music','/creators','/media','/merch','/tampa-halloween','/summer-walker','/dj-snake-pardon-my-french','/partners','/about','/contact']);
-           const sitemap=await ctx.request.get(base+'/sitemap.xml');if(sitemap.ok()){for(const m of (await sitemap.text()).matchAll(/<loc>(.*?)<\/loc>/g)){const u=new URL(m[1]);routes.add(u.pathname)}}
-           async function walk(folder){for(const e of await fs.readdir(folder,{withFileTypes:true})){const p=path.join(folder,e.name);if(e.isDirectory()&&!e.name.startsWith('_')&&!e.name.startsWith('[')&&e.name!=='api')await walk(p);else if(e.isFile()&&e.name==='page.tsx'){routes.add('/'+path.relative('src/app',folder).split(path.sep).filter(s=>!s.startsWith('(')).join('/'))}}}await walk('src/app');
-           const processed=new Set(),imageMap=new Map();
-           for(const width of [1440,390]){await ctx.close().catch(()=>{});const c=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'});
-            for(const route of routes){if(route.includes('[')||routes.size>100)continue;const p=await c.newPage();const row={route,width,errors:[]};p.on('pageerror',e=>row.errors.push(e.message));
-             try{const r=await p.goto(base+route,{waitUntil:'domcontentloaded',timeout:45000});row.status=r.status();row.final=p.url();await p.evaluate(()=>document.fonts.ready);for(let y=0;y<await p.evaluate(()=>document.body.scrollHeight);y+=800){await p.evaluate(y=>scrollTo({top:y,behavior:'instant'}),y);await p.waitForTimeout(40)}await p.evaluate(async()=>{await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));scrollTo({top:0,behavior:'instant'});await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))) });
-              Object.assign(row,await p.evaluate(()=>({title:document.title,h1:[...document.querySelectorAll('h1')].map(e=>e.textContent),text:document.body.innerText,scrollWidth:document.documentElement.scrollWidth,links:[...document.querySelectorAll('a[href]')].map(a=>({text:a.textContent.trim().slice(0,90),href:a.getAttribute('href')})),images:[...document.images].map(i=>({src:i.currentSrc||i.src,alt:i.alt,loaded:i.complete&&i.naturalWidth>0,width:i.naturalWidth,height:i.naturalHeight,fit:getComputedStyle(i).objectFit})),forms:[...document.forms].map(f=>({action:f.action,fields:[...f.elements].map(e=>({name:e.name,type:e.type,required:e.required}))}))})));
-              for(const im of row.images)if(im.loaded&&!im.src.startsWith('data:'))imageMap.set(im.src,im);
-              if(width===1440)for(const link of row.links){try{const u=new URL(link.href,base);if(u.origin===base&&!u.pathname.startsWith('/api/')&&!u.pathname.includes('.')&&!u.pathname.startsWith('/_next/'))routes.add(u.pathname)}catch{}}
-              const audit=await new AxeBuilder({page:p}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();row.accessibility=audit.violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}));
-              const name=route==='/'?'home':route.slice(1).replaceAll('/','-');await p.screenshot({path:path.join(out,'screenshots',`${name}-${width}.jpg`),fullPage:true,type:'jpeg',quality:82,animations:'disabled',timeout:60000});
-             }catch(e){row.error=e.message}report.pages.push(row);await p.close();await fs.writeFile(path.join(out,'report.json'),JSON.stringify(report,null,2));
-            }await c.close();}
-           report.images=[...imageMap.values()];for(let i=0;i<report.images.length;i++){const im=report.images[i];try{const r=await fetch(im.src);if(r.ok&&r.headers.get('content-type')?.startsWith('image/')){const bytes=Buffer.from(await r.arrayBuffer());if(bytes.length<12000000){im.local=`media/asset-${String(i).padStart(3,'0')}.img`;await fs.writeFile(path.join(out,im.local),bytes)}}}catch(e){im.error=e.message}}
-           report.routes=[...routes];
-          }catch(e){report.failures.push(e.stack||e.message)}finally{await fs.writeFile(path.join(out,'report.json'),JSON.stringify(report,null,2));await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});
-          NODE
-          node /tmp/iconic-browser/audit.cjs
+          NODE_PATH=/tmp/iconic-browser/node_modules AUDIT_BASE=https://iconic-website-ten.vercel.app AUDIT_OUT=iconic-baseline AUDIT_MEDIA=true node scripts/completion-browser-audit.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
