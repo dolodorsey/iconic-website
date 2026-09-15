@@ -1,0 +1,13 @@
+/* Verified against the complete 152-route desktop/mobile inventory, not just the homepage. */
+form a[href="/privacy"],form a[href="/terms"]{text-decoration:underline!important;text-underline-offset:3px}
+.ir-theme-tampa .ir-property-stats span{color:#b9a7a5!important}.ir-theme-tampa .ir-experience-list article>span{color:#ff7b70!important}
+.iconic-shell a[href="/tampa/nightmare-on-channelside/merch"][style*="background"]{background:#b61d19!important;color:#fff!important}
+html .noc-top-tier .noc-product-meta-v2>div>span,html .noc-top-tier .noc-shop-product-meta>div>span{color:#b5aaa5!important;font-size:12px!important;line-height:1.5!important}
+html .noc-top-tier footer p,html .noc-top-tier footer>span{color:#ada39e!important;font-size:12px!important;line-height:1.6!important}
+/* Campaign posters use their natural aspect ratios. No letterboxed landscape frames. */
+.ir-property .ir-gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:auto!important;align-items:start!important;gap:20px!important}
+.ir-property .ir-gallery-grid figure,.ir-property .ir-gallery-grid figure.wide{grid-column:auto!important;grid-row:auto!important;min-height:0!important;height:auto!important;margin:0;display:block!important;background:#100d0f!important}
+.ir-property .ir-gallery-grid figure img{position:relative!important;inset:auto!important;width:100%!important;height:auto!important;object-fit:contain!important;display:block}
+.ir-property .ir-gallery-grid figure figcaption{position:relative!important;inset:auto!important;padding:14px!important;min-height:44px;background:#100d0f!important;color:#d5c9d0!important;font-size:11px!important;line-height:1.5!important}
+.ir-shell a:focus-visible,.iconic-shell a:focus-visible,.noc-top-tier a:focus-visible,button:focus-visible{outline:2px solid #e7c881;outline-offset:4px}
+@media(max-width:760px){.ir-property .ir-gallery-grid{grid-template-columns:1fr!important;gap:22px!important}.ir-property .ir-gallery-grid figure{max-width:540px;margin-inline:auto;width:100%}}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { C, Hero, InfoGrid, Section, Shell } from "../_components/IconicPage";
+import { ART } from "../_cinematic/assets";
 
 export const metadata: Metadata = {
   title: "ICONIC Atlanta — Southlake Arena",
@@ -17,7 +18,7 @@ const properties = [
 export default function AtlantaPage() {
   return (
     <Shell>
-      <Hero eyebrow="ICONIC · FLAGSHIP MARKET" title="ATLANTA." sub="ICONIC's flagship Atlanta platform is now anchored at Southlake Arena by four distinct properties: The Ball Series, BRAVO New Year's Eve, GROWN-ISH 21+ Concert Series and Soul Session 30+ Concert Series." accent="#ff4fa7" />
+      <Hero visual={ART.world} visualPosition="center 58%" visualNote="ICONIC PLATFORM ART · MARKET OVERVIEW" eyebrow="ICONIC · FLAGSHIP MARKET" title="ATLANTA." sub="ICONIC's Atlanta platform is anchored by Southlake Arena and four distinct properties: The Ball Series, BRAVO New Year's Eve, GROWN-ISH 21+ Concert Series and Soul Session 30+ Concert Series." accent="#ff4fa7" />
       <Section eyebrow="Southlake Arena" title="Four properties. One flagship arena home.">
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 14 }}>
           {properties.map((p) => (

@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import { chromium } from '../.qa/node_modules/playwright/index.mjs';
 const BASE=(process.env.QA_BASE_URL||'http://127.0.0.1:3100').replace(/\/$/,'');
 const routes=['/','/events','/experiences','/music','/creators','/merch','/partners','/media'];
+const completionRoutes=['/summer-walker','/summer-walker/miami','/dj-snake-pardon-my-french','/dj-snake-pardon-my-french/los-angeles','/atlanta','/atlanta/halloween','/about','/contact','/access','/book','/social','/tampa-halloween','/tampa/nightmare-on-channelside','/ball-series','/series/21-plus','/series/30-plus'];
 const sizes=[{name:'desktop',width:1440,height:1000},{name:'tablet',width:768,height:1024},{name:'mobile',width:390,height:844},{name:'narrow',width:375,height:812}];
-const report={commit:process.env.QA_COMMIT||'unknown',baseUrl:BASE,checkedAt:new Date().toISOString(),pages:[],failures:[],notes:['Browser form tests mock delivery. They verify UI behavior, not backend persistence.','Do not label source-build screenshots as Vercel preview screenshots.']};
+const report={commit:process.env.QA_COMMIT||'unknown',baseUrl:BASE,checkedAt:new Date().toISOString(),pages:[],completionPages:[],failures:[],notes:['Browser form tests mock delivery. They verify UI behavior, not backend persistence.','Do not label source-build screenshots as Vercel preview screenshots.']};
 await fs.mkdir('qa-evidence',{recursive:true});
 for(let i=0;i<30;i++){try{if((await fetch(BASE)).ok)break;}catch{}await new Promise(r=>setTimeout(r,1000));}
 const browser=await chromium.launch({headless:true});
@@ -18,7 +19,7 @@ try{
     const res=await page.goto(BASE+path,{waitUntil:'networkidle',timeout:60000});assert(res?.ok(),'Page did not return success');
     await page.locator('[data-design-version="2.0.0"]').waitFor();
     await page.evaluate(async()=>{for(let y=0;y<document.body.scrollHeight;y+=600){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,60));}window.scrollTo(0,0);await document.fonts.ready;});
-    await page.waitForTimeout(1800);
+    await page.waitForTimeout(900);
     entry.brokenImages=await page.locator('img').evaluateAll(imgs=>imgs.filter(i=>!i.complete||i.naturalWidth===0).map(i=>({src:i.currentSrc||i.src,alt:i.alt})));
     entry.imageSizes=await page.locator('img').evaluateAll(imgs=>imgs.map(i=>({src:i.currentSrc||i.src,width:i.naturalWidth,height:i.naturalHeight})));
     assert.equal(entry.brokenImages.length,0,'Broken image');
@@ -37,6 +38,16 @@ try{
   }
   await page.close();
  }
+ for(const size of [sizes[0],sizes[2]]){
+  const page=await browser.newPage({viewport:{width:size.width,height:size.height},reducedMotion:'reduce'});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  for(const path of completionRoutes){const entry={path,viewport:size.name};try{const res=await page.goto(BASE+path,{waitUntil:'domcontentloaded',timeout:60000});assert(res?.ok(),'Page did not return success');await page.evaluate(async()=>{await document.fonts.ready;for(let y=0;y<document.body.scrollHeight;y+=800){scrollTo(0,y);await new Promise(r=>setTimeout(r,35))}scrollTo(0,0)});await page.waitForTimeout(500);entry.brokenImages=await page.locator('img').evaluateAll(imgs=>imgs.filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.currentSrc||i.src));assert.equal(entry.brokenImages.length,0,'Broken image');const dims=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,viewport:innerWidth}));assert(dims.scroll<=dims.viewport+1,`Horizontal overflow ${JSON.stringify(dims)}`);assert.equal(await page.locator('main').count(),1,'Exactly one main landmark');assert.equal(await page.locator('h1').count(),1,'Exactly one H1');assert.equal(errors.length,0,`Browser exception: ${errors.join('; ')}`);
+    if(path==='/summer-walker')assert((await page.locator('img').evaluateAll(xs=>xs.map(x=>x.getAttribute('src')))).some(x=>x?.includes('iconic-soul-symphony-verified-2026-09-15.webp')),'Soul Symphony canonical poster missing');
+    if(path==='/dj-snake-pardon-my-french')assert((await page.locator('img').evaluateAll(xs=>xs.map(x=>x.getAttribute('src')))).some(x=>x?.includes('iconic-pardon-my-french-verified-2026-09-15.webp')),'PMF canonical poster missing');
+    if(path==='/atlanta/halloween'){const text=await page.locator('body').innerText();assert(!text.includes('Nightmare on Channelside — ICONIC Atlanta'),'Atlanta must not impersonate Tampa property');assert(!text.includes('October 31, 2026'),'Atlanta Halloween must not publish Tampa date')}
+    const title='completion-'+path.slice(1).replaceAll('/','-');await page.screenshot({path:`qa-evidence/${title}-${size.name}-full.png`,fullPage:true});entry.status='pass';
+  }catch(e){entry.status='fail';entry.error=e.message;report.failures.push(`${path} completion ${size.name}: ${e.message}`);await page.screenshot({path:`qa-evidence/failure-completion-${path.slice(1).replaceAll('/','-')}-${size.name}.png`,fullPage:true}).catch(()=>{})}report.completionPages.push(entry);errors.length=0}
+  await page.close();
+ }
  const p=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});await p.goto(BASE,{waitUntil:'networkidle'});await p.getByTestId('motion-toggle').click();assert.equal(await p.getByTestId('home-canvas').getAttribute('data-motion'),'paused');await p.getByTestId('motion-toggle').click();assert.equal(await p.getByTestId('home-canvas').getAttribute('data-motion'),'playing');
  for(const [path,intent] of [['/music','music'],['/creators','creator'],['/partners','sponsorship'],['/media','media']]){
   let payload;await p.route('**/api/iconic-leads',async r=>{payload=r.request().postDataJSON();await r.fulfill({status:201,contentType:'application/json',body:'{"ok":true}'});});await p.route('**/api/event-track',r=>r.fulfill({status:201,contentType:'application/json',body:'{"ok":true}'}));
@@ -44,4 +55,4 @@ try{
  }
  report.formUI='pass; mocked network only';await p.close();
 }catch(e){report.failures.push(e.message);}finally{await browser.close();await fs.writeFile('qa-evidence/report.json',JSON.stringify(report,null,2));}
-console.log(JSON.stringify({pages:report.pages.length,failures:report.failures,formUI:report.formUI},null,2));if(report.failures.length)process.exit(1);
+console.log(JSON.stringify({pages:report.pages.length,completionPages:report.completionPages.length,failures:report.failures,formUI:report.formUI},null,2));if(report.failures.length)process.exit(1);

@@ -1,0 +1,31 @@
+name: ICONIC all-page completion baseline
+on:
+  push:
+    branches: [iconic-page-by-page-completion-20260915]
+    paths: ['.github/workflows/iconic-completion-baseline.yml']
+permissions:
+  contents: read
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Record source and inspect all public pages
+        run: |
+          mkdir -p iconic-baseline
+          git archive HEAD > iconic-baseline/source.tar
+          npm install --prefix /tmp/iconic-browser --no-audit --no-fund playwright@1.55.1 @axe-core/playwright@4.10.2
+          NODE_PATH=/tmp/iconic-browser/node_modules AUDIT_BASE=https://iconic-website-ten.vercel.app AUDIT_OUT=iconic-baseline AUDIT_MEDIA=true node scripts/completion-browser-audit.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: iconic-all-page-baseline-${{ github.run_id }}
+          path: iconic-baseline/
+          retention-days: 14
+          if-no-files-found: error

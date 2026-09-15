@@ -12,7 +12,14 @@ export const C={
   gold2:"#ffd97a",
   red:"#b98428"
 };
-export const drive=(id:string)=>`/api/media/drive/${id}`;
+const stableDriveMirrors:Record<string,string>={
+  "1EYSPTnhLTDDuVjQAK4PjojbHogWrjDcw":"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-corporate-logo-stable.png?v=1789461654",
+  "1Ub439rjM3-SwK67udFKh6f2q5SwDF_U1":"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-nightmare-channelside-official-flyer.png?v=1789461672",
+  "1GK8TTIz-1b6QYZ1_RNrIfgfw2PcIffH5":"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-nightmare-channelside-merch.png?v=1789461683",
+  "12l451pQV2i-ou9RgE1nS21JlFAylyGeY":"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-greek-ball-stable.webp?v=1789461693",
+  "1C9nszVwleMjAAe8mfavdvT2fb4HyoLd2":"https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-champagne-ball-stable.webp?v=1789461705",
+};
+export const drive=(id:string)=>stableDriveMirrors[id]||`/api/media/drive/${id}`;
 export const ICONIC_LOGO=drive("1EYSPTnhLTDDuVjQAK4PjojbHogWrjDcw");
 const navLink={color:"rgba(255,232,187,.72)",textDecoration:"none",fontFamily:"Arial,sans-serif",fontSize:9,fontWeight:900,letterSpacing:".14em",textTransform:"uppercase" as const};
 
@@ -20,11 +27,13 @@ export function Shell({children}:{children:ReactNode}){return <main className="i
   <nav className="iconic-nav" style={{position:"sticky",top:0,zIndex:50,minHeight:76,padding:"0 clamp(18px,4vw,56px)",display:"flex",alignItems:"center",justifyContent:"space-between",gap:20,background:"rgba(4,3,1,.91)",borderBottom:`1px solid ${C.faint}`,backdropFilter:"blur(28px) saturate(145%)"}}>
     <Link href="/" style={{color:C.white,textDecoration:"none",display:"flex",alignItems:"center"}}><img src={ICONIC_LOGO} alt="ICONIC" style={{width:"min(210px,28vw)",maxHeight:52,objectFit:"contain",objectPosition:"left center",filter:"drop-shadow(0 8px 24px rgba(226,171,61,.18))"}}/></Link>
     <div className="iconic-nav-links" style={{display:"flex",gap:"clamp(9px,1.7vw,22px)",alignItems:"center",flexWrap:"wrap",justifyContent:"flex-end"}}>
-      <Link href="/tampa-halloween" style={navLink}>Tampa Halloween</Link>
-      <Link href="/summer-walker" style={navLink}>Summer Walker</Link>
-      <Link href="/dj-snake-pardon-my-french" style={navLink}>DJ Snake</Link>
+      <Link href="/events" style={navLink}>Events</Link>
+      <Link href="/experiences" style={navLink}>Experiences</Link>
+      <Link href="/music" style={navLink}>Music</Link>
+      <Link href="/creators" style={navLink}>Creators</Link>
       <Link href="/merch" style={navLink}>Merch</Link>
-      <Link href="/access?intent=presale" style={{...navLink,color:C.gold2}}>Access</Link>
+      <Link href="/partners" style={navLink}>Partners</Link>
+      <Link href="/access?intent=presale" style={{...navLink,color:C.gold2}}>Get Access</Link>
     </div>
   </nav>
   {children}

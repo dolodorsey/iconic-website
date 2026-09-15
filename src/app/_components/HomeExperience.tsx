@@ -8,8 +8,8 @@ const PLATFORM="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-pl
 // APPROVED PROPERTY VISUALS — use the same official imagery as each property's destination page.
 // Do not substitute stock, generic, recycled, or cross-property imagery on ICONIC cards.
 const TAMPA_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/noc-site-scene-01.png?v=1788994167";
-const SUMMER_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summer-walker-soul-symphony.jpg?v=1789170574";
-const PMF_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-dj-snake-pardon-my-french.jpg?v=1789170586";
+const SUMMER_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-soul-symphony-verified-2026-09-15.webp?v=1789461635";
+const PMF_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-pardon-my-french-verified-2026-09-15.webp?v=1789461645";
 
 const divisions=[
   ["LIVE","Concerts, tours and arena-scale moments.","/events"],
@@ -27,7 +27,6 @@ export default function HomeExperience(_: {tampa:string;archive:string;merchTile
       <img src={PLATFORM} alt="ICONIC live entertainment platform"/>
       <div className="ir-home-hero-shade"/>
     </section>
-
     {/* All homepage headline/copy/CTAs live BELOW the animation canvas, never on top of it. */}
     <section className="ir-home-section" style={{paddingTop:"56px",paddingBottom:"64px"}}>
       <div className="ir-section-heading" style={{maxWidth:"980px"}}>
@@ -37,7 +36,6 @@ export default function HomeExperience(_: {tampa:string;archive:string;merchTile
         <div style={{display:"flex",gap:"12px",flexWrap:"wrap"}}><Link href="/events" className="ir-primary">Explore Events</Link><Link href="/partners" className="ir-secondary">Partner With ICONIC</Link></div>
       </div>
     </section>
-
     <section className="ir-home-section ir-slate">
       <div className="ir-section-heading"><span>Current Slate</span><h2>Three flagship worlds. Three different identities.</h2></div>
       <div className="ir-slate-grid">
@@ -46,35 +44,13 @@ export default function HomeExperience(_: {tampa:string;archive:string;merchTile
         <Link href="/dj-snake-pardon-my-french" aria-label="Enter DJ Snake Pardon My French" className="ir-slate-card ir-slate-graphic pmf" style={{backgroundImage:`linear-gradient(180deg,rgba(0,0,0,.02) 38%,rgba(0,0,0,.78) 100%),url("${PMF_VISUAL}")`,backgroundSize:"cover",backgroundPosition:"center 18%"}}><div className="ir-slate-copy"><small>ICONIC LIVE · STADIUM</small><span>Pardon My French · 5-city platform →</span></div></Link>
       </div>
     </section>
-
     <section className="ir-division-strip">{divisions.map(([title,,href])=><Link href={href} key={title}>{title}<span>↗</span></Link>)}</section>
-
     <section className="ir-feature ir-feature-editorial">
-      <div className="ir-feature-copy">
-        <span>Featured World</span>
-        <img src={SUMMER_WALKER_SOUL_SYMPHONY_LOGO} alt="Summer Walker Soul Symphony Tour"/>
-        <p>Modern R&B meets orchestral scale. Soul Symphony has its own visual language, hospitality system and market architecture.</p>
-        <Link href="/summer-walker">Enter Soul Symphony →</Link>
-      </div>
-      <div className="ir-feature-number">10</div>
-      <div className="ir-feature-caption">CITIES · ONE SOULFUL EXPERIENCE</div>
+      <div className="ir-feature-copy"><span>Featured World</span><img src={SUMMER_WALKER_SOUL_SYMPHONY_LOGO} alt="Summer Walker Soul Symphony Tour"/><p>Modern R&B meets orchestral scale. Soul Symphony has its own visual language, hospitality system and market architecture.</p><Link href="/summer-walker">Enter Soul Symphony →</Link></div>
+      <div className="ir-feature-number">10</div><div className="ir-feature-caption">CITIES · ONE SOULFUL EXPERIENCE</div>
     </section>
-
-    <section className="ir-home-section ir-ecosystem">
-      <div className="ir-section-heading"><span>The Platform</span><h2>ICONIC is bigger than the stage.</h2></div>
-      <div className="ir-ecosystem-list">{divisions.map(([title,body,href],index)=><Link href={href} key={title}><span>0{index+1}</span><strong>{title}</strong><p>{body}</p><em>↗</em></Link>)}</div>
-    </section>
-
+    <section className="ir-home-section ir-ecosystem"><div className="ir-section-heading"><span>The Platform</span><h2>ICONIC is bigger than the stage.</h2></div><div className="ir-ecosystem-list">{divisions.map(([title,body,href],index)=><Link href={href} key={title}><span>0{index+1}</span><strong>{title}</strong><p>{body}</p><em>↗</em></Link>)}</div></section>
     <section className="ir-partner-band"><div><span>Partnerships</span><h2>PUT YOUR BRAND INSIDE CULTURE.</h2><p>Activation, hospitality, content, merchandise, city takeovers and fan access should feel native to the experience — not pasted onto it.</p><Link href="/partners">Explore Partnerships →</Link></div></section>
-
-    <section className="ir-home-section ir-archive">
-      <div className="ir-section-heading"><span>Explore ICONIC</span><h2>Move through the platform without visual clutter.</h2></div>
-      <div className="ir-archive-text-grid">
-        <Link href="/media" className="ir-archive-text-card"><span>01</span><strong>MEDIA + ARCHIVE</strong><p>Campaigns, aftermovies, photography and cultural proof.</p><em>↗</em></Link>
-        <Link href="/creators" className="ir-archive-text-card"><span>02</span><strong>CREATORS</strong><p>Talent development, booking, packaging and opportunity.</p><em>↗</em></Link>
-        <Link href="/merch" className="ir-archive-text-card"><span>03</span><strong>MERCH</strong><p>Live event commerce and official product worlds.</p><em>↗</em></Link>
-        <Link href="/book" className="ir-archive-text-card"><span>04</span><strong>BOOK ICONIC</strong><p>Private, corporate, brand and venue programming.</p><em>↗</em></Link>
-      </div>
-    </section>
+    <section className="ir-home-section ir-archive"><div className="ir-section-heading"><span>Explore ICONIC</span><h2>Move through the platform without visual clutter.</h2></div><div className="ir-archive-text-grid"><Link href="/media" className="ir-archive-text-card"><span>01</span><strong>MEDIA + ARCHIVE</strong><p>Campaigns, aftermovies, photography and cultural proof.</p><em>↗</em></Link><Link href="/creators" className="ir-archive-text-card"><span>02</span><strong>CREATORS</strong><p>Talent development, booking, packaging and opportunity.</p><em>↗</em></Link><Link href="/merch" className="ir-archive-text-card"><span>03</span><strong>MERCH</strong><p>Live event commerce and official product worlds.</p><em>↗</em></Link><Link href="/book" className="ir-archive-text-card"><span>04</span><strong>BOOK ICONIC</strong><p>Private, corporate, brand and venue programming.</p><em>↗</em></Link></div></section>
   </div>;
 }

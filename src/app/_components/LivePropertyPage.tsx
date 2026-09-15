@@ -13,7 +13,7 @@ type Props = {
   stats:Stat[]; pillars:Pillar[]; brandMarks?:BrandMark[]; brandMarksAsTitle?:boolean; lineup?:LineupItem[];
   lineupEyebrow?:string; gallery?:GalleryItem[]; stops?:Stop[]; stopsEyebrow?:string; stopsTitle?:string;
   primaryLabel?:string; primaryHref?:string; secondaryLabel?:string; secondaryHref?:string; merchLabel?:string; merchHref?:string;
-  footerEyebrow?:string; footerTitle?:string;
+  footerEyebrow?:string; footerTitle?:string; heroLayout?:"background"|"poster"; experienceTitle?:string; galleryTitle?:string;
 };
 
 function themeFor(title:string){
@@ -27,15 +27,16 @@ function themeFor(title:string){
 export default function LivePropertyPage({
   eyebrow,title,sub,visual,visualPosition="center center",status,stats,pillars,brandMarks,lineup,lineupEyebrow="Lineup",gallery,stops,stopsEyebrow="Tour Architecture",stopsTitle="The route becomes part of the campaign.",
   primaryLabel="Get Access",primaryHref="/access?intent=presale",secondaryLabel="Partnerships",secondaryHref="/access?intent=sponsorship",merchLabel="Merch",merchHref="/merch",footerEyebrow="ICONIC LIVE",footerTitle="BE THERE BEFORE EVERYONE ELSE.",
+  heroLayout="background",experienceTitle="What the night is built to feel like.",galleryTitle="See the world behind the experience.",
 }:Props){
   const theme=themeFor(title);
-  return <PlatformShell><article className={`ir-property ir-theme-${theme}`}>
-    <section className="ir-property-hero">
-      <img src={visual} alt={title} style={{objectPosition:visualPosition}}/>
+  return <PlatformShell><main id="iconic-content" className={`ir-property ir-theme-${theme}`}>
+    <section className={`ir-property-hero ${heroLayout==="poster"?"ir-property-hero-poster":""}`}>
+      <img src={visual} alt={`${title} campaign artwork`} style={{objectPosition:visualPosition}}/>
       <div className="ir-property-hero-shade"/>
       <div className="ir-property-hero-copy">
         <span>{eyebrow}</span>
-        {brandMarks?.length?<div className="ir-property-marks">{brandMarks.map(mark=><img key={mark.src} src={mark.src} alt={mark.alt}/>)}</div>:<h1>{title}</h1>}
+        {brandMarks?.length?<><h1 className="ir-visually-hidden">{title}</h1><div className="ir-property-marks" aria-hidden="true">{brandMarks.map(mark=><img key={mark.src} src={mark.src} alt="" style={mark.maxWidth?{maxWidth:mark.maxWidth}:undefined}/>)}</div></>:<h1>{title}</h1>}
         <p>{sub}</p>
         <div className="ir-property-actions"><Link href={primaryHref}>{primaryLabel}</Link><Link href={secondaryHref}>{secondaryLabel}</Link><Link href={merchHref}>{merchLabel}</Link></div>
       </div>
@@ -46,12 +47,12 @@ export default function LivePropertyPage({
 
     {lineup?.length?<section className="ir-property-section ir-lineup-section"><div className="ir-property-heading"><span>{lineupEyebrow}</span><h2>The people carrying the night.</h2></div><div className="ir-lineup-grid">{lineup.map(artist=>artist.href?<Link href={artist.href} key={artist.name}><img src={artist.src} alt={artist.name}/><span>{artist.name}</span></Link>:<div key={artist.name}><img src={artist.src} alt={artist.name}/><span>{artist.name}</span></div>)}</div></section>:null}
 
-    <section className="ir-property-section ir-experience-section"><div className="ir-property-heading"><span>The Experience</span><h2>One clear world. No filler.</h2></div><div className="ir-experience-list">{pillars.map((pillar,index)=><article key={pillar.title}><span>0{index+1}</span><div><small>{pillar.label}</small><h3>{pillar.title}</h3><p>{pillar.body}</p></div></article>)}</div></section>
+    <section className="ir-property-section ir-experience-section"><div className="ir-property-heading"><span>The Experience</span><h2>{experienceTitle}</h2></div><div className="ir-experience-list">{pillars.map((pillar,index)=><article key={pillar.title}><span>0{index+1}</span><div><small>{pillar.label}</small><h3>{pillar.title}</h3><p>{pillar.body}</p></div></article>)}</div></section>
 
-    {gallery?.length?<section className="ir-property-section ir-gallery-section"><div className="ir-property-heading"><span>Visual World</span><h2>The campaign has to feel alive.</h2></div><div className="ir-gallery-grid">{gallery.map((item,index)=><figure className={index===0?"wide":""} key={item.title}><img src={item.src} alt={item.title}/><figcaption>{item.title}</figcaption></figure>)}</div></section>:null}
+    {gallery?.length?<section className="ir-property-section ir-gallery-section"><div className="ir-property-heading"><span>Visual World</span><h2>{galleryTitle}</h2></div><div className="ir-gallery-grid">{gallery.map((item,index)=><figure className={index===0?"wide":""} key={item.title}><img src={item.src} alt={item.title}/><figcaption>{item.title}</figcaption></figure>)}</div></section>:null}
 
     {stops?.length?<section className="ir-property-section ir-stops-section"><div className="ir-property-heading"><span>{stopsEyebrow}</span><h2>{stopsTitle}</h2></div><div className="ir-stop-list">{stops.map((stop,index)=>{const inner=<><span>0{index+1}</span><div><strong>{stop.city}</strong><p>{stop.venue}{stop.meta?` · ${stop.meta}`:""}</p>{stop.note?<small>{stop.note}</small>:null}</div><em>↗</em></>;return stop.href?<Link href={stop.href} key={`${stop.city}-${stop.venue}`}>{inner}</Link>:<div key={`${stop.city}-${stop.venue}`}>{inner}</div>})}</div></section>:null}
 
     <section className="ir-property-close"><div className="ir-property-close-copy"><span>{footerEyebrow}</span><h2>{footerTitle}</h2><div><Link href={primaryHref}>{primaryLabel} →</Link><Link href={merchHref}>{merchLabel}</Link></div></div></section>
-  </article></PlatformShell>;
+  </main></PlatformShell>;
 }

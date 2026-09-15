@@ -1,0 +1,46 @@
+name: ICONIC completion candidate acceptance
+on:
+  push:
+    branches: [iconic-page-by-page-completion-20260915]
+    paths: ['src/**','scripts/iconic-completion-qa.cjs','.github/workflows/iconic-completion-candidate.yml','docs/ICONIC_COMPLETION_UPGRADE_DRAFT_2026-09-15.md']
+  pull_request:
+    paths: ['src/**','scripts/iconic-completion-qa.cjs','.github/workflows/iconic-completion-candidate.yml']
+permissions:
+  contents: read
+concurrency:
+  group: iconic-completion-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install and validate source
+        run: npm ci && npm run validate:ui && npx tsc --noEmit
+      - name: Build production candidate
+        run: npm run build
+      - name: Start compiled candidate
+        run: |
+          mkdir -p iconic-completion-evidence
+          nohup npm run start -- --port 3000 > iconic-completion-evidence/server.log 2>&1 &
+          for i in $(seq 1 60); do curl -fsS http://localhost:3000/ -o /dev/null && exit 0 || sleep 2; done
+          exit 1
+      - name: Install isolated browser engines
+        run: npm install --prefix /tmp/iconic-completion --no-audit --no-fund playwright@1.55.1 @axe-core/playwright@4.10.2
+      - name: Browser acceptance and screenshots
+        run: NODE_PATH=/tmp/iconic-completion/node_modules ICONIC_QA_BASE_URL=http://localhost:3000 ICONIC_QA_OUT=iconic-completion-evidence node scripts/iconic-completion-qa.cjs
+      - name: Preserve exact candidate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iconic-completion-${{ github.sha }}-${{ github.run_id }}
+          path: iconic-completion-evidence/
+          retention-days: 14
+          if-no-files-found: error

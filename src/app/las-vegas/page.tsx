@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Button, Calendar, Hero, InfoGrid, Section, Shell, drive } from "../_components/IconicPage";
+import { Button, Calendar, Hero, InfoGrid, Section, Shell } from "../_components/IconicPage";
 
 export const metadata: Metadata = {
   title: "ICONIC Las Vegas — 2027 Four-Event Program",
   description: "ICONIC Las Vegas 2027 planning holds: four live entertainment dates across major leisure and holiday windows.",
 };
-
+const LAS_VEGAS_VISUAL="https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-las-vegas-market-stable_c916988f-f901-4514-b77b-592d4934b8e8.webp?v=1789462703";
 const vegas=[
   {month:"FEB",date:"FEB 13 · HOLD",anchor:"VALENTINE'S + PRESIDENTS DAY WEEKEND"},
   {month:"MAY",date:"MAY 29 · HOLD",anchor:"MEMORIAL DAY WEEKEND"},
@@ -14,7 +14,7 @@ const vegas=[
 ];
 
 export default function LasVegasPage(){return <Shell>
-  <Hero visual={drive("1RnHCTmytNkYt2V2Fu938_a4bRwXt1E0q")} visualNote="MARKET CONCEPT VISUAL · VENUE + TALENT TBD" eyebrow="ICONIC · NATIONAL CIRCUIT · LAS VEGAS" title="LAS VEGAS. BUILT TO FEEL INEVITABLE." sub="Four 2027 planning holds positioned on high-intent leisure weekends. Each date remains a distinct ICONIC property with its own venue, talent, creative direction and conversion funnel.">
+  <Hero visual={LAS_VEGAS_VISUAL} visualNote="MARKET CONCEPT VISUAL · VENUE + TALENT TBD" eyebrow="ICONIC · NATIONAL CIRCUIT · LAS VEGAS" title="LAS VEGAS. BUILT TO FEEL INEVITABLE." sub="Four 2027 planning holds positioned on high-intent leisure weekends. Each date remains a distinct ICONIC property with its own venue, talent, creative direction and conversion funnel.">
     <Button href="#calendar">2027 Holds</Button><Button href="/" ghost>ICONIC Home</Button>
   </Hero>
   <Section eyebrow="Las Vegas Program" title="Four events. Built around the weekends Vegas already wins.">

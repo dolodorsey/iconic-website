@@ -21,8 +21,8 @@ export const ART = {
   media: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-platform-aftermovie-archive.png?v=1789179965',
   greekBall: 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-greek-ball-original-web.webp?v=1789370777',
 } as const;
-export const SUMMER_VISUAL = 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-summer-walker-soul-symphony.jpg?v=1789170574';
-export const PMF_VISUAL = 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-dj-snake-pardon-my-french.jpg?v=1789170586';
+export const SUMMER_VISUAL = 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-soul-symphony-verified-2026-09-15.webp?v=1789461635';
+export const PMF_VISUAL = 'https://cdn.shopify.com/s/files/1/0759/7506/5791/files/iconic-pardon-my-french-verified-2026-09-15.webp?v=1789461645';
 export const WORLDS = [
   { key: 'tampa-halloween', title: 'Nightmare on Channelside', eyebrow: 'Tampa / Halloween 2026', body: 'The music. The costumes. The whole night.', href: '/tampa-halloween', src: NOC_MEDIA.headliners, action: 'Explore Tampa', tone: 'red' },
   { key: 'summer-walker-soul-symphony', title: 'Soul Symphony', eyebrow: 'Summer Walker / Tour updates', body: 'Modern R&B. An orchestral point of view.', href: '/summer-walker', src: SUMMER_VISUAL, action: 'Explore the tour', tone: 'blush' },

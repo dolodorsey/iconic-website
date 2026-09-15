@@ -1,0 +1,63 @@
+name: ICONIC all-pages rendered evidence
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Optional public deployment URL; blank builds a local candidate
+        required: false
+        default: ''
+permissions:
+  contents: read
+concurrency:
+  group: iconic-all-pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  all-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install and build candidate
+        if: github.event_name != 'push' && inputs.base_url == ''
+        run: npm ci --no-fund && npm run validate:ui && npm run build
+      - name: Install isolated browser tools
+        run: |
+          npm install --prefix /tmp/iconic-all-pages --no-fund --no-audit playwright@1.63.0 @axe-core/playwright@4.10.2
+          /tmp/iconic-all-pages/node_modules/.bin/playwright install --with-deps chromium
+      - name: Prepare exact-source evidence and target
+        env:
+          INPUT_BASE: ${{ inputs.base_url }}
+        run: |
+          mkdir -p all-pages-evidence
+          git archive -o all-pages-evidence/source.tar HEAD
+          git rev-parse HEAD > all-pages-evidence/source-sha.txt
+          if [ "$GITHUB_EVENT_NAME" = push ]; then
+            echo 'ICONIC_FULL_BASE=https://iconic-website-ten.vercel.app' >> "$GITHUB_ENV"
+            echo "ICONIC_EXPECTED_SHA=$GITHUB_SHA" >> "$GITHUB_ENV"
+          elif [ -n "$INPUT_BASE" ]; then
+            echo "ICONIC_FULL_BASE=$INPUT_BASE" >> "$GITHUB_ENV"
+          else
+            nohup npm run start -- --port 3200 > all-pages-evidence/server.log 2>&1 &
+            echo 'ICONIC_FULL_BASE=http://127.0.0.1:3200' >> "$GITHUB_ENV"
+          fi
+      - name: Render every public route and inspect shared accessibility templates
+        run: NODE_PATH=/tmp/iconic-all-pages/node_modules node scripts/iconic-all-pages.cjs
+      - name: Verify real visitor journeys without purchases or outbound messages
+        run: NODE_PATH=/tmp/iconic-all-pages/node_modules node scripts/iconic-journey-qa.cjs
+      - name: Preserve all screenshots, source, and measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iconic-all-pages-${{ github.sha }}-${{ github.run_id }}
+          path: all-pages-evidence/
+          if-no-files-found: error
+          retention-days: 14

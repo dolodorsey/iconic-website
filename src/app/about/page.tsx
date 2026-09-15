@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PlatformShell from "@/app/_components/PlatformShell";
+import { ART } from "@/app/_cinematic/assets";
 
 export const metadata:Metadata={title:"About ICONIC",description:"ICONIC is a live-entertainment and experiential platform producing headline concerts, tours, premium hospitality, merchandise, sponsorships and cultural moments."};
 const platform=[
@@ -13,7 +14,7 @@ const platform=[
 ] as const;
 
 export default function AboutPage(){return <PlatformShell><main className="cp-page">
-  <section className="cp-graphic-hero" style={{background:"linear-gradient(145deg,#0a0a0a,#111 58%,#15150d)"}}><div><div className="cp-kicker">ABOUT ICONIC</div><h1>MAKE THE MOMENT LAST LONGER THAN THE NIGHT.</h1><p>ICONIC operates at the intersection of culture, live entertainment, experience design and strategic partnerships. The goal is not simply attendance; it is memory, repeatability and scale.</p><div className="cp-actions"><Link href="/partners" className="cp-btn primary">Build With ICONIC</Link><Link href="/events" className="cp-btn">Current Events</Link></div></div></section>
+  <section className="cp-graphic-hero" style={{background:`linear-gradient(90deg,rgba(8,8,8,.94),rgba(8,8,8,.46)),url(${ART.world}) center/cover no-repeat`}}><div><div className="cp-kicker">ABOUT ICONIC</div><h1>MAKE THE MOMENT LAST LONGER THAN THE NIGHT.</h1><p>ICONIC operates at the intersection of culture, live entertainment, experience design and strategic partnerships. The goal is not simply attendance; it is memory, repeatability and scale.</p><div className="cp-actions"><Link href="/partners" className="cp-btn primary">Build With ICONIC</Link><Link href="/events" className="cp-btn">Current Events</Link></div></div></section>
   <section className="cp-section"><div className="cp-section-head"><div className="cp-kicker">The Platform</div><div><h2>Not a promoter tag. An operating system for culture.</h2></div></div><div className="cp-grid">{platform.map(([title,body],i)=><article className="cp-tile" key={title}><span>{String(i+1).padStart(2,"0")}</span><strong>{title}</strong><p>{body}</p></article>)}</div></section>
   <section className="cp-section alt"><div className="cp-section-head"><div className="cp-kicker">The Standard</div><div><h2>Premium presentation. Cultural relevance. Operational clarity.</h2></div></div><div className="cp-list">{[
     ["MEMORABLE BY DESIGN","Every experience should create moments worth photographing, retelling and comparing."],
