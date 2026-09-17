@@ -21,7 +21,7 @@ export default function manifest():MetadataRoute.Manifest{
     ],
     shortcuts:[
       {name:"Upcoming Events",short_name:"Events",url:"/events?source=pwa-shortcut"},
-      {name:"ICONIC Live",short_name:"Live",url:"/live?source=pwa-shortcut"}
+      {name:"Access ICONIC",short_name:"Access",url:"/access?source=pwa-shortcut"}
     ]
   };
 }
