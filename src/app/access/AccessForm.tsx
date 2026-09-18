@@ -19,6 +19,11 @@ export default function AccessForm({intent,event}:{intent:string;event?:string})
     setStatus("sending");
     setError("");
     const form=new FormData(formElement);
+    const params=new URLSearchParams(window.location.search);
+    let sessionId=sessionStorage.getItem("noc_session_id");
+    if(!sessionId){sessionId=crypto.randomUUID();sessionStorage.setItem("noc_session_id",sessionId);}
+    const promoCode=(params.get("code")||localStorage.getItem("noc_promo_code")||"").toUpperCase().replace(/[^A-Z0-9-]/g,"").slice(0,40);
+    if(promoCode) localStorage.setItem("noc_promo_code",promoCode);
     const payload={
       intent,event_slug:event||null,
       full_name:String(form.get("full_name")||"").trim(),
@@ -31,12 +36,16 @@ export default function AccessForm({intent,event}:{intent:string;event?:string})
       page_path:window.location.pathname+window.location.search,
       utm_source:new URLSearchParams(window.location.search).get("utm_source"),
       utm_medium:new URLSearchParams(window.location.search).get("utm_medium"),
-      utm_campaign:new URLSearchParams(window.location.search).get("utm_campaign"),
+      utm_campaign:params.get("utm_campaign"),
+      utm_content:params.get("utm_content"),
+      promo_code:promoCode||null,
+      session_id:sessionId,
+      consent_source:"website_access_form",
     };
     try{
       const res=await fetch("/api/iconic-leads",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
       if(!res.ok){const body=await res.json().catch(()=>({}));throw new Error(body.error||"Request failed");}
-      fetch("/api/event-track",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({eventKey:event||"iconic-access",action:"lead_submit",label:intent,path:window.location.pathname+window.location.search}),keepalive:true}).catch(()=>{});
+      fetch("/api/event-track",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({eventKey:event==="tampa-halloween"?"nightmare_on_channelside_2026":event||"iconic-access",action:"lead_submit",label:intent,path:window.location.pathname+window.location.search,promoCode:promoCode||null,sessionId,utmSource:params.get("utm_source"),utmMedium:params.get("utm_medium"),utmCampaign:params.get("utm_campaign"),utmContent:params.get("utm_content"),city:String(form.get("city")||"")}),keepalive:true}).catch(()=>{});
       formElement.reset();
       setStatus("success");
     }catch(err){setStatus("error");setError(err instanceof Error?err.message:"Unable to submit right now.");}

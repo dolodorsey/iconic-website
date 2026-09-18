@@ -20,10 +20,18 @@ export async function POST(req:NextRequest){
       label:clean(body?.label,160)||null,
       path:clean(body?.path,500)||null,
       source:"iconic-atl.com",
+      promo_code:clean(body?.promoCode,40).toUpperCase()||null,
+      utm_source:clean(body?.utmSource,80)||null,
+      utm_medium:clean(body?.utmMedium,80)||null,
+      utm_campaign:clean(body?.utmCampaign,120)||null,
+      utm_content:clean(body?.utmContent,120)||null,
+      city:clean(body?.city,80)||null,
+      ticket_type:clean(body?.ticketType,80)||null,
+      session_id:clean(body?.sessionId,64)||null,
     };
     if(!record.event_key||!record.action) return NextResponse.json({ok:false},{status:400,headers:{"cache-control":"no-store"}});
 
-    // Deliberately excludes names, emails, phone numbers, form notes, cookies and raw IP addresses.
+    // Privacy-minimized event telemetry only: no names, emails, phones, cookies or raw IP addresses.
     const result=await fetch(`${SUPABASE_URL}/rest/v1/iconic_live_events`,{
       method:"POST",
       headers:{apikey:SUPABASE_PUBLISHABLE_KEY,"Content-Type":"application/json",Prefer:"return=minimal"},
