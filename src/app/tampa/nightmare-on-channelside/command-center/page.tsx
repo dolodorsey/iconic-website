@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title:"Nightmare Marketing Command Center | ICONIC LIVE",
@@ -15,6 +16,7 @@ const kpis=[
 ];
 
 export default function CommandCenter(){
+  if(process.env.VERCEL_ENV==="production") notFound();
   return <main style={{minHeight:"100vh",background:"#070707",color:"#f7f3ed",fontFamily:"Arial,sans-serif",padding:"48px clamp(18px,4vw,58px) 90px"}}>
     <div style={{maxWidth:1500,margin:"0 auto"}}>
       <div style={{display:"flex",justifyContent:"space-between",gap:20,alignItems:"end",flexWrap:"wrap",paddingBottom:24,borderBottom:"1px solid rgba(255,255,255,.13)"}}>
