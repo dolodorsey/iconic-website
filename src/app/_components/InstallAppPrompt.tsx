@@ -3,6 +3,19 @@
 import { useEffect, useState } from "react";
 
 interface InstallPromptEvent extends Event { prompt: () => Promise<{ outcome: "accepted" | "dismissed" }> }
+
+function forceInstall(){try{return new URLSearchParams(location.search).get('install')==='1'}catch{return false}}
+function InstallQr(){
+  const [qr,setQr]=useState('');
+  useEffect(()=>{if(typeof window==='undefined'||window.innerWidth<760)return;try{const u=new URL(location.href);u.hash='';u.search='';u.searchParams.set('install','1');setQr('https://wfkohcwxxsrhcxhepfql.supabase.co/functions/v1/app-install-qr?url='+encodeURIComponent(u.toString()))}catch{}},[]);
+  if(!qr)return null;
+  return <aside aria-label="Scan to install app" style={{position:'fixed',right:22,bottom:22,zIndex:2147483002,width:188,padding:12,borderRadius:20,background:'rgba(7,8,11,.97)',border:'1px solid rgba(255,255,255,.16)',boxShadow:'0 24px 70px rgba(0,0,0,.48)',color:'#fff',fontFamily:'Arial,sans-serif'}}>
+    <img src={qr} alt="QR code to install this app" width="164" height="164" style={{display:'block',width:'100%',height:'auto',borderRadius:12,background:'#fff',padding:6}}/>
+    <strong style={{display:'block',marginTop:10,fontSize:10,letterSpacing:'.14em'}}>SCAN TO GET THE APP</strong>
+    <small style={{display:'block',marginTop:5,color:'rgba(255,255,255,.62)',fontSize:9,lineHeight:1.45}}>iPhone: Share → Add to Home Screen → Open as Web App → Add. Android: tap Install App.</small>
+  </aside>
+}
+
 const CAPTURE_URL="https://wfkohcwxxsrhcxhepfql.supabase.co/functions/v1/marketing-event-capture";
 const BRAND_KEY="iconic-live-entertainment";
 const DISMISS_MS=7*24*60*60*1000;
@@ -27,6 +40,7 @@ export default function InstallAppPrompt(){
     if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>undefined);
     const dismissed=Number(storageGet("iconic:pwa-dismissed")||0);
     const canShow=!dismissed||Date.now()-dismissed>DISMISS_MS;
+    if(forceInstall())window.setTimeout(()=>setVisible(true),120);
     const before=(event:Event)=>{event.preventDefault();setPrompt(event as InstallPromptEvent);if(canShow)setTimeout(()=>setVisible(true),1600)};
     const added=()=>{setInstalled(true);setVisible(false);void track("app_install",{platform:ios?"ios":"web",variant:"iconic_pwa"})};
     addEventListener("beforeinstallprompt",before);addEventListener("appinstalled",added);
@@ -39,6 +53,7 @@ export default function InstallAppPrompt(){
   const install=async()=>{void track("app_install_click",{platform:apple?"ios":"web",variant:prompt?"native_prompt":"instructions"});if(prompt){const result=await prompt.prompt();setPrompt(null);if(result.outcome==="accepted")setVisible(false);return}setSteps(true)};
 
   return <div className="iconic-install-backdrop" role="dialog" aria-modal="true" aria-label="Install ICONIC">
+    <InstallQr/>
     <section className="iconic-install-card">
       <button className="iconic-install-close" onClick={close} aria-label="Close">×</button>
       <div className="iconic-stage" aria-hidden="true"><div className="beam b1"/><div className="beam b2"/><div className="phone"><div className="island"/><div className="icon">I</div><div className="screenText">ICONIC</div></div><div className="halo"/></div>
