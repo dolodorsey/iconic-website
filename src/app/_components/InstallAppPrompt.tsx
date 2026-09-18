@@ -11,7 +11,7 @@ function InstallQr(){
   if(!qr)return null;
   return <aside aria-label="Scan to install app" style={{position:'fixed',right:22,bottom:22,zIndex:2147483002,width:188,padding:12,borderRadius:20,background:'rgba(7,8,11,.97)',border:'1px solid rgba(255,255,255,.16)',boxShadow:'0 24px 70px rgba(0,0,0,.48)',color:'#fff',fontFamily:'Arial,sans-serif'}}>
     <img src={qr} alt="QR code to install this app" width="164" height="164" style={{display:'block',width:'100%',height:'auto',borderRadius:12,background:'#fff',padding:6}}/>
-    <strong style={{display:'block',marginTop:10,fontSize:10,letterSpacing:'.14em'}}>SCAN TO GET THE APP</strong>
+    <strong style={{display:'block',marginTop:10,fontSize:10,letterSpacing:'.14em'}}>SCAN TO GET ICONIC</strong>
     <small style={{display:'block',marginTop:5,color:'rgba(255,255,255,.62)',fontSize:9,lineHeight:1.45}}>iPhone: Share → Add to Home Screen → Open as Web App → Add. Android: tap Install App.</small>
   </aside>
 }
@@ -39,7 +39,7 @@ export default function InstallAppPrompt(){
     const ios=isIOS();setApple(ios);
     if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>undefined);
     const dismissed=Number(storageGet("iconic:pwa-dismissed")||0);
-    const canShow=!dismissed||Date.now()-dismissed>DISMISS_MS;
+    const canShow=forceInstall()||!dismissed||Date.now()-dismissed>DISMISS_MS;
     if(forceInstall())window.setTimeout(()=>setVisible(true),120);
     const before=(event:Event)=>{event.preventDefault();setPrompt(event as InstallPromptEvent);if(canShow)setTimeout(()=>setVisible(true),1600)};
     const added=()=>{setInstalled(true);setVisible(false);void track("app_install",{platform:ios?"ios":"web",variant:"iconic_pwa"})};
@@ -48,7 +48,8 @@ export default function InstallAppPrompt(){
     return()=>{removeEventListener("beforeinstallprompt",before);removeEventListener("appinstalled",added);if(timer)clearTimeout(timer)};
   },[]);
 
-  if(installed||!visible)return null;
+  if(installed)return null;
+  if(!visible)return <button aria-label="Get ICONIC app" onClick={()=>{setSteps(false);setVisible(true);void track("cta_click",{cta:"iconic_persistent_get_app"})}} style={{position:"fixed",right:16,bottom:18,zIndex:2147482500,border:"1px solid #e0ad4566",borderRadius:999,padding:"13px 17px",background:"linear-gradient(100deg,#ffd97a,#dba63d)",color:"#090602",font:"900 11px/1 Arial",letterSpacing:".08em",boxShadow:"0 16px 44px rgba(0,0,0,.38)",cursor:"pointer"}}>GET ICONIC ↗</button>;
   const close=()=>{storageSet("iconic:pwa-dismissed",String(Date.now()));setVisible(false);void track("cta_click",{cta:"pwa_prompt_dismiss",variant:apple?"ios":"web"})};
   const install=async()=>{void track("app_install_click",{platform:apple?"ios":"web",variant:prompt?"native_prompt":"instructions"});if(prompt){const result=await prompt.prompt();setPrompt(null);if(result.outcome==="accepted")setVisible(false);return}setSteps(true)};
 
