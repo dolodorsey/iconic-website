@@ -40,6 +40,10 @@ export async function POST(req:NextRequest){
       utm_source:clean(body.utm_source,160),
       utm_medium:clean(body.utm_medium,160),
       utm_campaign:clean(body.utm_campaign,160),
+      utm_content:clean(body.utm_content,120),
+      promo_code:clean(body.promo_code,40)?.toUpperCase()||null,
+      session_id:clean(body.session_id,64),
+      consent_source:clean(body.consent_source,160),
     };
 
     const result=await fetch(`${SUPABASE_URL}/rest/v1/iconic_live_leads`,{
