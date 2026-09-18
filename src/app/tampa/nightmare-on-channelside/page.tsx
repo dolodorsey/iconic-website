@@ -59,9 +59,9 @@ export default function NightmarePage(){return <Shell>
       eventKey="nightmare_on_channelside_2026"
       eventName="Nightmare on Channelside"
       accent="#ff3b30"
-      supportLine="Ticket inventory is handled by Ticketmaster. VIP, sponsorship and partner requests are routed separately so each conversation stays clean."
+      supportLine="Ticket inventory is fulfilled by Ticketmaster after the ICONIC Ticket Face captures approved campaign and promoter attribution. VIP, sponsorship and partner requests remain separate so each revenue lane stays clean."
       actions={[
-        {key:"tickets",eyebrow:"Tickets",title:"Get Inside The Nightmare.",body:"Open the official Ticketmaster event page for current ticket inventory and seating.",href:TICKETMASTER,cta:"Buy on Ticketmaster"},
+        {key:"tickets",eyebrow:"Tickets",title:"Get Inside The Nightmare.",body:"Start on the ICONIC Ticket Face, apply an approved promo or tracking code, then continue to official Ticketmaster inventory and seating.",href:"/tampa/nightmare-on-channelside/tickets",cta:"Open Ticket Face"},
         {key:"vip",eyebrow:"VIP + Hospitality",title:"Make Halloween Premium.",body:"Request premium seating, group hospitality, hosted experiences and high-touch arrival options.",email:"kingdmmanagement@gmail.com",subject:"Nightmare on Channelside — VIP + Hospitality"},
         {key:"sponsors",eyebrow:"Corporate Partnerships",title:"Own Part Of The Experience.",body:"Request sponsorship, hospitality, content, beverage, activation and brand integration inventory.",email:"kingdmmanagement@gmail.com",subject:"Nightmare on Channelside — Corporate Partnership"},
         {key:"merch",eyebrow:"Official Merch",title:"Wear The Nightmare.",body:"Enter the dedicated concert merch universe with separate artist, Tampa and Halloween collections.",href:"/tampa/nightmare-on-channelside/merch",cta:"Enter Merch"},
