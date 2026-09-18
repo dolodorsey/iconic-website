@@ -21,9 +21,25 @@ type Props = {
   actions: EventAction[];
 };
 
+function attributionContext(){
+  const params=new URLSearchParams(window.location.search);
+  let sessionId=sessionStorage.getItem("noc_session_id");
+  if(!sessionId){sessionId=crypto.randomUUID();sessionStorage.setItem("noc_session_id",sessionId);}
+  const promoCode=(params.get("code")||localStorage.getItem("noc_promo_code")||"").toUpperCase().replace(/[^A-Z0-9-]/g,"").slice(0,40);
+  if(promoCode) localStorage.setItem("noc_promo_code",promoCode);
+  return {
+    promoCode:promoCode||null,
+    sessionId,
+    utmSource:params.get("utm_source"),
+    utmMedium:params.get("utm_medium"),
+    utmCampaign:params.get("utm_campaign"),
+    utmContent:params.get("utm_content"),
+  };
+}
+
 async function track(eventKey:string, action:string, label?:string){
   try{
-    const payload = JSON.stringify({eventKey, action, label, path:window.location.pathname});
+    const payload = JSON.stringify({eventKey, action, label, path:window.location.pathname+window.location.search,...attributionContext()});
     if(navigator.sendBeacon){
       navigator.sendBeacon("/api/event-track", new Blob([payload], {type:"application/json"}));
       return;
