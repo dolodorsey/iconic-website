@@ -5,7 +5,7 @@ const path = require("path");
 const ORIGIN = process.env.PREVIEW_ORIGIN;
 const TOKEN = process.env.VERCEL_SHARE_TOKEN;
 const SHA = process.env.GITHUB_SHA || "unknown";
-if (!ORIGIN || !TOKEN) throw new Error("Missing preview origin/share token");
+if (!ORIGIN) throw new Error("Missing screenshot target origin");
 
 const outDir = path.join(process.cwd(), "visual-evidence");
 fs.mkdirSync(outDir, { recursive: true });
@@ -30,7 +30,7 @@ const failures = [];
 
 function urlFor(route){
   const u = new URL(route, ORIGIN);
-  u.searchParams.set("_vercel_share", TOKEN);
+  if (TOKEN) u.searchParams.set("_vercel_share", TOKEN);
   return u.toString();
 }
 function check(name, pass, details={}){
@@ -94,7 +94,7 @@ function check(name, pass, details={}){
 
     const installUrl = new URL("/", ORIGIN);
     installUrl.searchParams.set("install","1");
-    installUrl.searchParams.set("_vercel_share",TOKEN);
+    if (TOKEN) installUrl.searchParams.set("_vercel_share",TOKEN);
     await page.goto(installUrl.toString(), {waitUntil:"networkidle", timeout:120000});
     await page.waitForTimeout(350);
     const dialog = page.locator('[role="dialog"][aria-label="Install ICONIC"]');
