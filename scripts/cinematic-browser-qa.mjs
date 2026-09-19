@@ -49,10 +49,29 @@ try{
   await page.close();
  }
  const p=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});await p.goto(BASE,{waitUntil:'networkidle'});await p.getByTestId('motion-toggle').click();assert.equal(await p.getByTestId('home-canvas').getAttribute('data-motion'),'paused');await p.getByTestId('motion-toggle').click();assert.equal(await p.getByTestId('home-canvas').getAttribute('data-motion'),'playing');
- for(const [path,intent] of [['/music','music'],['/creators','creator'],['/partners','sponsorship'],['/media','media']]){
+ for(const [path,intent] of [['/music','music'],['/creators','creator'],['/media','media']]){
   let payload;await p.route('**/api/iconic-leads',async r=>{payload=r.request().postDataJSON();await r.fulfill({status:201,contentType:'application/json',body:'{"ok":true}'});});await p.route('**/api/event-track',r=>r.fulfill({status:201,contentType:'application/json',body:'{"ok":true}'}));
   await p.goto(BASE+path,{waitUntil:'networkidle'});const form=p.locator('form').last();await form.locator('[name="full_name"]').fill('ICONIC QA');await form.locator('[name="email"]').fill('iconic-ui-qa@example.com');await form.locator('button[type="submit"]').click();await p.getByText('Request received',{exact:true}).waitFor({timeout:10000});assert.equal(payload.intent,intent);assert.equal(await form.locator('[role="alert"]').count(),0,'A successful response must not become a form error');await p.unroute('**/api/iconic-leads');await p.unroute('**/api/event-track');
  }
- report.formUI='pass; mocked network only';await p.close();
+ const personnelForms=[
+  ['/partners/apply/promoter-commission','promoter_commission'],
+  ['/partners/apply/promoter-comp','promoter_comp'],
+  ['/partners/apply/ambassador-model','ambassador_model'],
+  ['/partners/apply/podcast','podcast_partner'],
+  ['/partners/apply/dj-promo','dj_promo'],
+  ['/partners/apply/host-promo','host_promo'],
+  ['/partners/apply/dj-performance','dj_performance'],
+  ['/partners/apply/host-performance','host_performance'],
+  ['/partners/apply/street-team','street_team']
+ ];
+ for(const [path,expectedRole] of personnelForms){
+  let payload;await p.route('**/api/noc-partner-apply',async r=>{payload=r.request().postDataJSON();await r.fulfill({status:201,contentType:'application/json',body:JSON.stringify({ok:true,pipeline:'qa'})});});
+  await p.goto(BASE+path,{waitUntil:'networkidle'});const form=p.locator('form').last();await form.locator('[name="full_name"]').fill('ICONIC QA');await form.locator('[name="email"]').fill('iconic-personnel-qa@example.com');await form.locator('[name="phone"]').fill('5555550199');const city=form.locator('[name="city"]');await city.selectOption({index:1});
+  for(const input of await form.locator('input[required]').all()){const type=await input.getAttribute('type');const name=await input.getAttribute('name');if(['full_name','email','phone'].includes(name))continue;if(type==='checkbox'){await input.check();continue}if(type==='url')await input.fill('https://example.com/qa');else if(type==='number')await input.fill('10');else await input.fill('ICONIC QA')}
+  for(const ta of await form.locator('textarea[required]').all())await ta.fill('ICONIC QA required response');
+  for(const sel of await form.locator('select[required]').all()){if(await sel.getAttribute('name')==='city')continue;await sel.selectOption({index:1})}
+  await form.locator('button[type="submit"]').click();await p.getByText('APPLICATION RECEIVED',{exact:true}).waitFor({timeout:10000});assert.equal(payload.requested_role,expectedRole);assert.equal(await p.locator('[role="alert"]').count(),0,'Personnel success must not become form error');await p.unroute('**/api/noc-partner-apply');
+ }
+ report.formUI='pass; mocked inquiry + all nine personnel form submissions';await p.close();
 }catch(e){report.failures.push(e.message);}finally{await browser.close();await fs.writeFile('qa-evidence/report.json',JSON.stringify(report,null,2));}
 console.log(JSON.stringify({pages:report.pages.length,completionPages:report.completionPages.length,failures:report.failures,formUI:report.formUI},null,2));if(report.failures.length)process.exit(1);
