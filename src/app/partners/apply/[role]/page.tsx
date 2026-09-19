@@ -52,7 +52,7 @@ export default async function RoleApplicationPage({params}:{params:Promise<{role
         <ul>
           <li>Complimentary event-day meal and beverage.</li>
           <li>VIP bar access, with alcoholic service only where legally eligible.</li>
-          <li>Credentialed access to official ICONIC LIVE after-parties associated with the event, subject to capacity/security rules.</li>
+          <li>Credentialed access to all official ICONIC LIVE after-parties associated with the event, subject to capacity/security rules.</li>
           <li>Paid promotional personnel: additional campaign bonus stated in the personalized compensation sheet.</li>
           <li>Eligible non-cash promotional personnel: sold-out bonus package after official sellout + completed deliverables.</li>
         </ul>
