@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CinematicShell } from "../_cinematic";
-import { ART } from "../_cinematic/assets";
-import { FUTURE_PIPELINE, PARTNER_ROLES } from "@/lib/noc-partner-roles";
+import { NOC_MEDIA } from "../tampa/nightmare-on-channelside/merch/noc-assets";
+import { PARTNER_ROLES } from "@/lib/noc-partner-roles";
 import s from "./partners.module.css";
 
 const touringNames=[
@@ -13,12 +13,12 @@ const touringNames=[
 export default function PartnersLanding(){
   return <CinematicShell active="/partners">
     <section className={s.hero}>
-      <img src={ART.symphonic} alt="ICONIC LIVE campaign artwork representing a large live audience and stage" className={s.heroArt}/>
+      <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside official campaign artwork" className={s.heroArt}/>
       <div className={s.heroShade}/>
       <div className={s.heroCopy}>
         <span className={s.kicker}>ICONIC LIVE / PARTNERS + PERSONNEL</span>
         <h1>Build the room<br/>with us.</h1>
-        <p>Nightmare on Channelside is one event. We are building the network that can move with ICONIC LIVE from city to city—promoters, ambassadors, models, podcasts, DJs, hosts, street teams and strategic partners.</p>
+        <p>Nightmare on Channelside is the focus right now. We are building the promoters, ambassadors, models, podcasts, DJs, hosts, street teams and strategic partners who can make October 31 in Tampa move correctly.</p>
         <div className={s.heroActions}>
           <a href="#join-team" className={s.primary}>Choose your role <span>↗</span></a>
           <a href="#brands" className={s.secondary}>Brand + sponsorship <span>↗</span></a>
@@ -60,17 +60,17 @@ export default function PartnersLanding(){
 
     <section className={s.future}>
       <div className={s.sectionHead}>
-        <div><span className={s.kicker}>WHY THIS CAMPAIGN MATTERS</span><h2>Tampa can be your first assignment, not your last.</h2></div>
-        <p>Strong execution on this campaign gives us a real basis for who should be considered first when the next city, tour or property opens. We want a network we already know can execute—not a brand-new team every time.</p>
+        <div><span className={s.kicker}>UPCOMING</span><h2>Nightmare on Channelside.</h2></div>
+        <p>Saturday, October 31, 2026 · Tampa, Florida. This is the active ICONIC LIVE campaign and the only event currently being presented on this personnel page.</p>
       </div>
       <div className={s.futureGrid}>
-        {FUTURE_PIPELINE.map((item,i)=><article key={item.title}>
-          <span>{String(i+1).padStart(2,"0")} / {item.status}</span>
-          <h3>{item.title}</h3>
-          <p>{item.detail}</p>
-        </article>)}
+        <article>
+          <span>01 / ACTIVE CAMPAIGN</span>
+          <h3>Halloween in Tampa</h3>
+          <p>Every role, application, tracking link, asset assignment, proof requirement and payment workflow on this page is being built around Nightmare on Channelside.</p>
+        </article>
       </div>
-      <p className={s.disclaimer}>Future cities, tours and dates shown here are working pipeline targets and development plans unless separately announced as confirmed.</p>
+      <p className={s.disclaimer}>Additional ICONIC LIVE properties remain in development and are intentionally hidden from this page for now.</p>
     </section>
 
     <section id="join-team" className={s.join}>
