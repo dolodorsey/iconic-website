@@ -54,8 +54,10 @@ assert.match(read(base+'cinematic.module.css'),/prefers-reduced-motion/,'Reduced
 assert.match(motion,/data-testid="motion-toggle"/,'Pause control must remain outside canvas');
 assert.doesNotMatch(installPrompt,/setTimeout\(\(\)=>setVisible\(true\),1600\)/,'Install prompt may not auto-interrupt after beforeinstallprompt');
 assert.doesNotMatch(installPrompt,/setTimeout\(\(\)=>setVisible\(true\),4300\)/,'Install prompt may not auto-interrupt iOS visitors');
+assert.doesNotMatch(installPrompt,/aria-label="Get ICONIC app"/,'Persistent floating app button is forbidden');
 assert.doesNotMatch(installPrompt,/position:'fixed',right:22,bottom:22/,'Install QR may not float over site content');
-assert.match(installPrompt,/onClick=\{\(\)=>\{setSteps\(false\);setVisible\(true\)/,'Install experience must be explicitly user-initiated');
+assert.match(installPrompt,/if\(!visible\)return null/,'Install component may not render a persistent overlay entry');
+assert.match(site,/href="\?install=1">Get app<\/a>/,'Primary ICONIC shell must expose install from navigation instead of overlaying content');
 assert(fs.existsSync('docs/ICONIC_UI_PRODUCTION_STANDARD.md'),'Preserve v1 SOP');
 assert(fs.existsSync('docs/standards/iconic-v2/README.md'),'v2 standard required');
 assert(fs.existsSync('docs/standards/iconic-v2/ANIMATION_ASSET_ASSIGNMENT_2.1.md'),'v2.1 animation assignment standard required');
