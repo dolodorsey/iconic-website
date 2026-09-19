@@ -89,6 +89,35 @@ export default function PartnersLanding(){
       </div>
     </section>
 
+    <section className={s.benefits}>
+      <div className={s.sectionHead}>
+        <div><span className={s.kicker}>CAMPAIGN BENEFITS + BONUSES</span><h2>Execute the campaign. Share in the upside.</h2></div>
+        <p>Benefits are tied to an activated role, required deliverables and the final personalized packet. Access remains subject to venue, security, capacity and legal-age requirements.</p>
+      </div>
+      <div className={s.benefitGrid}>
+        <article>
+          <span>EVERY ACTIVATED PERSON</span>
+          <h3>Hospitality + access</h3>
+          <p>Complimentary event-day meal and beverage, VIP bar access, and credentialed access to official ICONIC LIVE after-parties associated with Nightmare on Channelside.</p>
+        </article>
+        <article>
+          <span>PAID PROMO PERSONNEL</span>
+          <h3>Additional bonus</h3>
+          <p>Paid promotional personnel receive an additional campaign bonus. The amount and release trigger are stated in the personalized compensation sheet and remain tied to verified completion.</p>
+        </article>
+        <article>
+          <span>NON-CASH PROMO PERSONNEL</span>
+          <h3>Sold-out bonus package</h3>
+          <p>If the event officially sells out and assigned deliverables are completed, eligible non-cash promotional personnel receive the campaign sold-out bonus package.</p>
+        </article>
+      </div>
+      <div className={s.bonusStrip}>
+        <span>SOLD-OUT BONUS PACKAGE MAY INCLUDE</span>
+        <p>Massage gift certificate · additional gift selected by ICONIC LIVE · bonus merchandise · future ICONIC LIVE tickets and/or backstage-access opportunities · consideration for touring-company work · possible endorsement consideration from an individual BEVCO beverage brand.</p>
+      </div>
+      <p className={s.disclaimer}>Touring-company work, future backstage access and BEVCO endorsement opportunities are consideration opportunities and require separate selection, availability, approvals and agreements. Alcoholic beverage service is only for legally eligible guests.</p>
+    </section>
+
     <section className={s.how}>
       <div className={s.sectionHead}>
         <div><span className={s.kicker}>WHAT HAPPENS AFTER YOU APPLY</span><h2>Simple on your end. Structured on ours.</h2></div>
