@@ -3,6 +3,17 @@ const {default:AxeBuilder}=require('@axe-core/playwright');
 const fs=require('node:fs/promises'),path=require('node:path');
 const base=(process.env.ICONIC_FULL_BASE||'http://127.0.0.1:3200').replace(/\/$/,'');
 const out='all-pages-evidence';
+const personnelRoutes=[
+  '/partners/apply/promoter-commission',
+  '/partners/apply/promoter-comp',
+  '/partners/apply/ambassador-model',
+  '/partners/apply/podcast',
+  '/partners/apply/dj-promo',
+  '/partners/apply/host-promo',
+  '/partners/apply/dj-performance',
+  '/partners/apply/host-performance',
+  '/partners/apply/street-team'
+];
 const report={base,sourceSha:process.env.GITHUB_SHA,expectedProductionSha:process.env.ICONIC_EXPECTED_SHA||null,started:new Date().toISOString(),pages:[],failures:[],scope:'All public HTML routes from live sitemap plus static app pages. No purchases, lead submissions, or outbound messages.'};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const key=p=>p==='/'?'home':p.slice(1).replace(/[^a-z0-9-]/gi,'_');
@@ -10,8 +21,20 @@ function template(route){if(/\/merch\/collection\/[^/]+\/[^/]+$/.test(route))ret
 async function staticRoutes(dir,prefix=''){let rows=[];for(const e of await fs.readdir(dir,{withFileTypes:true})){if(e.isDirectory()&&!e.name.startsWith('_')&&!e.name.includes('[')&&e.name!=='api')rows.push(...await staticRoutes(path.join(dir,e.name),prefix+'/'+e.name));else if(e.isFile()&&e.name==='page.tsx')rows.push(prefix||'/')}return rows}
 async function settle(p){await p.evaluate(async()=>{await document.fonts.ready;for(let y=0;y<document.body.scrollHeight;y+=700){scrollTo(0,y);await new Promise(r=>setTimeout(r,35))}await Promise.race([Promise.all([...document.images].map(i=>i.decode().catch(()=>{}))),new Promise(r=>setTimeout(r,12000))]);scrollTo(0,0)});await p.waitForTimeout(250)}
 (async()=>{await fs.mkdir(out+'/screenshots',{recursive:true});let ready=false;for(let i=0;i<90;i++){try{const r=await fetch(base+'/api/release');if(r.ok){const body=await r.json();if(!report.expectedProductionSha||body.commit===report.expectedProductionSha){report.release=body;ready=true;break}}}catch{}await sleep(5000)}if(!ready)throw Error('Exact target release did not become ready; refusing to audit an old deployment');
- const xml=await fetch(base+'/sitemap.xml');if(!xml.ok)throw Error('Sitemap unavailable');const routes=new Set(await staticRoutes('src/app'));for(const m of (await xml.text()).matchAll(/<loc>(.*?)<\/loc>/g))routes.add(new URL(m[1].replaceAll('&amp;','&')).pathname);const internalOnly=new Set(['/tampa/nightmare-on-channelside/command-center']);const all=[...routes].filter(route=>!internalOnly.has(route)).sort();if(all.length<40||all.length>600)throw Error('Unexpected inventory size '+all.length);report.routeInventory=all;report.ignoredInternalRoutes=[...internalOnly];
+ const xml=await fetch(base+'/sitemap.xml');if(!xml.ok)throw Error('Sitemap unavailable');const routes=new Set([...(await staticRoutes('src/app')),...personnelRoutes]);for(const m of (await xml.text()).matchAll(/<loc>(.*?)<\/loc>/g))routes.add(new URL(m[1].replaceAll('&amp;','&')).pathname);const internalOnly=new Set(['/tampa/nightmare-on-channelside/command-center']);const all=[...routes].filter(route=>!internalOnly.has(route)).sort();if(all.length<40||all.length>600)throw Error('Unexpected inventory size '+all.length);report.routeInventory=all;report.ignoredInternalRoutes=[...internalOnly];
  const browser=await chromium.launch({headless:true});try{for(const width of [1440,390]){const ctx=await browser.newContext({viewport:{width,height:width===1440?1000:844},reducedMotion:'reduce'});const axeSeen=new Set();let index=0;await Promise.all([0,1,2].map(async()=>{while(index<all.length){const route=all[index++],row={route,width};const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));try{const res=await p.goto(base+route,{waitUntil:'domcontentloaded',timeout:60000});row.status=res?.status();row.finalUrl=p.url();await settle(p);Object.assign(row,await p.evaluate(()=>({title:document.title,h1:[...document.querySelectorAll('h1')].map(e=>e.textContent),mains:document.querySelectorAll('main').length,scrollWidth:document.documentElement.scrollWidth,viewport:innerWidth,broken:[...document.images].filter(i=>!i.complete||!i.naturalWidth).map(i=>i.currentSrc||i.src),images:[...document.images].map(i=>({src:i.currentSrc||i.src,alt:i.alt,width:i.naturalWidth,height:i.naturalHeight})),text:document.body.innerText,links:[...document.querySelectorAll('a[href]')].map(a=>({href:a.getAttribute('href'),text:a.textContent.trim()||a.getAttribute('aria-label')}))})));row.errors=errors;const problems=[];if(row.status!==200)problems.push('HTTP '+row.status);if(row.h1.length!==1)problems.push('H1 count '+row.h1.length);if(row.mains!==1)problems.push('main count '+row.mains);if(row.scrollWidth>width+1)problems.push('overflow '+row.scrollWidth);if(row.broken.length)problems.push('broken images '+row.broken.join(','));if(errors.length)problems.push('JS '+errors.join('; '));
+ if(route==='/partners'){
+   if(!row.text.includes('CAMPAIGN BENEFITS + BONUSES'))problems.push('Partners benefits section missing');
+   if(!row.text.includes('ALL OFFICIAL ICONIC LIVE AFTER-PARTIES')&&!row.text.toLowerCase().includes('all official iconic live after-parties'))problems.push('All-after-parties benefit missing');
+   if(row.text.includes('Summer Walker — Soul Symphony')||row.text.includes('DJ Snake — Pardon My French'))problems.push('Hidden future property exposed on public Partners page');
+   if(row.text.includes('iconic-atl.com'))problems.push('Retired domain exposed');
+ }
+ if(route.startsWith('/partners/apply/')){
+   if(!row.text.includes('CAMPAIGN BENEFITS'))problems.push('Benefits panel missing');
+   if(!row.text.includes('Nightmare on Channelside'))problems.push('Halloween campaign context missing');
+   if(row.text.includes('Summer Walker Soul Symphony')||row.text.includes('DJ Snake Pardon My French'))problems.push('Hidden future property exposed on personnel form');
+   if(row.text.includes('iconic-atl.com'))problems.push('Retired domain exposed');
+ }
  const t=template(route);if(!axeSeen.has(t)){axeSeen.add(t);const result=await new AxeBuilder({page:p}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();row.violations=result.violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}));if(row.violations.length)problems.push('accessibility '+row.violations.map(v=>v.id).join(','))}
  row.screenshot=`screenshots/${key(route)}-${width}.jpg`;await p.screenshot({path:out+'/'+row.screenshot,fullPage:true,type:'jpeg',quality:80,animations:'disabled',timeout:60000});row.problems=problems;if(problems.length)report.failures.push({route,width,problems});
  }catch(e){row.error=e.message;report.failures.push({route,width,problems:[e.message]});await p.screenshot({path:`${out}/screenshots/failure-${key(route)}-${width}.jpg`,fullPage:true,type:'jpeg',quality:70}).catch(()=>{})}finally{report.pages.push(row);await p.close();await fs.writeFile(out+'/report.json',JSON.stringify(report,null,2))}}
