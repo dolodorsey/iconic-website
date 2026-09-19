@@ -8,5 +8,5 @@ export default async function ProductEntry({params}:{params:Promise<{sku:string}
   const catalog=await getMerchCatalog();
   const product=catalog.products.find(p=>p.sku===sku&&p.is_active);
   if(!product)notFound();
-  redirect(`/tampa/nightmare-on-channelside/merch/collection/${product.collection_slug}/${encodeURIComponent(product.sku)}`);
+  redirect(`/tampa/nightmare-on-channelside/merch/collection/nightmare-on-channelside/${encodeURIComponent(product.sku)}`);
 }

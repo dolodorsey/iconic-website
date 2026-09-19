@@ -1,4 +1,4 @@
-import { COLLECTION_ART, NOC_MEDIA } from '../tampa/nightmare-on-channelside/merch/noc-assets';
+import { NOC_MEDIA } from '../tampa/nightmare-on-channelside/merch/noc-assets';
 
 // ICONIC platform campaign art only. Never substitute these for a named tour,
 // product photograph, confirmed sponsor activation or documentary event proof.
@@ -28,12 +28,11 @@ export const WORLDS = [
   { key: 'summer-walker-soul-symphony', title: 'Soul Symphony', eyebrow: 'Summer Walker / Tour updates', body: 'Modern R&B. An orchestral point of view.', href: '/summer-walker', src: SUMMER_VISUAL, action: 'Explore the tour', tone: 'blush' },
   { key: 'dj-snake-pardon-my-french', title: 'Pardon My French', eyebrow: 'DJ Snake & Friends / Tour updates', body: 'Global sound. A stadium-sized ambition.', href: '/dj-snake-pardon-my-french', src: PMF_VISUAL, action: 'Explore the tour', tone: 'red' },
 ] as const;
-export const COLLECTIONS = [
-  { slug: '21-savage', title: '21 Savage' },
-  { slug: 'kodak-black', title: 'Kodak Black' },
-  { slug: 'da-baby', title: 'DaBaby' },
-  { slug: 'meek-mill', title: 'Meek Mill' },
-  { slug: 'belly-gang-kush', title: 'Belly Gang Kush' },
+export const ICONIC_MASTER_CHANNELS = [
+  { key: 'live', title: 'Live', eyebrow: 'Concerts + tours', body: 'Headline shows, touring concepts and nights built for the room.', href: '/events', src: ART.world },
+  { key: 'experiences', title: 'Experiences', eyebrow: 'Hospitality + culture', body: 'Arrival, atmosphere, guest flow and the moments around the stage.', href: '/experiences', src: ART.runway },
+  { key: 'music', title: 'Music', eyebrow: 'Sound + performance', body: 'Artist development, programming and performance built around the audience.', href: '/music', src: ART.dj },
+  { key: 'creators', title: 'Creators', eyebrow: 'People + ideas', body: 'Performers, filmmakers, photographers, hosts, producers and designers.', href: '/creators', src: ART.artist },
+  { key: 'media', title: 'Media', eyebrow: 'Story + archive', body: 'Campaign creative, documentation and the visual memory of the experience.', href: '/media', src: ART.media },
 ] as const;
 export const MERCH_ROOT = '/tampa/nightmare-on-channelside/merch';
-export { COLLECTION_ART };

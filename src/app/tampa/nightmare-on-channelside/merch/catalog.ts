@@ -30,6 +30,7 @@ export type CatalogProduct = {
   shopify_product_id: string;
   collection_slug: string;
   title: string;
+  display_title: string;
   product_type: string;
   design_number: number;
   price_cents: number;
@@ -183,12 +184,14 @@ function normalizeProducts(products: ShopifyPublicProduct[]): CatalogProduct[] {
     const price_cents = Math.min.apply(null, variants.map((variant) => variant.price_cents));
     const sizeOption = options.find((option) => /size/i.test(option.name));
 
+    const product_type = product.product_type || "Merch";
     normalized.push({
       sku: product.handle,
       shopify_product_id: String(product.id),
       collection_slug,
       title: product.title,
-      product_type: product.product_type || "Merch",
+      display_title: "",
+      product_type,
       design_number,
       price_cents,
       status: "LIVE",
@@ -205,7 +208,15 @@ function normalizeProducts(products: ShopifyPublicProduct[]): CatalogProduct[] {
     });
   });
 
-  return normalized.map((product, index) => ({ ...product, featured: index < 8 }));
+  return normalized.map((product, index) => ({
+    ...product,
+    featured: index < 8,
+    // Artist/subject metadata is under visual QA. Public display stays truthful
+    // and product-first until the garment artwork itself has been verified.
+    display_title: product.tags.includes("qa:safe-title-20260919")
+      ? product.title
+      : `NIGHTMARE ON CHANNELSIDE — ${product.product_type.toUpperCase()} / ${String(index + 1).padStart(2, "0")}`,
+  }));
 }
 
 export async function getMerchCatalog() {

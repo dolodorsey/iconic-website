@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getMerchCatalog } from "../catalog";
 import { NOC_MEDIA } from "../noc-assets";
-import { StoreFooter, StoreHeader, StoreSubnav, WorldCard } from "../noc-ui";
+import { StoreFooter, StoreHeader, StoreSubnav } from "../noc-ui";
 import ShopGrid from "./shop-grid";
 import premium from "../noc-premium.module.css";
 
@@ -21,8 +20,8 @@ export default async function NightmareShopPage() {
         <img src={NOC_MEDIA.market} alt="Nightmare on Channelside official merch floor" fetchPriority="high" decoding="async" />
         <div className={`${premium.collectionHeroCopy} noc-page-hero-copy-v2`}>
           <span>ICONIC LIVE PRESENTS · TAMPA HALLOWEEN</span>
-          <h1>SHOP THE LINEUP.</h1>
-          <p>Artist collections, Tampa editions, full-lineup pieces and official event merch — all connected to the live NOC Shopify catalog.</p>
+          <h1>SHOP THE DROP.</h1>
+          <p>Official event merchandise connected directly to the live NOC Shopify catalog. Browse the products themselves—no unverified artist grouping.</p>
         </div>
       </section>
       <StoreSubnav />
@@ -31,27 +30,13 @@ export default async function NightmareShopPage() {
           <section className={premium.empty}><div><h1>THE SHOP IS RELOADING.</h1><p>The live Shopify catalog is unavailable, so the storefront is intentionally hiding inventory instead of fabricating products.</p></div></section>
         ) : (
           <>
-            <section className={premium.section}>
-              <div className={premium.sectionHead}>
-                <span className={premium.eyebrow}>SHOP BY ARTIST + COLLECTION</span>
-                <h2 className="noc-editorial-heading">PICK YOUR SIDE.</h2>
-                <p>Each artist keeps a dedicated collection identity. Product grids show front and back at a glance whenever both Shopify images are available.</p>
-              </div>
-              <div className="noc-world-grid-v2">
-                {catalog.collections.map((collection) => <WorldCard key={collection.slug} collection={collection} />)}
-              </div>
-            </section>
-
             <section className={premium.section} style={{borderTop:"1px solid rgba(255,255,255,.08)"}}>
               <div className={premium.sectionHead}>
                 <span className={premium.eyebrow}>LIVE EVENT MERCH</span>
                 <h2 className="noc-editorial-heading">THE DROP.</h2>
-                <p>Search by artist, collection or garment. Every card below resolves to a real live product page and secure Shopify checkout.</p>
+                <p>Search the live catalog by product name or garment. Every card resolves directly to the real product page and secure Shopify checkout.</p>
               </div>
-              <nav className={`${premium.subnav} noc-collection-shortcuts`} aria-label="Shop collection shortcuts">
-                {catalog.collections.map((collection) => <Link key={collection.slug} href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}>{collection.name}</Link>)}
-              </nav>
-              <ShopGrid products={catalog.products} collections={catalog.collections} />
+              <ShopGrid products={catalog.products} />
             </section>
           </>
         )}

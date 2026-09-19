@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "validate:ui": "node scripts/validate-ui-governance.mjs",
-    "audit:production": "node scripts/audit-production.mjs"
+    "audit:production": "node scripts/audit-production.mjs",
+    "audit:merch-taxonomy": "node scripts/audit-merch-taxonomy.mjs"
   },
   "dependencies": {
     "next": "15.5.24",

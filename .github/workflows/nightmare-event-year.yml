@@ -42,7 +42,7 @@ jobs:
           grep -q 'year: 2026' "$ROOT/event-config.ts"
           grep -q 'October 31, 2026' "$ROOT/page.tsx"
           grep -q 'HALLOWEEN {NIGHTMARE_EVENT.year}' "$MERCH_HOME"
-          grep -q 'HALLOWEEN {NIGHTMARE_EVENT.year}' "$COLLECTION_PAGE"
+          grep -q 'redirect(SHOP)' "$COLLECTION_PAGE"
 
       - name: Setup Node
         uses: actions/setup-node@v4

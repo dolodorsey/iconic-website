@@ -2,18 +2,16 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import type { CatalogCollection, CatalogProduct } from "../catalog";
+import type { CatalogProduct } from "../catalog";
 
 const BASE = "/tampa/nightmare-on-channelside/merch";
 const PAGE_SIZE = 24;
 const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 
-type ShopProduct = Pick<CatalogProduct, "shopify_product_id" | "sku" | "collection_slug" | "title" | "product_type" | "price_cents" | "primary_image_url" | "secondary_image_url">;
-type ShopCollection = Pick<CatalogCollection, "slug" | "name">;
+type ShopProduct = Pick<CatalogProduct, "shopify_product_id" | "sku" | "title" | "display_title" | "product_type" | "price_cents" | "primary_image_url" | "secondary_image_url">;
 
-export default function ShopGrid({ products, collections }: { products: ShopProduct[]; collections: ShopCollection[] }) {
+export default function ShopGrid({ products }: { products: ShopProduct[] }) {
   const [query, setQuery] = useState("");
-  const [world, setWorld] = useState("all");
   const [type, setType] = useState("all");
   const [sort, setSort] = useState("featured");
   const [visible, setVisible] = useState(PAGE_SIZE);
@@ -23,28 +21,23 @@ export default function ShopGrid({ products, collections }: { products: ShopProd
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
     const next = products.filter((product) => {
-      const matchesQuery = !needle || `${product.title} ${product.product_type}`.toLowerCase().includes(needle);
-      const matchesWorld = world === "all" || product.collection_slug === world;
+      const matchesQuery = !needle || `${product.display_title} ${product.product_type}`.toLowerCase().includes(needle);
       const matchesType = type === "all" || product.product_type === type;
-      return matchesQuery && matchesWorld && matchesType;
+      return matchesQuery && matchesType;
     });
     if (sort === "price-low") next.sort((a, b) => a.price_cents - b.price_cents);
     if (sort === "price-high") next.sort((a, b) => b.price_cents - a.price_cents);
-    if (sort === "az") next.sort((a, b) => a.title.localeCompare(b.title));
+    if (sort === "az") next.sort((a, b) => a.display_title.localeCompare(b.display_title));
     return next;
-  }, [products, query, world, type, sort]);
+  }, [products, query, type, sort]);
 
-  useEffect(() => setVisible(PAGE_SIZE), [query, world, type, sort]);
+  useEffect(() => setVisible(PAGE_SIZE), [query, type, sort]);
   const shown = filtered.slice(0, visible);
 
   return (
     <>
       <div className="noc-shop-controls" aria-label="Filter Nightmare on Channelside merchandise">
         <input className="noc-shop-control noc-shop-search" type="search" placeholder="SEARCH MERCH" value={query} onChange={(event) => setQuery(event.target.value)} aria-label="Search merchandise" />
-        <select className="noc-shop-control" value={world} onChange={(event) => setWorld(event.target.value)} aria-label="Filter by collection">
-          <option value="all">ALL COLLECTIONS</option>
-          {collections.map((collection) => <option value={collection.slug} key={collection.slug}>{collection.name}</option>)}
-        </select>
         <select className="noc-shop-control" value={type} onChange={(event) => setType(event.target.value)} aria-label="Filter by garment type">
           <option value="all">ALL GARMENTS</option>
           {types.map((productType) => <option value={productType} key={productType}>{productType}</option>)}
@@ -60,29 +53,29 @@ export default function ShopGrid({ products, collections }: { products: ShopProd
       {shown.length ? (
         <div className="noc-shop-grid">
           {shown.map((product) => (
-            <Link href={`${BASE}/collection/${product.collection_slug}/${product.sku}`} className="noc-shop-product-card" key={product.shopify_product_id}>
+            <Link href={`${BASE}/product/${product.sku}`} className="noc-shop-product-card" key={product.shopify_product_id}>
               <div className={`noc-product-glance ${product.secondary_image_url ? "noc-product-glance--pair" : "noc-product-glance--single"}`}>
                 {product.primary_image_url ? (
                   <figure>
-                    <img src={product.primary_image_url} alt={`${product.title} front view`} loading="lazy" decoding="async" />
+                    <img src={product.primary_image_url} alt={`${product.display_title} front view`} loading="lazy" decoding="async" />
                     <figcaption>FRONT</figcaption>
                   </figure>
                 ) : null}
                 {product.secondary_image_url ? (
                   <figure>
-                    <img src={product.secondary_image_url} alt={`${product.title} back view`} loading="lazy" decoding="async" />
+                    <img src={product.secondary_image_url} alt={`${product.display_title} back view`} loading="lazy" decoding="async" />
                     <figcaption>BACK</figcaption>
                   </figure>
                 ) : null}
               </div>
               <div className="noc-shop-product-meta">
-                <div><strong>{product.title}</strong><span>{product.product_type}</span></div>
+                <div><strong>{product.display_title}</strong><span>{product.product_type}</span></div>
                 <b>{money.format(product.price_cents / 100)}</b>
               </div>
             </Link>
           ))}
         </div>
-      ) : <div className="noc-shop-empty">NO PIECES MATCH THAT SEARCH. TRY ANOTHER COLLECTION OR GARMENT.</div>}
+      ) : <div className="noc-shop-empty">NO PIECES MATCH THAT SEARCH. TRY ANOTHER PRODUCT OR GARMENT.</div>}
 
       {visible < filtered.length ? (
         <div className="noc-shop-load-more"><button type="button" onClick={() => setVisible((count) => count + PAGE_SIZE)}>LOAD MORE</button></div>

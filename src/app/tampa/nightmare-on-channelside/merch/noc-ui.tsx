@@ -14,8 +14,8 @@ export function StoreHeader() {
       <nav className={`${premium.nav} noc-mobile-nav`} aria-label="Nightmare store navigation">
         <Link href={BASE}>HOME</Link>
         <Link href={`${BASE}/shop`}>SHOP</Link>
-        <Link href={`${BASE}/worlds`}>COLLECTIONS</Link>
         <Link href="/tampa/nightmare-on-channelside">EVENT</Link>
+        <a href="?install=1">APP</a>
       </nav>
       <div className={`${premium.tools} noc-mobile-tools`}><BagIndicator /></div>
     </header>
@@ -31,7 +31,6 @@ export function StoreFooter() {
       </div>
       <nav aria-label="Nightmare footer navigation">
         <Link href={`${BASE}/shop`}>SHOP</Link>
-        <Link href={`${BASE}/worlds`}>COLLECTIONS</Link>
         <Link href="/tampa/nightmare-on-channelside">EVENT</Link>
         <Link href={`${BASE}/cart`}>CART</Link>
         <Link href={`${BASE}/policies`}>POLICIES</Link>
@@ -51,13 +50,13 @@ function ProductViews({ product }: { product: CatalogProduct }) {
     <div className={`noc-product-glance ${back ? "noc-product-glance--pair" : "noc-product-glance--single"}`}>
       {front ? (
         <figure>
-          <img src={front} alt={`${product.title} front view`} loading="lazy" decoding="async" />
+          <img src={front} alt={`${product.display_title} front view`} loading="lazy" decoding="async" />
           <figcaption>FRONT</figcaption>
         </figure>
       ) : null}
       {back ? (
         <figure>
-          <img src={back} alt={`${product.title} back view`} loading="lazy" decoding="async" />
+          <img src={back} alt={`${product.display_title} back view`} loading="lazy" decoding="async" />
           <figcaption>BACK</figcaption>
         </figure>
       ) : null}
@@ -67,16 +66,17 @@ function ProductViews({ product }: { product: CatalogProduct }) {
 
 export function ProductCard({ product }: { product: CatalogProduct }) {
   return (
-    <Link href={`${BASE}/collection/${product.collection_slug}/${product.sku}`} className={`${premium.productCard} noc-product-card-v2`}>
+    <Link href={`${BASE}/product/${product.sku}`} className={`${premium.productCard} noc-product-card-v2`}>
       <ProductViews product={product} />
       <div className={`${premium.productMeta} noc-product-meta-v2`}>
-        <div><strong>{product.title}</strong><span>{product.product_type}</span></div>
+        <div><strong>{product.display_title}</strong><span>{product.product_type}</span></div>
         <b>{formatPrice(product.price_cents)}</b>
       </div>
     </Link>
   );
 }
 
+// Compatibility export for legacy direct collection routes. Customer navigation keeps collection browsing hidden until QA passes.
 export function WorldCard({ collection }: { collection: CatalogCollection }) {
   const art = COLLECTION_ART[collection.slug];
   return (
@@ -97,7 +97,6 @@ export function StoreSubnav() {
   return (
     <nav className={premium.subnav} aria-label="Nightmare shop sections">
       <Link href={`${BASE}/shop`}>SHOP ALL</Link>
-      <Link href={`${BASE}/worlds`}>COLLECTIONS</Link>
       <Link href="/tampa/nightmare-on-channelside">THE EVENT</Link>
     </nav>
   );

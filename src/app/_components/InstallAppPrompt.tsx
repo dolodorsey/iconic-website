@@ -5,15 +5,15 @@ import { useEffect, useState } from "react";
 interface InstallPromptEvent extends Event { prompt: () => Promise<{ outcome: "accepted" | "dismissed" }> }
 
 function forceInstall(){try{return new URLSearchParams(location.search).get('install')==='1'}catch{return false}}
+function clearInstallIntent(){try{const u=new URL(location.href);u.searchParams.delete('install');history.replaceState(history.state,'',u.pathname+(u.search||'')+(u.hash||''))}catch{}}
 function InstallQr(){
   const [qr,setQr]=useState('');
   useEffect(()=>{if(typeof window==='undefined'||window.innerWidth<760)return;try{const u=new URL(location.href);u.hash='';u.search='';u.searchParams.set('install','1');setQr('https://wfkohcwxxsrhcxhepfql.supabase.co/functions/v1/app-install-qr?url='+encodeURIComponent(u.toString()))}catch{}},[]);
   if(!qr)return null;
-  return <aside aria-label="Scan to install app" style={{position:'fixed',right:22,bottom:22,zIndex:2147483002,width:188,padding:12,borderRadius:20,background:'rgba(7,8,11,.97)',border:'1px solid rgba(255,255,255,.16)',boxShadow:'0 24px 70px rgba(0,0,0,.48)',color:'#fff',fontFamily:'Arial,sans-serif'}}>
-    <img src={qr} alt="QR code to install this app" width="164" height="164" style={{display:'block',width:'100%',height:'auto',borderRadius:12,background:'#fff',padding:6}}/>
-    <strong style={{display:'block',marginTop:10,fontSize:10,letterSpacing:'.14em'}}>SCAN TO GET ICONIC</strong>
-    <small style={{display:'block',marginTop:5,color:'rgba(255,255,255,.62)',fontSize:9,lineHeight:1.45}}>iPhone: Share → Add to Home Screen → Open as Web App → Add. Android: tap Install App.</small>
-  </aside>
+  return <div className="install-qr" aria-label="Scan to install ICONIC on another device">
+    <img src={qr} alt="QR code to install ICONIC" width="112" height="112"/>
+    <div><strong>SCAN ON YOUR PHONE</strong><small>Open the install flow without covering the site.</small></div>
+  </div>
 }
 
 const CAPTURE_URL="https://wfkohcwxxsrhcxhepfql.supabase.co/functions/v1/marketing-event-capture";
@@ -39,22 +39,20 @@ export default function InstallAppPrompt(){
     const ios=isIOS();setApple(ios);
     if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>undefined);
     const dismissed=Number(storageGet("iconic:pwa-dismissed")||0);
-    const canShow=forceInstall()||!dismissed||Date.now()-dismissed>DISMISS_MS;
+    void dismissed;
     if(forceInstall())window.setTimeout(()=>setVisible(true),120);
-    const before=(event:Event)=>{event.preventDefault();setPrompt(event as InstallPromptEvent);if(canShow)setTimeout(()=>setVisible(true),1600)};
+    const before=(event:Event)=>{event.preventDefault();setPrompt(event as InstallPromptEvent)};
     const added=()=>{setInstalled(true);setVisible(false);void track("app_install",{platform:ios?"ios":"web",variant:"iconic_pwa"})};
     addEventListener("beforeinstallprompt",before);addEventListener("appinstalled",added);
-    let timer=0;if(canShow&&ios)timer=window.setTimeout(()=>setVisible(true),4300);
-    return()=>{removeEventListener("beforeinstallprompt",before);removeEventListener("appinstalled",added);if(timer)clearTimeout(timer)};
+    return()=>{removeEventListener("beforeinstallprompt",before);removeEventListener("appinstalled",added)};
   },[]);
 
   if(installed)return null;
-  if(!visible)return <button aria-label="Get ICONIC app" onClick={()=>{setSteps(false);setVisible(true);void track("cta_click",{cta:"iconic_persistent_get_app"})}} style={{position:"fixed",right:16,bottom:18,zIndex:2147482500,border:"1px solid #e0ad4566",borderRadius:999,padding:"13px 17px",background:"linear-gradient(100deg,#ffd97a,#dba63d)",color:"#090602",font:"900 11px/1 Arial",letterSpacing:".08em",boxShadow:"0 16px 44px rgba(0,0,0,.38)",cursor:"pointer"}}>GET ICONIC ↗</button>;
-  const close=()=>{storageSet("iconic:pwa-dismissed",String(Date.now()));setVisible(false);void track("cta_click",{cta:"pwa_prompt_dismiss",variant:apple?"ios":"web"})};
-  const install=async()=>{void track("app_install_click",{platform:apple?"ios":"web",variant:prompt?"native_prompt":"instructions"});if(prompt){const result=await prompt.prompt();setPrompt(null);if(result.outcome==="accepted")setVisible(false);return}setSteps(true)};
+  if(!visible)return null;
+  const close=()=>{storageSet("iconic:pwa-dismissed",String(Date.now()));clearInstallIntent();setVisible(false);void track("cta_click",{cta:"pwa_prompt_dismiss",variant:apple?"ios":"web"})};
+  const install=async()=>{void track("app_install_click",{platform:apple?"ios":"web",variant:prompt?"native_prompt":"instructions"});if(prompt){const result=await prompt.prompt();setPrompt(null);if(result.outcome==="accepted"){clearInstallIntent();setVisible(false)}return}setSteps(true)};
 
   return <div className="iconic-install-backdrop" role="dialog" aria-modal="true" aria-label="Install ICONIC">
-    <InstallQr/>
     <section className="iconic-install-card">
       <button className="iconic-install-close" onClick={close} aria-label="Close">×</button>
       <div className="iconic-stage" aria-hidden="true"><div className="beam b1"/><div className="beam b2"/><div className="phone"><div className="island"/><div className="icon">I</div><div className="screenText">ICONIC</div></div><div className="halo"/></div>
@@ -69,6 +67,7 @@ export default function InstallAppPrompt(){
         <div className="kicker">{apple?"IPHONE / HOME SCREEN":"INSTALL ICONIC"}</div>
         <h2>THREE TAPS.<br/><em>FRONT ROW.</em></h2>
         <ol><li><b>01</b><div><strong>{apple?"Tap Share":"Open browser menu"}</strong><small>{apple?"Use Safari's Share button.":"Open the browser installation menu."}</small></div></li><li><b>02</b><div><strong>Add to Home Screen</strong><small>Select Add to Home Screen / Install App.</small></div></li><li><b>03</b><div><strong>Tap Add</strong><small>ICONIC lands beside your other apps.</small></div></li></ol>
+        {!apple&&<InstallQr/>}
         <button className="cta" onClick={close}>GOT IT</button>
       </div>}
       <style jsx>{`

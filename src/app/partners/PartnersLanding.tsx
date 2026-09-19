@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CinematicShell } from "../_cinematic";
+import { ART } from "../_cinematic/assets";
 import { NOC_MEDIA } from "../tampa/nightmare-on-channelside/merch/noc-assets";
 import { PARTNER_ROLES } from "@/lib/noc-partner-roles";
 import s from "./partners.module.css";
@@ -12,8 +13,8 @@ const touringNames=[
 
 export default function PartnersLanding(){
   return <CinematicShell active="/partners">
-    <section className={s.hero}>
-      <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside official campaign artwork" className={s.heroArt}/>
+    <section className={s.hero} data-asset-namespace="ICONIC_MASTER" data-testid="partners-parent-hero">
+      <img src={ART.hospitality} alt="ICONIC LIVE master-brand hospitality and audience experience artwork" className={s.heroArt}/>
       <div className={s.heroShade}/>
       <div className={s.heroCopy}>
         <span className={s.kicker}>ICONIC LIVE / PARTNERS + PERSONNEL</span>
@@ -63,14 +64,16 @@ export default function PartnersLanding(){
         <div><span className={s.kicker}>UPCOMING</span><h2>Nightmare on Channelside.</h2></div>
         <p>Saturday, October 31, 2026 · Tampa, Florida. This is the active ICONIC LIVE campaign and the only event currently being presented on this personnel page.</p>
       </div>
-      <div className={s.futureGrid}>
-        <article>
+      <div className={s.campaignFeature} data-asset-namespace="NIGHTMARE_ON_CHANNELSIDE" data-testid="active-nightmare-campaign">
+        <div className={s.campaignArt}><img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside official Tampa Halloween campaign artwork"/></div>
+        <div className={s.campaignCopy}>
           <span>01 / ACTIVE CAMPAIGN</span>
           <h3>Halloween in Tampa</h3>
-          <p>Every role, application, tracking link, asset assignment, proof requirement and payment workflow on this page is being built around Nightmare on Channelside.</p>
-        </article>
+          <p>Every role, application, tracking link, asset assignment, proof requirement and payment workflow on this page is being built around Nightmare on Channelside. The event artwork stays here—in the event-specific campaign section—not as generic ICONIC parent-brand decoration.</p>
+          <Link href="/tampa/nightmare-on-channelside" className={s.secondary}>Explore the event <span>↗</span></Link>
+        </div>
       </div>
-      <p className={s.disclaimer}>Additional ICONIC LIVE properties remain in development and are intentionally hidden from this page for now.</p>
+      <p className={s.disclaimer}>Additional ICONIC LIVE properties remain in development and are intentionally hidden from this personnel page until they are ready for their own property-specific activation.</p>
     </section>
 
     <section id="join-team" className={s.join}>
