@@ -14,7 +14,7 @@ export const metadata:Metadata={
 
 export default function GiveawayPage(){
   return <Shell>
-    <main className={styles.wrap}>
+    <div className={styles.wrap}>
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
           <div className={styles.eyebrow}>ICONIC LIVE · TAMPA · OFFICIAL GIVEAWAY CONTROL</div>
@@ -42,6 +42,6 @@ export default function GiveawayPage(){
           </div>
         </div>
       </section>
-    </main>
+    </div>
   </Shell>;
 }
