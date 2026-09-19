@@ -1,0 +1,58 @@
+name: ICONIC Visual Evidence
+
+on:
+  push:
+    branches:
+      - iconic-asset-governance-20260919
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install exact candidate
+        run: npm ci --no-fund
+      - name: Validate and build exact candidate
+        run: |
+          npm run validate:ui
+          npm run build
+      - name: Install browser QA runtime
+        run: |
+          npm install -g playwright@1.55.0
+          playwright install --with-deps chromium
+      - name: Start exact compiled candidate
+        run: |
+          npm run start -- --port 3100 > /tmp/iconic-visual-server.log 2>&1 &
+          for i in {1..60}; do
+            curl -fsS http://127.0.0.1:3100/ >/dev/null && exit 0
+            sleep 2
+          done
+          cat /tmp/iconic-visual-server.log
+          exit 1
+      - name: Capture and validate rendered evidence
+        env:
+          PREVIEW_ORIGIN: http://127.0.0.1:3100
+        run: |
+          export NODE_PATH="$(npm root -g)"
+          node scripts/capture-visual-evidence.cjs
+      - name: Upload visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iconic-visual-evidence-${{ github.sha }}
+          path: |
+            visual-evidence/
+            /tmp/iconic-visual-server.log
+          if-no-files-found: error
+          retention-days: 14
