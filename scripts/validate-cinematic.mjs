@@ -7,6 +7,7 @@ const sources=['index.tsx','MotionCanvas.tsx','assets.ts'].map(p=>read(base+p));
 const [site,motion,assets]=sources;
 const summerPage=read('src/app/summer-walker/page.tsx');
 const pmfPage=read('src/app/dj-snake-pardon-my-french/page.tsx');
+const installPrompt=read('src/app/_components/InstallAppPrompt.tsx');
 assert.match(summerPage,/import\s*\{\s*SUMMER_VISUAL\s*\}\s*from\s*["']@\/app\/_cinematic\/assets["']/,'Soul Symphony page must import canonical property artwork');
 assert.match(summerPage,/visual=\{SUMMER_VISUAL\}/,'Soul Symphony page must render canonical property artwork');
 assert.match(pmfPage,/import\s*\{\s*PMF_VISUAL\s*\}\s*from\s*["']@\/app\/_cinematic\/assets["']/,'PMF page must import canonical property artwork');
@@ -51,6 +52,10 @@ visit(parsed);assert.equal(canvases,1,'Exactly one clean homepage canvas require
 for(const [route,exportName] of [['','Home'],['events','Events'],['music','Music'],['creators','Creators'],['experiences','Experiences'],['partners','Partners'],['media','Media'],['merch','Merch']])assert.match(read(`src/app/${route?route+'/':''}page.tsx`),new RegExp(`Cinematic${exportName}`),'Live route must use governed component');
 assert.match(read(base+'cinematic.module.css'),/prefers-reduced-motion/,'Reduced motion required');
 assert.match(motion,/data-testid="motion-toggle"/,'Pause control must remain outside canvas');
+assert.doesNotMatch(installPrompt,/setTimeout\(\(\)=>setVisible\(true\),1600\)/,'Install prompt may not auto-interrupt after beforeinstallprompt');
+assert.doesNotMatch(installPrompt,/setTimeout\(\(\)=>setVisible\(true\),4300\)/,'Install prompt may not auto-interrupt iOS visitors');
+assert.doesNotMatch(installPrompt,/position:'fixed',right:22,bottom:22/,'Install QR may not float over site content');
+assert.match(installPrompt,/onClick=\{\(\)=>\{setSteps\(false\);setVisible\(true\)/,'Install experience must be explicitly user-initiated');
 assert(fs.existsSync('docs/ICONIC_UI_PRODUCTION_STANDARD.md'),'Preserve v1 SOP');
 assert(fs.existsSync('docs/standards/iconic-v2/README.md'),'v2 standard required');
 assert(fs.existsSync('docs/standards/iconic-v2/ANIMATION_ASSET_ASSIGNMENT_2.1.md'),'v2.1 animation assignment standard required');
