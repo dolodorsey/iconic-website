@@ -24,6 +24,12 @@ assert.match(site,/w\.src/,'World cards must consume the semantic registry');
 assert.match(site,/p\.primary_image_url/,'Products must use actual product images');
 assert.match(site,/formatPrice\(p\.price_cents\)/,'Products must use actual catalog prices');
 assert.match(site,/getMerchCatalog\(\)/,'Live catalog integration must remain');
+assert.match(assets,/export const ICONIC_MASTER_CHANNELS\s*=/,'ICONIC parent asset registry must keep explicit master-channel assignments');
+assert.doesNotMatch(assets,/export const COLLECTIONS\s*=/,'ICONIC parent asset registry may not hard-code artist merchandise collections');
+assert.doesNotMatch(assets,/import\s*\{[^}]*COLLECTION_ART[^}]*\}\s*from\s*['"][^'"]*noc-assets['"]/,'ICONIC parent asset registry may not import NOC collection artwork');
+assert.match(site,/data-asset-namespace="ICONIC_MASTER"/,'Homepage must label governed parent-brand visual sequence');
+assert.doesNotMatch(site,/\['21-savage','kodak-black','da-baby'\]/,'Homepage may not hard-code artist collection shortcuts');
+
 assert.match(site,/<MotionCanvas\/>/,'Homepage motion must remain');
 assert.match(site,/<Intro eyebrow="ICONIC \/ LIVE ENTERTAINMENT & CULTURE"/,'Homepage H1 must remain outside canvas');
 assert.match(site,/CinematicEvents[\s\S]*?<Opener src=\{ART\.crowd\}/,'Events page must use CONCERT ANI away from homepage');
