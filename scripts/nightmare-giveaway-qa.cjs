@@ -68,7 +68,7 @@ async function settle(page){
           assert.equal(errors.length,0,'No page exceptions');
 
           if(route.key==='giveaway-hub'){
-            assert(row.text.includes('THE DOOR IS NOT OPEN YET.'),'Locked-state headline missing');
+            assert(row.text.replace(/\\s+/g,' ').includes('THE DOOR IS NOT OPEN YET.'),'Locked-state headline missing');
             assert(row.text.includes('NO PURCHASE NECESSARY'),'No-purchase disclosure missing');
             assert.equal(row.forms,0,'Entry form must not render before launch');
           }
