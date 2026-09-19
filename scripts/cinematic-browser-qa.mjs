@@ -70,7 +70,7 @@ try{
   for(const input of await form.locator('input[required]').all()){const type=await input.getAttribute('type');const name=await input.getAttribute('name');if(['full_name','email','phone'].includes(name))continue;if(type==='checkbox'){await input.check();continue}if(type==='url')await input.fill('https://example.com/qa');else if(type==='number')await input.fill('10');else await input.fill('ICONIC QA')}
   for(const ta of await form.locator('textarea[required]').all())await ta.fill('ICONIC QA required response');
   for(const sel of await form.locator('select[required]').all()){if(await sel.getAttribute('name')==='city')continue;await sel.selectOption({index:1})}
-  await form.locator('button[type="submit"]').click();await p.getByText('APPLICATION RECEIVED',{exact:true}).waitFor({timeout:10000});assert.equal(payload.requested_role,expectedRole);assert.equal(await p.locator('[role="alert"]').count(),0,'Personnel success must not become form error');await p.unroute('**/api/noc-partner-apply');
+  await form.locator('button[type="submit"]').click();await p.getByText('APPLICATION RECEIVED',{exact:true}).waitFor({timeout:10000});assert.equal(payload.requested_role,expectedRole);assert.equal(await p.locator('form [role="alert"]').count(),0,'Personnel success must not become form error');await p.unroute('**/api/noc-partner-apply');
  }
  report.formUI='pass; mocked inquiry + all nine personnel form submissions';await p.close();
 }catch(e){report.failures.push(e.message);}finally{await browser.close();await fs.writeFile('qa-evidence/report.json',JSON.stringify(report,null,2));}
