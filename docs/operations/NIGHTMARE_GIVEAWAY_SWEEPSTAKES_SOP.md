@@ -7,7 +7,7 @@
 **Event key:** `nightmare_on_channelside_2026`  
 **Primary public identity:** @THEICONICLIVE / 775-542-6642 / 77-55-ICONIC  
 **Operating owner:** DIESEL  
-**System status:** Backend built. Public launch gated pending Official Rules, ARV, required Florida filing/security determination, prize approvals, HighLevel materialization, and end-to-end QA.
+**System status:** Backend + secure intake endpoint built and prelaunch gate verified. Main-program provisional ARV is **$13,200**, so operations are treating it as Florida filing/security-required unless final approved values/structure establish otherwise. Earliest planned chance-based launch is **September 27, 2026**, and remains blocked until all gates clear.
 
 ## 1. Operating decision
 
@@ -68,7 +68,7 @@ Flow:
 4. Sweepstake entry consent is recorded.
 5. SMS marketing opt-in and email marketing opt-in remain separate choices.
 6. Contact is source-tagged `NOC26-TEXT`.
-7. Dedupe enforces the published entry limit.
+7. Dedupe enforces **one official entry per person per day across the main sweepstakes**, regardless of channel.
 8. Contact enters eligibility QA.
 
 ### B. CALL IN
@@ -168,9 +168,9 @@ Hosts are entertainers, **not** rule-makers. They use approved scripts and canno
 | Sep 19 | Backend + operating architecture | Internal | Giveaway Director |
 | Sep 20 | Rules + ARV review | All | Rules Reviewer |
 | Sep 21 | End-to-end intake QA | Text/web | CRM Operator |
-| Sep 22 | First social giveaway — only if gates clear | Ticket pair / IG | Host #1 |
-| Sep 25, 8 PM ET | Comedian call/text live #1 | Ticket pair | Host #1 |
-| Sep 28 | Radio/podcast Wave 1 | Ticket pair | Partner Liaison |
+| Sep 22 | Teaser / waitlist only — NO chance-based entries | Event awareness | Host #1 |
+| Sep 25, 8 PM ET | Comedian teaser live — NO giveaway entries | Event awareness | Host #1 |
+| Sep 27 | Earliest official launch if all legal/filing/security/QA gates are green | Ticket pair / text + IG | Host #1 |\n| Sep 28 | Radio/podcast Wave 1 | Ticket pair | Partner Liaison |
 | Oct 1 | Merch giveaway | Merch / IG | Host #2 |
 | Oct 4, 8 PM ET | Comedian live #2 | Ticket pair | Host #2 |
 | Oct 8 | Radio/podcast Wave 2 | Merch / ticket | Partner Liaison |
@@ -223,9 +223,9 @@ Required objects stored in Supabase `noc_ghl_blueprint`:
 - `noc_giveaway_draws`
 - `noc_giveaway_winners`
 - `noc_giveaway_personnel_slots`
-- `noc_giveaway_calendar`
+- `noc_giveaway_calendar`\n- `noc_giveaway_intake_rate_limits`\n- Edge Function: `noc-giveaway-entry` (public status + hardened server-side entry intake)
 
-All eight tables have RLS enabled and direct `anon` / `authenticated` privileges revoked. The future public website should submit through a hardened server-side route, not directly write these tables from the browser.
+All giveaway tables have RLS enabled and direct `anon` / `authenticated` privileges revoked. Public entry writes now run through the deployed `noc-giveaway-entry` Edge Function and service-role-only RPC; the database itself blocks entries until status, dates, channel and rules version are live.
 
 ## 12. Public launch checklist
 
