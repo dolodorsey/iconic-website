@@ -1,0 +1,40 @@
+name: Temporary NOC Shopify Mockup Export
+on:
+  pull_request:
+    paths:
+      - '.tmp/noc-shopify-images.tsv'
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Shopify mockups
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p NIGHTMARE_ON_CHANNELSIDE_SHOPIFY_MOCKUPS
+          printf "index\thandle\ttitle\tshopify_url\tfilename\n" > NIGHTMARE_ON_CHANNELSIDE_SHOPIFY_MOCKUPS/MANIFEST.tsv
+          while IFS=$'\t' read -r idx handle title url; do
+            [ -n "$url" ] || continue
+            clean_url="${url%%\?*}"
+            ext="${clean_url##*.}"
+            safe_title="$(printf '%s' "$title" | iconv -f UTF-8 -t ASCII//TRANSLIT 2>/dev/null | tr '[:lower:]' '[:upper:]' | sed -E 's/[^A-Z0-9]+/_/g; s/^_+|_+$//g' | cut -c1-90)"
+            filename="${idx}_${safe_title}.${ext}"
+            curl -L --fail --retry 4 --retry-delay 2 --connect-timeout 20 "$url" -o "NIGHTMARE_ON_CHANNELSIDE_SHOPIFY_MOCKUPS/$filename"
+            printf "%s\t%s\t%s\t%s\t%s\n" "$idx" "$handle" "$title" "$url" "$filename" >> NIGHTMARE_ON_CHANNELSIDE_SHOPIFY_MOCKUPS/MANIFEST.tsv
+          done < .tmp/noc-shopify-images.tsv
+          count="$(find NIGHTMARE_ON_CHANNELSIDE_SHOPIFY_MOCKUPS -maxdepth 1 -type f ! -name MANIFEST.tsv | wc -l | tr -d ' ')"
+          test "$count" -eq 93
+          printf "NIGHTMARE ON CHANNELSIDE\nShopify collection: noc-2026\nMockups: %s\nGenerated from Shopify featured product media.\n" "$count" > NIGHTMARE_ON_CHANNELSIDE_SHOPIFY_MOCKUPS/README.txt
+
+      - name: Upload mockup ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: NIGHTMARE_ON_CHANNELSIDE_SHOPIFY_MOCKUPS
+          path: NIGHTMARE_ON_CHANNELSIDE_SHOPIFY_MOCKUPS/
+          if-no-files-found: error
+          retention-days: 1
