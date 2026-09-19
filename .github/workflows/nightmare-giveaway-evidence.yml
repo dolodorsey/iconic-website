@@ -1,0 +1,45 @@
+name: Nightmare giveaway screenshot evidence
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nightmare-giveaway-evidence-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  giveaway-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Build exact candidate
+        run: npm ci --no-fund && npm run validate:ui && npm run build
+      - name: Install isolated browser
+        run: |
+          npm install --prefix /tmp/noc-giveaway-qa --no-fund --no-audit playwright@1.63.0
+          /tmp/noc-giveaway-qa/node_modules/.bin/playwright install --with-deps chromium
+      - name: Start exact candidate
+        run: |
+          nohup npm run start -- --port 3000 > giveaway-server.log 2>&1 &
+      - name: Capture desktop + mobile proof
+        run: NODE_PATH=/tmp/noc-giveaway-qa/node_modules node scripts/nightmare-giveaway-qa.cjs
+      - name: Preserve exact source and screenshots
+        if: always()
+        run: |
+          git rev-parse HEAD > giveaway-evidence/source-sha.txt
+          cp giveaway-server.log giveaway-evidence/server.log || true
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightmare-giveaway-evidence-${{ github.sha }}-${{ github.run_id }}
+          path: giveaway-evidence/
+          if-no-files-found: error
+          retention-days: 14
