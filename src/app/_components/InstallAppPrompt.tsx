@@ -35,6 +35,7 @@ export default function InstallAppPrompt(){
   const [apple,setApple]=useState(false);
 
   useEffect(()=>{
+    if(location.pathname.startsWith("/tampa/nightmare-on-channelside/giveaways")){setInstalled(true);return}
     if(isStandalone()){setInstalled(true);return}
     const ios=isIOS();setApple(ios);
     if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>undefined);
