@@ -55,7 +55,7 @@ async function getVariantIndex() {
   catalog.products.forEach((product) => {
     product.variants.forEach((variant) => {
       index.set(variant.id, {
-        productTitle: product.title,
+        productTitle: product.display_title,
         productHandle: product.sku,
         collectionSlug: product.collection_slug,
         variantTitle: variant.title,
