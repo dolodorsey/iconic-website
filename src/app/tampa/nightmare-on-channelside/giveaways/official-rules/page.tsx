@@ -10,7 +10,7 @@ export const metadata:Metadata={
 
 export default function RulesPage(){
   return <Shell>
-    <main style={{background:"#050101",minHeight:"100vh"}}>
+    <div style={{background:"#050101",minHeight:"100vh"}}>
       <article className={styles.rules}>
         <div className={styles.rulesBanner}>DRAFT · NOT YET ACTIVE · FINAL LEGAL ENTITY, APPROVED ARVs, FILING RECEIPT AND SECURITY MUST BE INSERTED BEFORE LAUNCH</div>
         <h1>NIGHTMARE ON CHANNELSIDE<br/>OFFICIAL GIVEAWAY RULES.</h1>
@@ -62,6 +62,6 @@ export default function RulesPage(){
 
         <p style={{marginTop:46}}><Link href="/tampa/nightmare-on-channelside/giveaways">← Back to Giveaway Hub</Link></p>
       </article>
-    </main>
+    </div>
   </Shell>;
 }
