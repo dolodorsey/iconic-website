@@ -72,7 +72,7 @@ function check(name, pass, details={}){
       }
       if(route.key==="merch"){
         const text = metrics.bodyText.toLowerCase();
-        check(`merch ${view.key} product-first-copy`, !text.includes("choose your collection") && !text.includes("artist collections"), {});
+        check(`merch ${view.key} product-first-copy`, !text.includes("choose your collection") && !text.includes("shop by artist") && !text.includes("explore collection"), {});
         const collectionLinks = await page.locator('a[href*="/merch/collection/"]').count();
         check(`merch ${view.key} no-public-collection-links`, collectionLinks===0, {collectionLinks});
       }
