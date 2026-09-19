@@ -1,4 +1,9 @@
-import type { Metadata } from 'next';
-import { CinematicPartners } from '../_cinematic';
-export const metadata:Metadata={title:'Partnerships & Sponsorships',description:'Explore ICONIC event partnerships, guest experiences, content collaborations and merchandise opportunities.'};
-export default CinematicPartners;
+import type { Metadata } from "next";
+import PartnersLanding from "./PartnersLanding";
+
+export const metadata:Metadata={
+  title:"Partners + Personnel",
+  description:"Join ICONIC LIVE as a promoter, ambassador, model, podcast/media partner, DJ, host or street-team member—or explore brand and sponsorship opportunities.",
+};
+
+export default PartnersLanding;
