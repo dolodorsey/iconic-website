@@ -14,12 +14,12 @@ export function CinematicShell({children, active = ''}:{children:ReactNode; acti
     <header className={s.header} data-testid="site-header">
       <Link href="/" className={s.logo} aria-label="ICONIC home"><img src={ICONIC_LOGO} alt="ICONIC" width={200} height={60}/></Link>
       <nav className={s.nav} aria-label="Main navigation">{NAV.map(([label,href])=><Link key={href} href={href} aria-current={active===href?'page':undefined}>{label}</Link>)}</nav>
-      <div className={s.headerActions}><Link className={s.access} href="/access?intent=presale">Get access <span aria-hidden="true">↗</span></Link>
+      <div className={s.headerActions}><a className={s.appLink} href="?install=1">Get app</a><Link className={s.access} href="/access?intent=presale">Get access <span aria-hidden="true">↗</span></Link>
       <details className={s.mobileMenu}><summary aria-label="Open navigation">Menu <span aria-hidden="true">☰</span></summary><nav aria-label="Mobile navigation">{NAV.map(([label,href])=><Link key={href} href={href}>{label}</Link>)}<Link href="/media">Media</Link><Link href="/book">Book ICONIC</Link><Link href="/contact">Contact</Link></nav></details></div>
     </header>
     <main id="iconic-content">{children}</main>
     <footer className={s.footer}>
-      <div className={s.footerTop}><div><img src={ICONIC_LOGO} alt="ICONIC" width={200} height={60}/><p>Music brings us here.<br/>Culture keeps us connected.</p></div><div><span className={s.eyebrow}>Explore</span>{NAV.map(([label,href])=><Link key={href} href={href}>{label}</Link>)}</div><div><span className={s.eyebrow}>Be part of it</span><Link href="/access?intent=presale">Event updates</Link><Link href="/access?intent=vip">VIP & hospitality</Link><Link href="/book">Book ICONIC</Link><Link href="/media">Press & media</Link><Link href="/contact">Contact</Link></div></div>
+      <div className={s.footerTop}><div><img src={ICONIC_LOGO} alt="ICONIC" width={200} height={60}/><p>Music brings us here.<br/>Culture keeps us connected.</p></div><div><span className={s.eyebrow}>Explore</span>{NAV.map(([label,href])=><Link key={href} href={href}>{label}</Link>)}</div><div><span className={s.eyebrow}>Be part of it</span><Link href="/access?intent=presale">Event updates</Link><Link href="/access?intent=vip">VIP & hospitality</Link><a href="?install=1">Get the app</a><Link href="/book">Book ICONIC</Link><Link href="/media">Press & media</Link><Link href="/contact">Contact</Link></div></div>
       <div className={s.footerBottom}><span>ICONIC · Live entertainment & culture</span><span><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></span></div>
     </footer>
   </div>;
