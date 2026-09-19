@@ -15,6 +15,7 @@ export function StoreHeader() {
         <Link href={BASE}>HOME</Link>
         <Link href={`${BASE}/shop`}>SHOP</Link>
         <Link href="/tampa/nightmare-on-channelside">EVENT</Link>
+        <a href="?install=1">APP</a>
       </nav>
       <div className={`${premium.tools} noc-mobile-tools`}><BagIndicator /></div>
     </header>
