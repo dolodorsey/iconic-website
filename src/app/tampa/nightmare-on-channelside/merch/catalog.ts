@@ -213,7 +213,9 @@ function normalizeProducts(products: ShopifyPublicProduct[]): CatalogProduct[] {
     featured: index < 8,
     // Artist/subject metadata is under visual QA. Public display stays truthful
     // and product-first until the garment artwork itself has been verified.
-    display_title: `NIGHTMARE ON CHANNELSIDE — ${product.product_type.toUpperCase()} / ${String(index + 1).padStart(2, "0")}`,
+    display_title: product.tags.includes("qa:safe-title-20260919")
+      ? product.title
+      : `NIGHTMARE ON CHANNELSIDE — ${product.product_type.toUpperCase()} / ${String(index + 1).padStart(2, "0")}`,
   }));
 }
 
