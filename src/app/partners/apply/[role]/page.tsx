@@ -13,7 +13,7 @@ export async function generateMetadata({params}:{params:Promise<{role:string}>})
   if(!role) return {title:"Partner Application"};
   return {
     title:`${role.title} Application`,
-    description:`Apply to ICONIC LIVE for the ${role.title} lane for Nightmare on Channelside and future relevant ICONIC LIVE opportunities.`,
+    description:`Apply to ICONIC LIVE for the ${role.title} lane for Nightmare on Channelside in Tampa.`,
     robots:{index:false,follow:false},
   };
 }
@@ -43,8 +43,8 @@ export default async function RoleApplicationPage({params}:{params:Promise<{role
         </aside>
       </div>
       <div className={s.futureNote}>
-        <span>THIS IS BIGGER THAN ONE NIGHT</span>
-        <p>Nightmare on Channelside in Tampa is the first active assignment. Strong personnel can be considered first for future ICONIC LIVE cities and touring properties, including an Atlanta target for Nightmare on Channelside, the Summer Walker Soul Symphony concept, the DJ Snake Pardon My French concept, and additional live properties as they are confirmed.</p>
+        <span>UPCOMING</span>
+        <p>Nightmare on Channelside · Saturday, October 31, 2026 · Tampa, Florida. Your application is being reviewed specifically for this campaign. Strong execution can still build your track record inside the ICONIC LIVE network, but other properties are intentionally not being presented on this page right now.</p>
       </div>
       <PartnerRoleForm role={role}/>
     </section>
