@@ -3,7 +3,7 @@ name: ICONIC Visual Evidence
 on:
   push:
     branches:
-      - iconic-asset-governance-20260919
+      - iconic-release-candidate-20260919-v2
   pull_request:
     branches:
       - main
