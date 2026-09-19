@@ -50,13 +50,13 @@ function ProductViews({ product }: { product: CatalogProduct }) {
     <div className={`noc-product-glance ${back ? "noc-product-glance--pair" : "noc-product-glance--single"}`}>
       {front ? (
         <figure>
-          <img src={front} alt={`${product.title} front view`} loading="lazy" decoding="async" />
+          <img src={front} alt={`${product.display_title} front view`} loading="lazy" decoding="async" />
           <figcaption>FRONT</figcaption>
         </figure>
       ) : null}
       {back ? (
         <figure>
-          <img src={back} alt={`${product.title} back view`} loading="lazy" decoding="async" />
+          <img src={back} alt={`${product.display_title} back view`} loading="lazy" decoding="async" />
           <figcaption>BACK</figcaption>
         </figure>
       ) : null}
@@ -69,7 +69,7 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
     <Link href={`${BASE}/product/${product.sku}`} className={`${premium.productCard} noc-product-card-v2`}>
       <ProductViews product={product} />
       <div className={`${premium.productMeta} noc-product-meta-v2`}>
-        <div><strong>{product.title}</strong><span>{product.product_type}</span></div>
+        <div><strong>{product.display_title}</strong><span>{product.product_type}</span></div>
         <b>{formatPrice(product.price_cents)}</b>
       </div>
     </Link>
