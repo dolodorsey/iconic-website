@@ -61,7 +61,11 @@ for(const product of products){
   counts[subject]=(counts[subject]||0)+1;
 
   let pass=false;
-  if(subject==="all-artist"){
+  if(subject==="visual-qa-pending"){
+    pass=tags.includes("qa:visual-identity-pending") &&
+      tags.includes("tier:visual-qa-pending") &&
+      /^NIGHTMARE ON CHANNELSIDE — /i.test(product.title);
+  }else if(subject==="all-artist"){
     pass=/^ALL ARTIST\b/i.test(product.title) ||
       (/^NOC\b/i.test(product.title) && tags.includes("tier:lineup"));
   }else{
