@@ -8,7 +8,7 @@ const BASE = "/tampa/nightmare-on-channelside/merch";
 const PAGE_SIZE = 24;
 const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 
-type ShopProduct = Pick<CatalogProduct, "shopify_product_id" | "sku" | "title" | "product_type" | "price_cents" | "primary_image_url" | "secondary_image_url">;
+type ShopProduct = Pick<CatalogProduct, "shopify_product_id" | "sku" | "title" | "display_title" | "product_type" | "price_cents" | "primary_image_url" | "secondary_image_url">;
 
 export default function ShopGrid({ products }: { products: ShopProduct[] }) {
   const [query, setQuery] = useState("");
@@ -21,13 +21,13 @@ export default function ShopGrid({ products }: { products: ShopProduct[] }) {
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
     const next = products.filter((product) => {
-      const matchesQuery = !needle || `${product.title} ${product.product_type}`.toLowerCase().includes(needle);
+      const matchesQuery = !needle || `${product.display_title} ${product.product_type}`.toLowerCase().includes(needle);
       const matchesType = type === "all" || product.product_type === type;
       return matchesQuery && matchesType;
     });
     if (sort === "price-low") next.sort((a, b) => a.price_cents - b.price_cents);
     if (sort === "price-high") next.sort((a, b) => b.price_cents - a.price_cents);
-    if (sort === "az") next.sort((a, b) => a.title.localeCompare(b.title));
+    if (sort === "az") next.sort((a, b) => a.display_title.localeCompare(b.display_title));
     return next;
   }, [products, query, type, sort]);
 
@@ -57,19 +57,19 @@ export default function ShopGrid({ products }: { products: ShopProduct[] }) {
               <div className={`noc-product-glance ${product.secondary_image_url ? "noc-product-glance--pair" : "noc-product-glance--single"}`}>
                 {product.primary_image_url ? (
                   <figure>
-                    <img src={product.primary_image_url} alt={`${product.title} front view`} loading="lazy" decoding="async" />
+                    <img src={product.primary_image_url} alt={`${product.display_title} front view`} loading="lazy" decoding="async" />
                     <figcaption>FRONT</figcaption>
                   </figure>
                 ) : null}
                 {product.secondary_image_url ? (
                   <figure>
-                    <img src={product.secondary_image_url} alt={`${product.title} back view`} loading="lazy" decoding="async" />
+                    <img src={product.secondary_image_url} alt={`${product.display_title} back view`} loading="lazy" decoding="async" />
                     <figcaption>BACK</figcaption>
                   </figure>
                 ) : null}
               </div>
               <div className="noc-shop-product-meta">
-                <div><strong>{product.title}</strong><span>{product.product_type}</span></div>
+                <div><strong>{product.display_title}</strong><span>{product.product_type}</span></div>
                 <b>{money.format(product.price_cents / 100)}</b>
               </div>
             </Link>
