@@ -84,23 +84,26 @@ function check(name, pass, details={}){
       }
     }
 
-    // Explicit install state: must appear only after user action.
+    // Explicit install state: normal page has no install overlay; install opens only through ?install=1.
     await page.goto(urlFor("/"), {waitUntil:"networkidle", timeout:120000});
     await page.waitForTimeout(700);
-    const installButton = page.getByRole("button", {name:"Get ICONIC app"});
-    const hasButton = await installButton.count();
-    check(`home ${view.key} install-entry-button`, hasButton===1, {hasButton});
-    if(hasButton){
-      await installButton.click();
-      await page.waitForTimeout(350);
-      const dialog = page.locator('[role="dialog"][aria-label="Install ICONIC"]');
-      check(`home ${view.key} install-dialog-user-initiated`, await dialog.count()===1, {});
-      const file = `home-install__${view.key}__${SHA.slice(0,12)}.png`;
-      await page.screenshot({path:path.join(outDir,file), fullPage:false});
-      results.screenshots.push({route:"/",viewport:view.key,state:"install",file});
-      const floatingQr = await page.locator('aside[aria-label="Scan to install app"]').count();
-      check(`home ${view.key} no-floating-install-qr`, floatingQr===0, {floatingQr});
-    }
+    const installEntry = await page.locator('a[href*="install=1"]').count();
+    check(`home ${view.key} install-entry-in-navigation`, installEntry>0, {installEntry});
+    const fixedInstall = await page.locator('button[aria-label="Get ICONIC app"]').count();
+    check(`home ${view.key} no-persistent-install-overlay-button`, fixedInstall===0, {fixedInstall});
+
+    const installUrl = new URL("/", ORIGIN);
+    installUrl.searchParams.set("install","1");
+    installUrl.searchParams.set("_vercel_share",TOKEN);
+    await page.goto(installUrl.toString(), {waitUntil:"networkidle", timeout:120000});
+    await page.waitForTimeout(350);
+    const dialog = page.locator('[role="dialog"][aria-label="Install ICONIC"]');
+    check(`home ${view.key} install-dialog-explicit-query`, await dialog.count()===1, {});
+    const file = `home-install__${view.key}__${SHA.slice(0,12)}.png`;
+    await page.screenshot({path:path.join(outDir,file), fullPage:false});
+    results.screenshots.push({route:"/",viewport:view.key,state:"install",file});
+    const floatingQr = await page.locator('aside[aria-label="Scan to install app"]').count();
+    check(`home ${view.key} no-floating-install-qr`, floatingQr===0, {floatingQr});
 
     await context.close();
   }
