@@ -108,7 +108,7 @@ export default function PartnerRoleForm({role}:{role:PartnerRole}){
     </label>
 
     {state==="error"&&<div className={s.error}>{error}</div>}
-    <button className={s.submit} disabled={state==="sending"}>{state==="sending"?"SUBMITTING APPLICATION…":`SUBMIT ${role.title.toUpperCase()} APPLICATION →`}</button>
+    <button type="submit" className={s.submit} disabled={state==="sending"}>{state==="sending"?"SUBMITTING APPLICATION…":`SUBMIT ${role.title.toUpperCase()} APPLICATION →`}</button>
     <p className={s.legal}>Submitting an application does not create a booking, employment relationship, guaranteed payment, ticket allocation, credential, stage appearance or future opportunity. If approved, your signed role-specific agreement and compensation sheet control your actual assignment.</p>
   </form>;
 }
