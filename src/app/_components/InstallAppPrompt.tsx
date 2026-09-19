@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 interface InstallPromptEvent extends Event { prompt: () => Promise<{ outcome: "accepted" | "dismissed" }> }
 
 function forceInstall(){try{return new URLSearchParams(location.search).get('install')==='1'}catch{return false}}
+function clearInstallIntent(){try{const u=new URL(location.href);u.searchParams.delete('install');history.replaceState(history.state,'',u.pathname+(u.search||'')+(u.hash||''))}catch{}}
 function InstallQr(){
   const [qr,setQr]=useState('');
   useEffect(()=>{if(typeof window==='undefined'||window.innerWidth<760)return;try{const u=new URL(location.href);u.hash='';u.search='';u.searchParams.set('install','1');setQr('https://wfkohcwxxsrhcxhepfql.supabase.co/functions/v1/app-install-qr?url='+encodeURIComponent(u.toString()))}catch{}},[]);
@@ -48,8 +49,8 @@ export default function InstallAppPrompt(){
 
   if(installed)return null;
   if(!visible)return null;
-  const close=()=>{storageSet("iconic:pwa-dismissed",String(Date.now()));setVisible(false);void track("cta_click",{cta:"pwa_prompt_dismiss",variant:apple?"ios":"web"})};
-  const install=async()=>{void track("app_install_click",{platform:apple?"ios":"web",variant:prompt?"native_prompt":"instructions"});if(prompt){const result=await prompt.prompt();setPrompt(null);if(result.outcome==="accepted")setVisible(false);return}setSteps(true)};
+  const close=()=>{storageSet("iconic:pwa-dismissed",String(Date.now()));clearInstallIntent();setVisible(false);void track("cta_click",{cta:"pwa_prompt_dismiss",variant:apple?"ios":"web"})};
+  const install=async()=>{void track("app_install_click",{platform:apple?"ios":"web",variant:prompt?"native_prompt":"instructions"});if(prompt){const result=await prompt.prompt();setPrompt(null);if(result.outcome==="accepted"){clearInstallIntent();setVisible(false)}return}setSteps(true)};
 
   return <div className="iconic-install-backdrop" role="dialog" aria-modal="true" aria-label="Install ICONIC">
     <section className="iconic-install-card">
