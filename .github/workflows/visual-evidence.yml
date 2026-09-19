@@ -14,24 +14,35 @@ permissions:
 jobs:
   screenshots:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    env:
-      PREVIEW_ORIGIN: https://iconic-website-git-iconic-asset-gove-20400e-dr-dorseys-projects.vercel.app
-      VERCEL_SHARE_TOKEN: j6Yb9tHxE773M3vHbsYfK2mevLW5qY3t
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
+          cache: npm
+      - name: Install exact candidate
+        run: npm ci --no-fund
+      - name: Validate and build exact candidate
+        run: |
+          npm run validate:ui
+          npm run build
       - name: Install browser QA runtime
         run: |
           npm install -g playwright@1.55.0
           playwright install --with-deps chromium
-      - name: Wait for branch preview
-        run: sleep 90
+      - name: Start exact compiled candidate
+        run: |
+          npm run start -- --port 3100 > /tmp/iconic-visual-server.log 2>&1 &
+          for i in {1..60}; do
+            curl -fsS http://127.0.0.1:3100/ >/dev/null && exit 0
+            sleep 2
+          done
+          cat /tmp/iconic-visual-server.log
+          exit 1
       - name: Capture and validate rendered evidence
         env:
-          NODE_PATH: /opt/hostedtoolcache/node/20.x/x64/lib/node_modules
+          PREVIEW_ORIGIN: http://127.0.0.1:3100
         run: |
           export NODE_PATH="$(npm root -g)"
           node scripts/capture-visual-evidence.cjs
@@ -40,6 +51,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: iconic-visual-evidence-${{ github.sha }}
-          path: visual-evidence/
+          path: |
+            visual-evidence/
+            /tmp/iconic-visual-server.log
           if-no-files-found: error
           retention-days: 14
