@@ -88,7 +88,7 @@ export default function TicketFaceClient({ticketmasterUrl}:{ticketmasterUrl:stri
         <div style={{fontSize:9,fontWeight:900,letterSpacing:".2em",textTransform:"uppercase",color:"#ff473d"}}>PROMO / TRACKING CODE</div>
         <div style={{display:"grid",gridTemplateColumns:"minmax(0,1fr) auto",gap:10}}>
           <input value={code} onChange={e=>setCode(normalizeCode(e.target.value))} placeholder="EX: TPA-STREET" aria-label="Promo or tracking code" style={{minHeight:56,borderRadius:14,border:"1px solid rgba(255,255,255,.16)",background:"#0b0505",color:"#fff",padding:"0 16px",fontSize:16,fontWeight:800,letterSpacing:".08em"}}/>
-          <button onClick={applyCode} style={{minHeight:56,border:0,borderRadius:14,padding:"0 22px",background:"#ff3b30",color:"#fff",fontWeight:900,letterSpacing:".12em",textTransform:"uppercase",cursor:"pointer"}}>Apply Code</button>
+          <button onClick={applyCode} style={{minHeight:56,border:0,borderRadius:14,padding:"0 22px",background:"#c72d24",color:"#fff",fontWeight:900,letterSpacing:".12em",textTransform:"uppercase",cursor:"pointer"}}>Apply Code</button>
         </div>
         <p style={{margin:0,color:"rgba(255,255,255,.5)",fontSize:11,lineHeight:1.6}}>ICONIC LIVE captures this code before Ticketmaster so promoter, creator, city, QR and campaign attribution can be measured. A Ticketmaster presale/offer code, when applicable, is entered separately on Ticketmaster.</p>
         {message&&<div style={{fontSize:11,color:"#ff8b84",fontWeight:800}}>{message}</div>}
@@ -99,7 +99,7 @@ export default function TicketFaceClient({ticketmasterUrl}:{ticketmasterUrl:stri
           <div style={{fontSize:9,fontWeight:900,letterSpacing:".2em",textTransform:"uppercase",color:"#ff473d"}}>OFFICIAL TICKET INVENTORY</div>
           <h2 style={{fontFamily:"Georgia,serif",fontSize:40,lineHeight:.95,margin:"18px 0 12px"}}>Ticketmaster Seats + Prices</h2>
           <p style={{color:"rgba(255,255,255,.62)",fontSize:13,lineHeight:1.7}}>Current seating, live inventory and final Ticketmaster pricing load after you continue. Your ICONIC promo attribution stays captured before the handoff.</p>
-          <button onClick={continueToTicketmaster} style={{marginTop:"auto",minHeight:54,border:0,borderRadius:999,background:"#ff3b30",color:"#fff",fontSize:10,fontWeight:900,letterSpacing:".16em",textTransform:"uppercase",cursor:"pointer"}}>Continue to Ticketmaster →</button>
+          <button onClick={continueToTicketmaster} style={{marginTop:"auto",minHeight:54,border:0,borderRadius:999,background:"#c72d24",color:"#fff",fontSize:10,fontWeight:900,letterSpacing:".16em",textTransform:"uppercase",cursor:"pointer"}}>Continue to Ticketmaster →</button>
         </article>
 
         <article style={{minHeight:330,padding:28,border:"1px solid rgba(255,255,255,.12)",borderRadius:24,background:"rgba(255,255,255,.035)",display:"flex",flexDirection:"column"}}>
