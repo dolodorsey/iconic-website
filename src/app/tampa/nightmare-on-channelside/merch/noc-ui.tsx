@@ -1,6 +1,7 @@
 import Link from "next/link";
-import type { CatalogProduct } from "./catalog";
+import type { CatalogCollection, CatalogProduct } from "./catalog";
 import { formatPrice } from "./catalog";
+import { COLLECTION_ART } from "./noc-assets";
 import { BagIndicator } from "./shop-client";
 import premium from "./noc-premium.module.css";
 
@@ -74,6 +75,24 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
   );
 }
 
+export function WorldCard({ collection }: { collection: CatalogCollection }) {
+  const art = COLLECTION_ART[collection.slug];
+  return (
+    <Link href={`${BASE}/collection/${collection.slug}`} className="noc-world-card-v3">
+      <div className="noc-world-artist-stage">
+        {art ? <img src={art} alt={`${collection.name} Nightmare on Channelside artwork`} loading="lazy" decoding="async" /> : null}
+      </div>
+      <div className="noc-world-card-copy-v3">
+        <span>COLLECTION</span>
+        <strong>{collection.name}</strong>
+        <em>SHOP COLLECTION →</em>
+      </div>
+    </Link>
+  );
+}
+
+// Compatibility export for legacy direct collection routes.
+// Customer-facing navigation does not expose collection browsing while QA is open.
 export function StoreSubnav() {
   return (
     <nav className={premium.subnav} aria-label="Nightmare shop sections">
