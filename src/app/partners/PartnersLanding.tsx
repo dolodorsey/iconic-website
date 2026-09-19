@@ -98,7 +98,7 @@ export default function PartnersLanding(){
         <article>
           <span>EVERY ACTIVATED PERSON</span>
           <h3>Hospitality + access</h3>
-          <p>Complimentary event-day meal and beverage, VIP bar access, and credentialed access to official ICONIC LIVE after-parties associated with Nightmare on Channelside.</p>
+          <p>Complimentary event-day meal and beverage, VIP bar access, and credentialed access to all official ICONIC LIVE after-parties associated with Nightmare on Channelside.</p>
         </article>
         <article>
           <span>PAID PROMO PERSONNEL</span>
