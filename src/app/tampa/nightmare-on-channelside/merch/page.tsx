@@ -8,7 +8,7 @@ import premium from "./noc-premium.module.css";
 
 export const metadata: Metadata = {
   title: "Nightmare on Channelside — Official Merch",
-  description: "Official Nightmare on Channelside event merchandise pulled from the live catalog."
+  description: "Official Nightmare on Channelside artist collections, Tampa editions and event merchandise.",
   alternates: { canonical: "/tampa/nightmare-on-channelside/merch" },
 };
 
@@ -39,13 +39,17 @@ export default async function NightmareMerchPage() {
         <section className={premium.intro}>
           <span className={premium.eyebrow}>OFFICIAL NIGHTMARE ON CHANNELSIDE MERCH</span>
           <h1 className={`${premium.display} noc-editorial-display`}>SHOP THE NIGHT.</h1>
-          <p className={premium.body}>Official Nightmare on Channelside pieces pulled from the live catalog. Browse the actual products, variants and prices.</p>
+          <p className={premium.body}>Official artist collections, Tampa editions and Nightmare on Channelside event pieces.</p>
         </section>
 
         <section className="noc-portal-grid" aria-label="Nightmare storefront sections">
           <Link href={`${BASE}/shop`} className={premium.portal}>
             <img src={NOC_MEDIA.market} alt="Nightmare on Channelside merch market" loading="lazy" decoding="async" />
             <div className={premium.portalCopy}><span>OFFICIAL MERCH</span><strong>SHOP ALL</strong><em>ALL PIECES →</em></div>
+          </Link>
+          <Link href={`${BASE}/worlds`} className={premium.portal}>
+            <img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside artist collections" loading="lazy" decoding="async" />
+            <div className={premium.portalCopy}><span>COLLECTIONS</span><strong>SHOP BY ARTIST</strong><em>21 SAVAGE / KODAK / MEEK / MORE →</em></div>
           </Link>
           <Link href="/tampa/nightmare-on-channelside" className={premium.portal}>
             <img src={NOC_MEDIA.hall} alt="Nightmare on Channelside Tampa event" loading="lazy" decoding="async" />
@@ -60,7 +64,7 @@ export default async function NightmareMerchPage() {
             <div className={premium.sectionHead}>
               <span className={premium.eyebrow}>FEATURED MERCH</span>
               <h2 className="noc-editorial-heading">FIRST LOOK</h2>
-              <p>These cards come from live Shopify inventory. Open any piece for front/back views, sizes, variants and checkout.</p>
+              <p>Front and back at a glance. Open any piece for sizes, variants and checkout.</p>
             </div>
             <div className={premium.productGrid}>{featured.map((product) => <ProductCard key={product.shopify_product_id} product={product} />)}</div>
             <div className={premium.more}><Link href={`${BASE}/shop`} className={premium.button}>SHOP THE FULL DROP →</Link></div>
