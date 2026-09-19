@@ -122,11 +122,13 @@ function check(name, pass, details={}){
     await context.close();
   }
 
-  // Legacy collection browser must redirect to product-first shop.
+  // Legacy collection browsers and direct collection landings must redirect to product-first shop.
   const context = await browser.newContext({ viewport:{width:1440,height:1000} });
   const page = await context.newPage();
   await page.goto(urlFor("/tampa/nightmare-on-channelside/merch/worlds"), {waitUntil:"networkidle", timeout:120000});
   check("legacy-worlds-redirects-to-shop", page.url().includes("/tampa/nightmare-on-channelside/merch/shop"), {finalUrl:page.url()});
+  await page.goto(urlFor("/tampa/nightmare-on-channelside/merch/collection/21-savage"), {waitUntil:"networkidle", timeout:120000});
+  check("direct-artist-collection-redirects-to-shop", page.url().includes("/tampa/nightmare-on-channelside/merch/shop"), {finalUrl:page.url()});
   await context.close();
 
   fs.writeFileSync(path.join(outDir,"qa.json"), JSON.stringify({...results, failures}, null, 2));
