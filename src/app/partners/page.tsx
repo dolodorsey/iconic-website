@@ -6,4 +6,6 @@ export const metadata:Metadata={
   description:"Join ICONIC LIVE as a promoter, ambassador, model, podcast/media partner, DJ, host or street-team member—or explore brand and sponsorship opportunities.",
 };
 
-export default PartnersLanding;
+// Preserve the governed route contract while using the expanded Partners implementation.
+const CinematicPartners = PartnersLanding;
+export default CinematicPartners;
