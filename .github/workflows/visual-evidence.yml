@@ -23,9 +23,11 @@ jobs:
           cache: npm
       - name: Install exact candidate
         run: npm ci --no-fund
-      - name: Validate and build exact candidate
+      - name: Validate governance, live taxonomy, and build exact candidate
         run: |
           npm run validate:ui
+          node scripts/validate-cinematic.mjs
+          npm run audit:merch-taxonomy
           npm run build
       - name: Install browser QA runtime
         run: |
