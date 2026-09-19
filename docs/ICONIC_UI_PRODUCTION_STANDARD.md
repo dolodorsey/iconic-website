@@ -3,7 +3,7 @@
 Version: 1.0.0  
 Status: LOCKED / PRODUCTION GOVERNANCE  
 Applies to: ICONIC platform website only  
-Primary production property: iconic-atl.com / iconic-website Vercel project
+Primary production property: https://iconic-website-ten.vercel.app / iconic-website Vercel project (temporary URL until the custom domain is assigned)
 
 ## 1. Purpose
 
