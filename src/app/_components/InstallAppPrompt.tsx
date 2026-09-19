@@ -47,7 +47,7 @@ export default function InstallAppPrompt(){
   },[]);
 
   if(installed)return null;
-  if(!visible)return <button aria-label="Get ICONIC app" onClick={()=>{setSteps(false);setVisible(true);void track("cta_click",{cta:"iconic_persistent_get_app"})}} style={{position:"fixed",right:16,bottom:18,zIndex:2147482500,border:"1px solid #e0ad4566",borderRadius:999,padding:"13px 17px",background:"linear-gradient(100deg,#ffd97a,#dba63d)",color:"#090602",font:"900 11px/1 Arial",letterSpacing:".08em",boxShadow:"0 16px 44px rgba(0,0,0,.38)",cursor:"pointer"}}>GET ICONIC ↗</button>;
+  if(!visible)return null;
   const close=()=>{storageSet("iconic:pwa-dismissed",String(Date.now()));setVisible(false);void track("cta_click",{cta:"pwa_prompt_dismiss",variant:apple?"ios":"web"})};
   const install=async()=>{void track("app_install_click",{platform:apple?"ios":"web",variant:prompt?"native_prompt":"instructions"});if(prompt){const result=await prompt.prompt();setPrompt(null);if(result.outcome==="accepted")setVisible(false);return}setSteps(true)};
 
