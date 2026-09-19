@@ -46,6 +46,18 @@ export default async function RoleApplicationPage({params}:{params:Promise<{role
         <span>UPCOMING</span>
         <p>Nightmare on Channelside · Saturday, October 31, 2026 · Tampa, Florida. Your application is being reviewed specifically for this campaign. Strong execution can still build your track record inside the ICONIC LIVE network, but other properties are intentionally not being presented on this page right now.</p>
       </div>
+      <div className={s.benefitsBox}>
+        <span>CAMPAIGN BENEFITS</span>
+        <h2>What comes with an activated role.</h2>
+        <ul>
+          <li>Complimentary event-day meal and beverage.</li>
+          <li>VIP bar access, with alcoholic service only where legally eligible.</li>
+          <li>Credentialed access to official ICONIC LIVE after-parties associated with the event, subject to capacity/security rules.</li>
+          <li>Paid promotional personnel: additional campaign bonus stated in the personalized compensation sheet.</li>
+          <li>Eligible non-cash promotional personnel: sold-out bonus package after official sellout + completed deliverables.</li>
+        </ul>
+        <p>Sold-out package may include a massage gift certificate, additional gift, bonus merch, future tickets and/or backstage-access opportunities, touring-company job consideration, and possible endorsement consideration from an individual BEVCO beverage brand. Touring jobs, future backstage access and endorsement opportunities require separate selection and agreement.</p>
+      </div>
       <PartnerRoleForm role={role}/>
     </section>
   </CinematicShell>;
