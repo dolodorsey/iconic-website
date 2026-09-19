@@ -82,6 +82,20 @@ function check(name, pass, details={}){
         const directProduct = await page.locator('a[href*="/merch/product/"]').count();
         check(`noc-shop ${view.key} direct-product-links-present`, directProduct>0, {directProduct});
       }
+      if(route.key==="partners"){
+        const parentHero = page.locator('[data-testid="partners-parent-hero"] img').first();
+        const parentSrc = await parentHero.getAttribute("src");
+        check(`partners ${view.key} parent-hero-is-iconic-master`, Boolean(parentSrc?.includes("iconic-platform-vip-hospitality")), {parentSrc});
+        const campaign = page.locator('[data-testid="active-nightmare-campaign"]');
+        const campaignCount = await campaign.count();
+        check(`partners ${view.key} one-nightmare-campaign-block`, campaignCount===1, {campaignCount});
+        if(campaignCount){
+          const campaignSrc = await campaign.locator("img").first().getAttribute("src");
+          check(`partners ${view.key} nightmare-art-is-contained`, Boolean(campaignSrc?.includes("noc-site-scene")), {campaignSrc});
+          const box = await campaign.boundingBox();
+          check(`partners ${view.key} nightmare-feature-has-real-width`, Boolean(box && box.width >= view.width*0.78), {box});
+        }
+      }
     }
 
     // Explicit install state: normal page has no install overlay; install opens only through ?install=1.
