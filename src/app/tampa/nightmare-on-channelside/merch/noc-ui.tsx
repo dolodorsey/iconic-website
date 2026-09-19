@@ -14,6 +14,7 @@ export function StoreHeader() {
       <nav className={`${premium.nav} noc-mobile-nav`} aria-label="Nightmare store navigation">
         <Link href={BASE}>HOME</Link>
         <Link href={`${BASE}/shop`}>SHOP</Link>
+        <Link href={`${BASE}/worlds`}>COLLECTIONS</Link>
         <Link href="/tampa/nightmare-on-channelside">EVENT</Link>
       </nav>
       <div className={`${premium.tools} noc-mobile-tools`}><BagIndicator /></div>
@@ -30,6 +31,7 @@ export function StoreFooter() {
       </div>
       <nav aria-label="Nightmare footer navigation">
         <Link href={`${BASE}/shop`}>SHOP</Link>
+        <Link href={`${BASE}/worlds`}>COLLECTIONS</Link>
         <Link href="/tampa/nightmare-on-channelside">EVENT</Link>
         <Link href={`${BASE}/cart`}>CART</Link>
         <Link href={`${BASE}/policies`}>POLICIES</Link>
@@ -65,7 +67,7 @@ function ProductViews({ product }: { product: CatalogProduct }) {
 
 export function ProductCard({ product }: { product: CatalogProduct }) {
   return (
-    <Link href={`${BASE}/product/${product.sku}`} className={`${premium.productCard} noc-product-card-v2`}>
+    <Link href={`${BASE}/collection/${product.collection_slug}/${product.sku}`} className={`${premium.productCard} noc-product-card-v2`}>
       <ProductViews product={product} />
       <div className={`${premium.productMeta} noc-product-meta-v2`}>
         <div><strong>{product.title}</strong><span>{product.product_type}</span></div>
@@ -91,12 +93,11 @@ export function WorldCard({ collection }: { collection: CatalogCollection }) {
   );
 }
 
-// Compatibility export for legacy direct collection routes.
-// Customer-facing navigation does not expose collection browsing while QA is open.
 export function StoreSubnav() {
   return (
     <nav className={premium.subnav} aria-label="Nightmare shop sections">
       <Link href={`${BASE}/shop`}>SHOP ALL</Link>
+      <Link href={`${BASE}/worlds`}>COLLECTIONS</Link>
       <Link href="/tampa/nightmare-on-channelside">THE EVENT</Link>
     </nav>
   );
