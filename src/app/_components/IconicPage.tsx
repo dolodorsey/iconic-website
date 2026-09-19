@@ -33,6 +33,7 @@ export function Shell({children}:{children:ReactNode}){return <main className="i
       <Link href="/creators" style={navLink}>Creators</Link>
       <Link href="/merch" style={navLink}>Merch</Link>
       <Link href="/partners" style={navLink}>Partners</Link>
+      <a href="?install=1" style={{...navLink,color:C.gold2}}>Get App</a>
       <Link href="/access?intent=presale" style={{...navLink,color:C.gold2}}>Get Access</Link>
     </div>
   </nav>
