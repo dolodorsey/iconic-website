@@ -13,7 +13,7 @@ const touringNames=[
 
 export default function PartnersLanding(){
   return <CinematicShell active="/partners">
-    <section className={s.hero}>
+    <section className={s.hero} data-asset-namespace="ICONIC_MASTER" data-testid="partners-parent-hero">
       <img src={ART.hospitality} alt="ICONIC LIVE master-brand hospitality and audience experience artwork" className={s.heroArt}/>
       <div className={s.heroShade}/>
       <div className={s.heroCopy}>
@@ -64,7 +64,7 @@ export default function PartnersLanding(){
         <div><span className={s.kicker}>UPCOMING</span><h2>Nightmare on Channelside.</h2></div>
         <p>Saturday, October 31, 2026 · Tampa, Florida. This is the active ICONIC LIVE campaign and the only event currently being presented on this personnel page.</p>
       </div>
-      <div className={s.campaignFeature}>
+      <div className={s.campaignFeature} data-asset-namespace="NIGHTMARE_ON_CHANNELSIDE" data-testid="active-nightmare-campaign">
         <div className={s.campaignArt}><img src={NOC_MEDIA.headliners} alt="Nightmare on Channelside official Tampa Halloween campaign artwork"/></div>
         <div className={s.campaignCopy}>
           <span>01 / ACTIVE CAMPAIGN</span>
