@@ -126,6 +126,16 @@ function priceToCents(value: string | number | undefined) {
   return Number.isFinite(parsed) ? Math.round(parsed * 100) : 0;
 }
 
+function isRenderableProductImage(value: string) {
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "https:") return false;
+    return /\.(png|jpe?g|webp|gif|avif)$/i.test(url.pathname);
+  } catch {
+    return false;
+  }
+}
+
 function getSubject(tags: string[], handle: string) {
   const liveTag = tags.find(
     (item) => item.startsWith("subject:") && item !== "subject:visual-qa-pending"
@@ -185,7 +195,13 @@ function normalizeProducts(products: ShopifyPublicProduct[]): CatalogProduct[] {
     const collection_slug = getCollectionSlug(tags, product.handle);
     collectionCounts[collection_slug] = (collectionCounts[collection_slug] || 0) + 1;
     const design_number = collectionCounts[collection_slug];
-    const images = (product.images || []).map((image) => image.src).filter(Boolean);
+    const images = Array.from(
+      new Set(
+        (product.images || [])
+          .map((image) => image.src)
+          .filter((image): image is string => Boolean(image) && isRenderableProductImage(image))
+      )
+    );
     const price_cents = Math.min.apply(null, variants.map((variant) => variant.price_cents));
     const sizeOption = options.find((option) => /size/i.test(option.name));
 
