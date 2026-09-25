@@ -3,6 +3,7 @@ import type { CatalogCollection, CatalogProduct } from "./catalog";
 import { formatPrice } from "./catalog";
 import { COLLECTION_ART } from "./noc-assets";
 import { BagIndicator } from "./shop-client";
+import ProductCardMedia from "./product-card-media";
 import premium from "./noc-premium.module.css";
 
 const BASE = "/tampa/nightmare-on-channelside/merch";
@@ -41,34 +42,10 @@ export function StoreFooter() {
   );
 }
 
-function ProductViews({ product }: { product: CatalogProduct }) {
-  const front = product.primary_image_url;
-  const back = product.secondary_image_url;
-
-  if (!front && !back) return null;
-
-  return (
-    <div className={`noc-product-glance ${back ? "noc-product-glance--pair" : "noc-product-glance--single"}`}>
-      {front ? (
-        <figure>
-          <img src={front} alt={`${product.title} front view`} loading="lazy" decoding="async" />
-          <figcaption>FRONT</figcaption>
-        </figure>
-      ) : null}
-      {back ? (
-        <figure>
-          <img src={back} alt={`${product.title} back view`} loading="lazy" decoding="async" />
-          <figcaption>BACK</figcaption>
-        </figure>
-      ) : null}
-    </div>
-  );
-}
-
 export function ProductCard({ product }: { product: CatalogProduct }) {
   return (
     <Link href={`${BASE}/collection/${product.collection_slug}/${product.sku}`} className={`${premium.productCard} noc-product-card-v2`}>
-      <ProductViews product={product} />
+      <ProductCardMedia front={product.primary_image_url} back={product.secondary_image_url} title={product.title} />
       <div className={`${premium.productMeta} noc-product-meta-v2`}>
         <div><strong>{product.title}</strong><span>{product.product_type}</span></div>
         <b>{formatPrice(product.price_cents)}</b>
