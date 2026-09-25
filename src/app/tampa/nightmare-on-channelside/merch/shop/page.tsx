@@ -46,7 +46,7 @@ export default async function NightmareShopPage() {
               <div className={premium.sectionHead}>
                 <span className={premium.eyebrow}>LIVE EVENT MERCH</span>
                 <h2 className="noc-editorial-heading">THE DROP.</h2>
-                <p>Search by artist, collection or garment. Every card below resolves to a real live product page and secure Shopify checkout.</p>
+                <p>Search by artist, collection or garment. Product cards show the front by default; hover to reveal the back. Every card resolves to a live product page and secure Shopify checkout.</p>
               </div>
               <nav className={`${premium.subnav} noc-collection-shortcuts`} aria-label="Shop collection shortcuts">
                 {catalog.collections.map((collection) => <Link key={collection.slug} href={`/tampa/nightmare-on-channelside/merch/collection/${collection.slug}`}>{collection.name}</Link>)}
