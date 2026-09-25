@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { CatalogCollection, CatalogProduct } from "../catalog";
+import ProductCardMedia from "../product-card-media";
 
 const BASE = "/tampa/nightmare-on-channelside/merch";
 const PAGE_SIZE = 24;
@@ -61,20 +62,7 @@ export default function ShopGrid({ products, collections }: { products: ShopProd
         <div className="noc-shop-grid">
           {shown.map((product) => (
             <Link href={`${BASE}/collection/${product.collection_slug}/${product.sku}`} className="noc-shop-product-card" key={product.shopify_product_id}>
-              <div className={`noc-product-glance ${product.secondary_image_url ? "noc-product-glance--pair" : "noc-product-glance--single"}`}>
-                {product.primary_image_url ? (
-                  <figure>
-                    <img src={product.primary_image_url} alt={`${product.title} front view`} loading="lazy" decoding="async" />
-                    <figcaption>FRONT</figcaption>
-                  </figure>
-                ) : null}
-                {product.secondary_image_url ? (
-                  <figure>
-                    <img src={product.secondary_image_url} alt={`${product.title} back view`} loading="lazy" decoding="async" />
-                    <figcaption>BACK</figcaption>
-                  </figure>
-                ) : null}
-              </div>
+              <ProductCardMedia front={product.primary_image_url} back={product.secondary_image_url} title={product.title} />
               <div className="noc-shop-product-meta">
                 <div><strong>{product.title}</strong><span>{product.product_type}</span></div>
                 <b>{money.format(product.price_cents / 100)}</b>
