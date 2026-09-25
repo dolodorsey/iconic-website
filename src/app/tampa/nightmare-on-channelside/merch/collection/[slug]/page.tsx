@@ -72,7 +72,7 @@ export default async function CollectionPage({ params }: Props) {
           <div className={premium.sectionHead}>
             <span className={premium.eyebrow}>{collection.name} · TAMPA · HALLOWEEN {NIGHTMARE_EVENT.year}</span>
             <h2 className="noc-editorial-heading">THE COLLECTION</h2>
-            <p>Front and back at a glance. Open any piece for live sizes, variants and checkout.</p>
+            <p>Front view first. Hover any piece to reveal the back, then open it for live sizes, variants and checkout.</p>
           </div>
           <div className={premium.productGrid}>{products.map((product) => <ProductCard key={product.shopify_product_id} product={product} />)}</div>
         </section>
