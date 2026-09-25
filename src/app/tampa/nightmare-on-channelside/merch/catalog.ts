@@ -1,4 +1,5 @@
 import { collections as collectionWorlds } from "./merch-data";
+import { NOC_PRODUCT_SNAPSHOT } from "./product-snapshot";
 
 export type CatalogCollection = {
   slug: string;
@@ -125,13 +126,18 @@ function priceToCents(value: string | number | undefined) {
   return Number.isFinite(parsed) ? Math.round(parsed * 100) : 0;
 }
 
-function getSubject(tags: string[]) {
-  const tag = tags.find((item) => item.startsWith("subject:"));
-  return tag ? tag.slice("subject:".length) : "noc";
+function getSubject(tags: string[], handle: string) {
+  const liveTag = tags.find(
+    (item) => item.startsWith("subject:") && item !== "subject:visual-qa-pending"
+  );
+  if (liveTag) return liveTag.slice("subject:".length);
+
+  const preservedSubject = NOC_PRODUCT_SNAPSHOT[handle]?.subject;
+  return preservedSubject || "noc";
 }
 
-function getCollectionSlug(tags: string[]) {
-  return subjectToCollection[getSubject(tags)] || "nightmare-on-channelside";
+function getCollectionSlug(tags: string[], handle: string) {
+  return subjectToCollection[getSubject(tags, handle)] || "nightmare-on-channelside";
 }
 
 function selectedOptions(variant: ShopifyPublicVariant, options: ShopifyPublicOption[]) {
@@ -176,7 +182,7 @@ function normalizeProducts(products: ShopifyPublicProduct[]): CatalogProduct[] {
     }));
     if (!variants.length) return;
 
-    const collection_slug = getCollectionSlug(tags);
+    const collection_slug = getCollectionSlug(tags, product.handle);
     collectionCounts[collection_slug] = (collectionCounts[collection_slug] || 0) + 1;
     const design_number = collectionCounts[collection_slug];
     const images = (product.images || []).map((image) => image.src).filter(Boolean);
